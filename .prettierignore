@@ -1,0 +1,4 @@
+.next/
+dist/
+.cache/
+pnpm-lock.yaml

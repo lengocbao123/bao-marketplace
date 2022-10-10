@@ -1,0 +1,46 @@
+{
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "lint": "turbo run lint",
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "prepare": "husky install",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,mdx,css,yaml,yml,graphql}\"",
+    "clean": "turbo run clean && rm -rf node_modules pnpm-lock.yaml",
+    "setup": "pnpm install",
+    "reinstall": "pnpm run clean && pnpm run setup",
+    "update": "pnpm update -r --interactive --latest"
+  },
+  "prettier": {
+    "plugins": [
+      "prettier-plugin-tailwindcss"
+    ],
+    "printWidth": 120,
+    "singleQuote": true,
+    "trailingComma": "none"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "eslint": "^8.25.0",
+    "eslint-config-custom": "workspace:*",
+    "husky": "^8.0.1",
+    "prettier": "^2.7.1",
+    "prettier-plugin-tailwindcss": "^0.1.13",
+    "turbo": "latest"
+  },
+  "engines": {
+    "node": ">=14.19.1 <=18.x.x",
+    "npm": ">=6.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "react": "^18.2.0"
+    }
+  }
+}
