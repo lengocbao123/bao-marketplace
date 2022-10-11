@@ -31,6 +31,7 @@ importers:
       '@types/react': ^18.0.21
       '@types/react-dom': ^18.0.6
       autoprefixer: ^10.4.0
+      clsx: ^1.2.1
       date-fns: ^2.29.3
       eslint-config-custom: workspace:*
       ethers: ^5.7.1
@@ -53,6 +54,7 @@ importers:
     dependencies:
       '@headlessui/react': 1.7.3_biqbaboplfbrettd7655fr4n2y
       '@hookform/resolvers': 2.9.8_react-hook-form@7.37.0
+      clsx: 1.2.1
       date-fns: 2.29.3
       ethers: 5.7.1
       next: 12.3.1_6tziyx3dehkoeijunclpkpolha
