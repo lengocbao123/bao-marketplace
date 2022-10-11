@@ -1,6 +1,7 @@
-const title = 'Marketplace';
-const description = 'A starter template for Next.js with TypeScript and Tailwind CSS.';
-const url = 'https://marketplace.pikasso.xyz';
+export const title = 'Marketplace';
+export const description = 'A starter template for Next.js with TypeScript and Tailwind CSS.';
+export const url = 'https://marketplace.pikasso.xyz';
+export const keywords = 'nft, marketplace, crypto, ethereum';
 
 /** @type {import('next-seo').DefaultSeoProps} */
 const nextSeoConfig = {
@@ -16,8 +17,7 @@ const nextSeoConfig = {
     locale: 'en_US'
   },
   twitter: {
-    handle: '@handle',
-    site: '@site',
+    site: '@pikassonft',
     cardType: 'summary_large_image'
   }
 };

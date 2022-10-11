@@ -10,6 +10,10 @@ const nextConfig = {
     formats: ['image/avif', 'image/webp'],
     unoptimized: true
   },
+  publicRuntimeConfig: {
+    // Will be available on both server and client
+    googleTagManagerId: process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
+  },
 
   webpack(config) {
     config.module.rules.push({
