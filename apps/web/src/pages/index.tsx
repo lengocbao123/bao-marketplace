@@ -1,4 +1,3 @@
-import { Avatar } from '../components/atoms';
 import { Layout } from '../components/layouts';
 import { NextPageWithLayout } from './_app';
 

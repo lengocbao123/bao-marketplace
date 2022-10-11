@@ -2270,7 +2270,7 @@ packages:
       cosmiconfig: 5.2.1
       deepmerge: 3.3.0
       glob: 7.2.3
-      joi: 17.6.2
+      joi: 17.6.3
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -2403,7 +2403,7 @@ packages:
   /@react-native-community/cli-types/9.1.0:
     resolution: {integrity: sha512-KDybF9XHvafLEILsbiKwz5Iobd+gxRaPyn4zSaAerBxedug4er5VUWa8Szy+2GeYKZzMh/gsb1o9lCToUwdT/g==}
     dependencies:
-      joi: 17.6.2
+      joi: 17.6.3
     dev: false
 
   /@react-native-community/cli/9.1.3_@babel+core@7.19.3:
@@ -3751,7 +3751,7 @@ packages:
     hasBin: true
     dependencies:
       caniuse-lite: 1.0.30001418
-      electron-to-chromium: 1.4.276
+      electron-to-chromium: 1.4.277
       node-releases: 2.0.6
       update-browserslist-db: 1.0.10_browserslist@4.21.4
 
@@ -4575,8 +4575,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  /electron-to-chromium/1.4.276:
-    resolution: {integrity: sha512-EpuHPqu8YhonqLBXHoU6hDJCD98FCe6KDoet3/gY1qsQ6usjJoHqBH2YIVs8FXaAtHwVL8Uqa/fsYao/vq9VWQ==}
+  /electron-to-chromium/1.4.277:
+    resolution: {integrity: sha512-Ej4VyUfGdVY5D2J5WHAVNqrEFBKgeNcX7p/bBQU4x/VKwvnyEvGd62NEkIK3lykLEe9Cg4MCcoWAa+u97o0u/A==}
 
   /elliptic/6.5.4:
     resolution: {integrity: sha512-iLhC6ULemrljPZb+QutR5TQGB+pdW6KGD5RSegS+8sorOZT+rdQFbsQFJgvN3eRqNALqJer4oQ16YvJHlU8hzQ==}
@@ -6440,8 +6440,8 @@ packages:
       supports-color: 8.1.1
     dev: false
 
-  /joi/17.6.2:
-    resolution: {integrity: sha512-+gqqdh1xc1wb+Lor0J9toqgeReyDOCqOdG8QSdRcEvwrcRiFQZneUCGKjFjuyBWUb3uaFOgY56yMaZ5FIc+H4w==}
+  /joi/17.6.3:
+    resolution: {integrity: sha512-YlQsIaS9MHYekzf1Qe11LjTkNzx9qhYluK3172z38RxYoAUf82XMX1p1DG1H4Wtk2ED/vPdSn9OggqtDu+aTow==}
     dependencies:
       '@hapi/hoek': 9.3.0
       '@hapi/topo': 5.1.0
