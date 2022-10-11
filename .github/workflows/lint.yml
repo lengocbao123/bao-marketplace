@@ -32,6 +32,11 @@ jobs:
           version: 7
           run_install: false
 
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "::set-output name=pnpm_cache_dir::$(pnpm store path)"
+
       - uses: actions/cache@v3
         name: Setup pnpm cache
         with:
@@ -44,4 +49,4 @@ jobs:
         run: pnpm install
 
       - name: Run linters
-        run: npm run lint
+        run: pnpm run lint
