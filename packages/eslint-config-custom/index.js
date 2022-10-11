@@ -4,6 +4,7 @@ module.exports = {
     '@next/next/no-html-link-for-pages': 'off',
     'react/jsx-key': 'off',
     'object-shorthand': ['error', 'always'],
+    '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/ban-types': [
