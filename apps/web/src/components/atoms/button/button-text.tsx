@@ -1,19 +1,9 @@
 import { SvgSpinAnimate } from '@/assets/svg';
 import clsx from 'clsx';
 import React from 'react';
-import { ButtonVariant, ButtonSize, IconOrientation, ButtonIcon } from './button';
+import { ButtonProps } from './button';
 
-export interface ButtonTextProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  size?: ButtonSize;
-  variant?: ButtonVariant;
-  icon?: ButtonIcon;
-  iconOrientation?: IconOrientation;
-  loading?: boolean;
-  disabled?: boolean;
-  label?: string;
-}
-
-export const ButtonText = React.forwardRef<HTMLButtonElement, ButtonTextProps>(
+export const ButtonText = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       size = 'md',
