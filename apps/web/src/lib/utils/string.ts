@@ -1,4 +1,4 @@
-// Get avatar letter by words
+// Get an avatar letter by words
 export const getAvatarLetter = (words?: string): string => {
   if (!words) {
     return '';

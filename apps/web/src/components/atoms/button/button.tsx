@@ -1,17 +1,17 @@
-import { SvgSpinAnimate } from '@/assets/svg';
 import clsx from 'clsx';
 import React from 'react';
+import { SpinIcon } from '../../icons/animate';
 
-export type ButtonIcon = React.FC<React.SVGProps<SVGSVGElement>>;
+export type IconButton = React.FC<React.SVGProps<SVGSVGElement>>;
 export type ButtonSize = 'sm' | 'md' | 'lg';
 export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
-export type IconOrientation = 'left' | 'right';
+export type ButtonIconOrientation = 'left' | 'right';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
   variant?: ButtonVariant;
-  icon?: ButtonIcon;
-  iconOrientation?: IconOrientation;
+  icon?: IconButton;
+  iconOrientation?: ButtonIconOrientation;
   loading?: boolean;
   disabled?: boolean;
   label?: string;
@@ -34,7 +34,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const Icon = loading ? SvgSpinAnimate : icon;
+    const Icon = loading ? SpinIcon : icon;
 
     const buttonSize =
       variant === 'tertiary'

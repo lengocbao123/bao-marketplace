@@ -5,13 +5,13 @@ import { AlertIcon } from '../../icons/outline';
 const NAME = 'Input';
 
 export type SVG = React.FC<React.SVGProps<SVGSVGElement>>;
-export type IconOrientation = 'left' | 'right';
+export type InputIconOrientation = 'left' | 'right';
 
 /**
  * The class name for the icon relative to the orientation
  * @param iconOrientation
  */
-export const IconOrientations: Record<IconOrientation, string> = {
+export const IconOrientations: Record<InputIconOrientation, string> = {
   left: 'order-0 pr-2',
   right: 'order-1 pl-2'
 } as const;
@@ -20,7 +20,7 @@ export const IconOrientations: Record<IconOrientation, string> = {
  * The class name for the input relative to the orientation
  * @param iconOrientation
  */
-export const InputOrientations: Record<IconOrientation, string> = {
+export const InputOrientations: Record<InputIconOrientation, string> = {
   left: 'order-1',
   right: 'order-0'
 };
@@ -28,7 +28,7 @@ export const InputOrientations: Record<IconOrientation, string> = {
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   error?: string;
   Icon?: SVG;
-  iconOrientation?: IconOrientation;
+  iconOrientation?: InputIconOrientation;
   hasWarningIcon?: boolean;
 }
 

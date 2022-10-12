@@ -1,8 +1,8 @@
-import { SvgSpinAnimate } from '@/assets/svg';
 import clsx from 'clsx';
 import Link, { LinkProps } from 'next/link';
 import { AnchorHTMLAttributes, forwardRef } from 'react';
-import { ButtonVariant, ButtonSize, IconOrientation, ButtonIcon } from './button';
+import { SpinIcon } from '../../icons/animate';
+import { ButtonIconOrientation, ButtonSize, ButtonVariant, IconButton } from './button';
 
 // Root size classes
 const sizes: Record<ButtonSize, string> = {
@@ -29,8 +29,8 @@ export interface ButtonLinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorEle
   label?: string;
   size?: ButtonSize;
   variant?: ButtonVariant;
-  iconOrientation?: IconOrientation;
-  icon?: ButtonIcon;
+  iconOrientation?: ButtonIconOrientation;
+  icon?: IconButton;
   loading?: boolean;
   disabled?: boolean;
 }
@@ -50,7 +50,7 @@ export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(
     },
     ref
   ) => {
-    const Icon = loading ? SvgSpinAnimate : icon;
+    const Icon = loading ? SpinIcon : icon;
 
     const iconTextSize = {
       'text-base': size === 'sm',

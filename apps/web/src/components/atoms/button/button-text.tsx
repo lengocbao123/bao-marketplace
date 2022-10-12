@@ -1,6 +1,6 @@
-import { SvgSpinAnimate } from '@/assets/svg';
 import clsx from 'clsx';
 import React from 'react';
+import { SpinIcon } from '../../icons/animate';
 import { ButtonProps } from './button';
 
 export const ButtonText = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -20,7 +20,7 @@ export const ButtonText = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
-    const Icon = loading ? SvgSpinAnimate : icon;
+    const Icon = loading ? SpinIcon : icon;
 
     const buttonSize = { 'py-1.5': size === 'sm', 'py-2.5': size === 'md', 'py-3': size === 'lg' };
 

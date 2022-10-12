@@ -1,9 +1,9 @@
-import { formatAbbreviationNumber } from '@/lib/utils/number';
-import { pluralize } from '@/lib/utils/plural-count';
-import { getAvatarLetter } from '@/lib/utils/string';
 import Image from 'next/future/image';
 import Link, { LinkProps } from 'next/link';
 import React, { FC, HTMLAttributes } from 'react';
+import { formatAbbreviationNumber } from '../../../lib/utils/number';
+import { pluralize } from '../../../lib/utils/plural-count';
+import { getAvatarLetter } from '../../../lib/utils/string';
 
 export interface CardCollectionProps extends HTMLAttributes<HTMLDivElement> {
   link: LinkProps;
