@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import React from 'react';
+import { SVG } from '../../../types/index';
 import { AlertIcon } from '../../icons/outline';
 
 const NAME = 'Input';
 
-export type SVG = React.FC<React.SVGProps<SVGSVGElement>>;
 export type InputIconOrientation = 'left' | 'right';
 
 /**
