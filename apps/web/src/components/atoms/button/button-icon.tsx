@@ -20,7 +20,11 @@ export const ButtonIcon = React.forwardRef<HTMLButtonElement, ButtonProps>(
   ) => {
     const Icon = loading ? SpinIcon : icon;
 
-    const buttonSize = { 'h-8 w-8': size === 'sm', 'h-10 w-10': size === 'md', 'h-12 w-12': size === 'lg' };
+    const buttonSize = {
+      'h-8 w-8': size === 'sm',
+      'h-10 w-10': size === 'md',
+      'h-12 w-12': size === 'lg'
+    };
 
     const buttonVariant = {
       'bg-secondary text-neutral-0 hover:bg-secondary-30 active:bg-secondary-70 disabled:bg-secondary/50':
@@ -43,7 +47,7 @@ export const ButtonIcon = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button ref={ref} type={type} disabled={disabled} className={buttonClasses} onClick={onClick} {...rest}>
-        <Icon />
+        <Icon className={'text-xl'} />
       </button>
     );
   }

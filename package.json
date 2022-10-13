@@ -14,7 +14,7 @@
     "clean": "turbo run clean && rm -rf node_modules pnpm-lock.yaml",
     "setup": "pnpm install",
     "reinstall": "pnpm run clean && pnpm run setup",
-    "update": "pnpm update -r --interactive --latest"
+    "update": "pnpm update --recursive --interactive --latest"
   },
   "prettier": {
     "plugins": [
