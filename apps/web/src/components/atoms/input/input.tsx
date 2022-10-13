@@ -68,7 +68,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
     InputOrientations[iconOrientation]
   );
   return (
-    <div className={rootClasses} {...rest}>
+    <div className={rootClasses}>
       {Icon && !(error && iconOrientation === 'right') && (
         <span
           className={clsx('flex items-center justify-center', IconOrientations[iconOrientation])}
@@ -84,6 +84,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref)
         disabled={disabled}
         placeholder={placeholder}
         className={inputClassName}
+        {...rest}
         data-component={'input'}
       />
       {children && (
