@@ -2,19 +2,13 @@ import { FC, ReactNode, Fragment } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 
-/** Active dropdown item's className
- * @param activeItemClassName
- */
-
-/** Array of items base on item's index do not have hover effect. Eg: [0,1]
- * @param inactiveItems
- */
 export interface DropdownMenuProps {
   button?: ReactNode;
   items?: ReactNode[];
-  activeItemClassName?: string;
-  inactiveItems?: number[];
+  activeItemClassName?: string; // Active dropdown item's className
+  inactiveItems?: number[]; // Array of items base on item's index do not have hover effect. Eg: [0,1]
 }
+
 export const DropdownMenu: FC<DropdownMenuProps> = ({ button, items, activeItemClassName = '', inactiveItems }) => {
   return (
     <Menu>
