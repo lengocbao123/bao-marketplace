@@ -24,6 +24,7 @@ importers:
 
   apps/web:
     specifiers:
+      '@badrap/bar-of-progress': ^0.2.1
       '@headlessui/react': ^1.7.3
       '@hookform/resolvers': ^2.9.8
       '@svgr/webpack': ^6.4.0
@@ -53,6 +54,7 @@ importers:
       wagmi: ^0.6.8
       yup: ^0.32.11
     dependencies:
+      '@badrap/bar-of-progress': 0.2.1
       '@headlessui/react': 1.7.3_biqbaboplfbrettd7655fr4n2y
       '@hookform/resolvers': 2.9.8_react-hook-form@7.37.0
       clsx: 1.2.1
@@ -1412,6 +1414,10 @@ packages:
       '@babel/helper-string-parser': 7.19.4
       '@babel/helper-validator-identifier': 7.19.1
       to-fast-properties: 2.0.0
+
+  /@badrap/bar-of-progress/0.2.1:
+    resolution: {integrity: sha512-+vqWaMkHnCcoKDo0dRhMpY40Lt2+Li2/vo0IArrbYWKTLeHatEGLJRX23iUl6quxwxVqrflJPCr8F0Sak+hujg==}
+    dev: false
 
   /@coinbase/wallet-sdk/3.5.3_bid2dtw7cmronlxwnb7c6kybdy:
     resolution: {integrity: sha512-kaGMk9KyiSLPm1+BvCQSc99ku9gn0j+M1+2Beii+4gx/lRVhutlzmn6l+5zTB/n3xri25iTr+SxjMZLlMfW8Hg==}
