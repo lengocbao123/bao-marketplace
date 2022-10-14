@@ -104,7 +104,7 @@ export const Header: FC<HeaderProps> = (props) => {
     <header {...headerProps}>
       <div className={'container'}>
         <div className={'flex items-center justify-between gap-5 py-5'}>
-          <Link href={'/'}>
+          <Link href={'/'} className={'-mt-2.5'}>
             <span className={'sr-only'}>Pikasso</span>
             <PikassoColorIcon width="136" height="34" />
           </Link>
@@ -122,12 +122,7 @@ export const Header: FC<HeaderProps> = (props) => {
           </nav>
 
           <form className={'max-w-xs grow'}>
-            <Input
-              type={'search'}
-              Icon={SearchIcon}
-              iconOrientation={'right'}
-              placeholder={'Search items, collections,....'}
-            />
+            <Input block type={'search'} trailingVisual={SearchIcon} placeholder={'Search items, collections,....'} />
           </form>
 
           {isSignin ? (

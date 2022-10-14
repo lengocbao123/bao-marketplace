@@ -1,104 +1,92 @@
 import clsx from 'clsx';
-import React from 'react';
+import { createRef, forwardRef, InputHTMLAttributes, ReactElement, RefObject, useId } from 'react';
 import { SVG } from '../../../types/index';
 import { AlertIcon } from '../../icons/outline';
 
-const NAME = 'Input';
-
-export type InputIconOrientation = 'left' | 'right';
-
-/**
- * The class name for the icon relative to the orientation
- * @param iconOrientation
- */
-export const IconOrientations: Record<InputIconOrientation, string> = {
-  left: 'order-0 pr-2',
-  right: 'order-1 pl-2'
-} as const;
-
-/**
- * The class name for the input relative to the orientation
- * @param iconOrientation
- */
-export const InputOrientations: Record<InputIconOrientation, string> = {
-  left: 'order-1',
-  right: 'order-0'
+export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+  label?: string;
+  error?: string;
+  /**
+   * A visual that renders inside the input before the typing area
+   */
+  leadingVisual?: string | SVG;
+  /**
+   * A visual that renders inside the input after the typing area
+   */
+  trailingVisual?: string | SVG;
+  loadingPosition?: 'leading' | 'trailing';
+  block?: boolean;
+  help?: string;
+  hint?: string;
+  /**
+   * A visual that renders inside the input after the typing area
+   */
+  trailingAction?: ReactElement;
 };
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  error?: string;
-  Icon?: SVG;
-  iconOrientation?: InputIconOrientation;
-  hasWarningIcon?: boolean;
-}
+export const Input = forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
+  const { label, error, help, hint, block, trailingVisual, leadingVisual, trailingAction, ...inputProps } = props;
+  const id = useId();
+  const disabled = inputProps.disabled;
+  const LeadingVisual = leadingVisual;
+  const TrailingVisual = error ? AlertIcon : trailingVisual;
 
-/* ---------------------------------------------------------------------------------------------------------------------
- * Input
- * ------------------------------------------------------------------------------------------------------------------ */
+  const inputRef = (forwardedRef as RefObject<HTMLInputElement>) || createRef<HTMLInputElement>();
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const {
-    className,
-    id,
-    iconOrientation = 'left',
-    disabled = false,
-    placeholder,
-    Icon,
-    error,
-    children,
-    hasWarningIcon = true,
-    ...rest
-  } = props;
-
-  /**
-   * The class name for the input wrapper
-   * @type {string}
-   */
-  const rootClasses = clsx(
-    'px-4 py-2 text-sm border border-neutral-10 rounded-full flex items-center hover:border-primary-30 focus:border-primary',
-    error
-      ? 'border-accent-error bg-accent-error/20 hover:border-accent-error focus:border-accent-error'
-      : 'focus-within:!bg-primary-5 focus-within:!border-primary hover:border-primary-30',
-    disabled ? '!bg-neutral-10 border-neutral-30 hover:border-neutral-30 text-neutral-50' : 'text-neutral',
-    className
-  );
-
-  const inputClassName = clsx(
-    'w-full h-full outline-none font-normal py-0.5 bg-transparent',
-    InputOrientations[iconOrientation]
-  );
   return (
-    <div className={rootClasses}>
-      {Icon && !(error && iconOrientation === 'right') && (
-        <span
-          className={clsx('flex items-center justify-center', IconOrientations[iconOrientation])}
-          data-component={'icon'}
+    <div className={clsx('flex-col gap-2.5', block ? 'flex' : 'inline-flex')}>
+      {(label || hint) && (
+        <div className={'flex items-center justify-between'}>
+          <label className={'text-base font-semibold'} htmlFor={id}>
+            {label}
+          </label>
+
+          <div className="text-sm text-neutral-50">{hint}</div>
+        </div>
+      )}
+
+      <div className="inline-flex flex-col gap-2">
+        <div
+          className={clsx(
+            'focus-within:border-primary focus-within:bg-primary-5 border-neutral-10 inline-flex items-center rounded-full border',
+            disabled ? 'border-neutral-30 bg-neutral-10' : 'hover:border-primary-30',
+            error && 'border-accent-error bg-accent-error/10',
+            {
+              'pl-4': leadingVisual,
+              'pr-4': trailingVisual || trailingAction
+            }
+          )}
         >
-          <Icon className={'text-2xl'} />
-        </span>
-      )}
-      <input
-        ref={ref}
-        id={id}
-        readOnly={disabled}
-        disabled={disabled}
-        placeholder={placeholder}
-        className={inputClassName}
-        {...rest}
-        data-component={'input'}
-      />
-      {children && (
-        <span className="border-neutral-10 order-3 border-l pl-3" data-component={'trailing'}>
-          {children}
-        </span>
-      )}
-      {!disabled && error && hasWarningIcon && (
-        <span className="order-last pl-2" data-component={'warning-icon'}>
-          <AlertIcon className="text-accent-error text-2xl" />
-        </span>
-      )}
+          {leadingVisual && (
+            <span className={'text-sm'}>
+              {typeof leadingVisual === 'string' ? leadingVisual : <LeadingVisual className={'text-2xl'} />}
+            </span>
+          )}
+
+          <input
+            {...inputProps}
+            id={id}
+            ref={inputRef}
+            className={
+              'inline-flex w-full rounded-full border-none bg-transparent px-4 py-2.5 text-sm focus:ring-0 focus-visible:outline-none'
+            }
+          />
+
+          {trailingVisual && (
+            <span className={'text-sm'}>
+              {typeof trailingVisual === 'string' ? trailingVisual : <TrailingVisual className={'text-2xl'} />}
+            </span>
+          )}
+
+          {trailingAction}
+        </div>
+
+        {help && <div className={'text-xs text-neutral-50'}>{help}</div>}
+
+        {error && <div className={'text-accent-error text-xs'}>{error}</div>}
+      </div>
     </div>
   );
 });
 
-Input.displayName = NAME;
+Input.displayName = 'Input';

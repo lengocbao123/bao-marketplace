@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import React from 'react';
-import { Input, InputProps } from '../../atoms/input/input';
+import { Input, InputProps } from '../../atoms';
 
 const NAME = 'TextField';
 
