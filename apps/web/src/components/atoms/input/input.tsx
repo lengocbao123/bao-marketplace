@@ -15,6 +15,9 @@ export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
    */
   trailingVisual?: string | SVG;
   loadingPosition?: 'leading' | 'trailing';
+  /**
+   * Full-width input
+   */
   block?: boolean;
   help?: string;
   hint?: string;
@@ -68,7 +71,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, forwardedR
             id={id}
             ref={inputRef}
             className={
-              'inline-flex w-full rounded-full border-none bg-transparent px-4 py-2.5 text-sm focus:ring-0 focus-visible:outline-none'
+              'py-2.25 inline-flex w-full rounded-full border-none bg-transparent px-4 text-sm focus:ring-0 focus-visible:outline-none'
             }
           />
 

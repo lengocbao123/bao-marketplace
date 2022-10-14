@@ -1,7 +1,7 @@
 import clsx from 'clsx';
-import { FC, ReactNode } from 'react';
+import { FC, InputHTMLAttributes, ReactNode } from 'react';
 
-export interface CheckboxInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface CheckboxInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: ReactNode;
 }
 export const CheckboxInput: FC<CheckboxInputProps> = ({ label, disabled, className, ...rest }) => {

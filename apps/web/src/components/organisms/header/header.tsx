@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { FC, Fragment, HTMLAttributes } from 'react';
 import { Avatar, Button, ButtonIcon, Input } from '../../atoms';
 import { PikassoColorIcon } from '../../icons/brand';
-import { SearchIcon, WalletIcon } from '../../icons/outline';
+import { EditIcon, MenuIcon, PersonIcon, SearchIcon, WalletIcon } from '../../icons/outline';
 import { CaretDownIcon } from '../../icons/solid';
 
 /* ---------------------------------------------------------------------------------------------------------------------
@@ -98,42 +98,70 @@ export type HeaderProps = HTMLAttributes<HTMLElement>;
 export const Header: FC<HeaderProps> = (props) => {
   const { ...headerProps } = props;
 
-  const isSignin = false;
+  const isSignin = true;
 
   return (
     <header {...headerProps}>
       <div className={'container'}>
         <div className={'flex items-center justify-between gap-5 py-5'}>
-          <Link href={'/'} className={'-mt-2.5'}>
-            <span className={'sr-only'}>Pikasso</span>
-            <PikassoColorIcon width="136" height="34" />
-          </Link>
+          <div className="flex grow items-center gap-5">
+            <div className={'lg:hidden'}>
+              <ButtonIcon variant={'tertiary'} icon={MenuIcon} title={'Menu'} />
+            </div>
 
-          <nav className="flex grow gap-5 font-medium">
-            <Link className={'px-2.5'} href={'/'}>
-              Explore
+            <Link href={'/'} className={'-mt-2.5'}>
+              <span className={'sr-only'}>Pikasso</span>
+              <PikassoColorIcon width="136" height="34" />
             </Link>
-            <Link className={'px-2.5'} href={'/'}>
-              Collection
-            </Link>
-            <Link className={'px-2.5'} href={'/'}>
-              Collection
-            </Link>
-          </nav>
 
-          <form className={'max-w-xs grow'}>
-            <Input block type={'search'} trailingVisual={SearchIcon} placeholder={'Search items, collections,....'} />
-          </form>
+            <nav className="hidden grow gap-5 font-medium lg:flex">
+              <Link className={'px-2.5'} href={'/'}>
+                Explore
+              </Link>
+              <Link className={'px-2.5'} href={'/'}>
+                Collection
+              </Link>
+              <Link className={'px-2.5'} href={'/'}>
+                Collection
+              </Link>
+            </nav>
+
+            <div className="ml-auto flex justify-center justify-center lg:hidden">
+              <button>
+                <SearchIcon className={'text-2xl'} />
+              </button>
+            </div>
+
+            <form className={'hidden max-w-xs grow lg:block'}>
+              <Input block type={'search'} trailingVisual={SearchIcon} placeholder={'Search items, collections,....'} />
+            </form>
+          </div>
 
           {isSignin ? (
             <div className="">
-              <Button label={'Sign in'} />
+              <div className={'sm:hidden'}>
+                <ButtonIcon variant={'tertiary'} icon={PersonIcon} title={'Sign in'} />
+              </div>
+
+              <div className={'hidden sm:block'}>
+                <Button label={'Sign in'} />
+              </div>
             </div>
           ) : (
-            <div className="flex items-center gap-5">
-              <Button label={'Create'} />
+            <div className="flex items-center">
+              <div className="sm:mr-5">
+                <div className={'hidden lg:block xl:hidden'}>
+                  <ButtonIcon variant={'tertiary'} icon={EditIcon} title={'Create'} />
+                </div>
 
-              <ButtonIcon variant={'tertiary'} icon={WalletIcon} />
+                <div className={'hidden sm:block lg:hidden xl:block'}>
+                  <Button label={'Create'} />
+                </div>
+              </div>
+
+              <div className={'hidden sm:mr-5 sm:block'}>
+                <ButtonIcon variant={'tertiary'} icon={WalletIcon} title={'Wallet'} />
+              </div>
 
               <HeaderUserMenu />
             </div>
