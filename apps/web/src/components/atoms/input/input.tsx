@@ -28,7 +28,8 @@ export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>((props, forwardedRef) => {
-  const { label, error, help, hint, block, trailingVisual, leadingVisual, trailingAction, ...inputProps } = props;
+  const { label, error, help, hint, block, trailingVisual, leadingVisual, trailingAction, className, ...inputProps } =
+    props;
   const id = useId();
   const disabled = inputProps.disabled;
   const LeadingVisual = leadingVisual;
@@ -57,7 +58,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, forwardedR
             {
               'pl-4': leadingVisual,
               'pr-4': trailingVisual || trailingAction
-            }
+            },
+            className
           )}
         >
           {leadingVisual && (
@@ -67,6 +69,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, forwardedR
           )}
 
           <input
+            data-component="input"
             {...inputProps}
             id={id}
             ref={inputRef}

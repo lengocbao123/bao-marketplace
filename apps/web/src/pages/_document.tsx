@@ -16,7 +16,7 @@ class MyDocument extends Document {
           />
         </Head>
 
-        <body>
+        <body className={'overflow-x-hidden'}>
           <noscript>
             <iframe
               src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
