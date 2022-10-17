@@ -12,6 +12,9 @@ import paymentError from './payment-error.svg';
 import paymentSuccess from './payment-success.svg';
 import pcLaptop from './pc-laptop.svg';
 import success from './success.svg';
+import collection from './collection.svg';
+import gallery from './gallery.svg';
+import sale from './sale.svg';
 
 export {
   checkMail as CheckMailGraphic,
@@ -27,5 +30,8 @@ export {
   paymentError as PaymentErrorGraphic,
   paymentSuccess as PaymentSuccessGraphic,
   pcLaptop as PcLaptopGraphic,
-  success as SuccessGraphic
+  success as SuccessGraphic,
+  collection as CollectionGraphic,
+  gallery as GalleryGraphic,
+  sale as SaleGraphic
 };

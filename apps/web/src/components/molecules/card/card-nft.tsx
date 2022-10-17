@@ -52,15 +52,15 @@ export const CardNft: FC<CardNftProps> = ({ className, user, link, image, title,
             <h3 className="text-neutral line-clamp-1 font-bold">{title}</h3>
           </Link>
 
-          <div className="border-neutral-10 mt-2 flex min-h-[40px] items-center justify-between border-t pt-3 sm:mt-3">
+          <div className="border-neutral-10 min-h-10 mt-2 flex items-center justify-between border-t pt-3 sm:mt-3">
             <div className="text-left">
-              <p className="hidden pb-[6px] text-xs text-neutral-50 sm:block">Price</p>
+              <p className="hidden pb-1.5 text-xs text-neutral-50 sm:block">Price</p>
               <p className="to-secondary bg-gradient-to-r from-[#DA22FF] bg-clip-text text-base font-bold text-transparent">
                 {formatCurrency(price)}
               </p>
             </div>
             <div className="text-left">
-              <p className="hidden pb-[6px] text-xs text-neutral-50 sm:block">Creator</p>
+              <p className="hidden pb-1.5 text-xs text-neutral-50 sm:block">Creator</p>
               <Avatar
                 name={user.username ?? getUsernameFromEmail(user.email)}
                 size="sm"

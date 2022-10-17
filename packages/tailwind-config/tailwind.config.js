@@ -62,14 +62,17 @@ module.exports = {
         4.5: '1.125rem' /* 18px */,
         7.5: '1.875rem' /* 30px */,
         7.75: '1.9375rem' /* 31px */,
+        12.5: '3.125rem' /* 50px */,
         15: '3.75rem' /* 60px */,
         16.5: '4rem' /* 66px */,
         17.5: '4.375rem' /* 70px */,
+        22.5: '5.625rem' /* 90px */,
         24.5: '6.125rem' /* 98px */,
         25: '6.25rem' /* 100px */,
         26: '6.5rem' /* 104px */,
         35: '8.75rem' /* 140px */,
         41: '10.25rem' /* 164px */,
+        50: '12.5rem' /* 200px */,
         56: '14rem' /* 224px */,
         60: '15rem' /* 240px */,
         67: '16.75rem' /* 268px */
@@ -79,6 +82,7 @@ module.exports = {
       },
       backgroundImage: {
         'gradient-1': 'linear-gradient(61.1deg, #f6f6f6 -18.33%, #916ff2 20.35%, #4a20b0 60.96%, #2f107c 105.78%)',
+        'gradient-2': 'linear-gradient(65.39deg, #da22ff -2.14%, #6e43d4 100.21%)',
         'hero-overlay': 'linear-gradient(180deg, #ffffff 14.51%, rgba(255, 255, 255, 0) 100%)'
       },
       boxShadow: {

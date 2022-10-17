@@ -1,13 +1,18 @@
-import { Fragment } from 'react';
 import { Layout } from '../components/layouts';
-import { Hero } from '../components/molecules/hero';
+import { Hero } from '../components/molecules';
+import { Community, Explorer, Instruction, TopCollections } from '../components/organisms';
+import { COLLECTIONS } from '../lib/dummy';
 import { NextPageWithLayout } from './_app';
 
 const Home: NextPageWithLayout = () => {
   return (
-    <Fragment>
+    <div className={'space-y-20'}>
       <Hero />
-    </Fragment>
+      <Explorer viewMorePageUrl="/explore" />
+      <TopCollections collections={COLLECTIONS} viewMorePageUrl="/collections" />
+      <Instruction />
+      <Community />
+    </div>
   );
 };
 

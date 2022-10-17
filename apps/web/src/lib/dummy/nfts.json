@@ -1,0 +1,74 @@
+[
+  {
+    "id": "1261c62f-815a-4753-bf86-61a4c1bbf54e",
+    "name": "Rasheed Mountains#1",
+    "price": 100,
+    "description": "description",
+    "image": "https://images.unsplash.com/photo-1665979154453-ceb2a4934028?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1287&q=80",
+    "createdAt": "2022-10-14T10:04:18.992Z",
+    "updatedAt": "2022-10-14T10:04:18.992Z"
+  },
+  {
+    "id": "44af1ac5-633e-4eac-961d-0f6405876d14",
+    "name": "Hauck Flat#1",
+    "price": 200,
+    "description": "description",
+    "image": "https://ik.imagekit.io/gsozk5bngn/product/image-3_suhW2eBcF.jpg",
+    "createdAt": "2022-10-14T10:04:33.344Z",
+    "updatedAt": "2022-10-14T10:04:33.344Z"
+  },
+  {
+    "id": "380b9a92-fef1-45f6-97b2-b1f2b9d22f5d",
+    "name": "Ortiz Passage#1",
+    "description": "description",
+    "price": 100,
+    "image": "https://ik.imagekit.io/gsozk5bngn/product/image-4_Nx7jkw6OK.jpg",
+    "createdAt": "2022-10-14T10:04:36.407Z",
+    "updatedAt": "2022-10-14T10:04:36.407Z"
+  },
+  {
+    "id": "8a532d48-8fb2-4db9-b01b-54c4d1585d8c",
+    "name": "Terry Skyway#1",
+    "price": 30,
+    "description": "description",
+    "image": "https://ik.imagekit.io/gsozk5bngn/product/image-3_suhW2eBcF.jpg",
+    "createdAt": "2022-10-14T10:04:41.031Z",
+    "updatedAt": "2022-10-14T10:04:41.031Z"
+  },
+  {
+    "id": "b4cc912c-1470-4d62-b247-c9d4722223cf",
+    "name": "Oberbrunner Field#1",
+    "price": 100,
+    "description": "description",
+    "image": "https://ik.imagekit.io/gsozk5bngn/product/image-3_suhW2eBcF.jpg",
+    "createdAt": "2022-10-14T10:04:46.479Z",
+    "updatedAt": "2022-10-14T10:04:46.479Z"
+  },
+  {
+    "id": "2eb5b563-5e84-494f-bfdb-c06b8832b6a6",
+    "price": 35,
+    "name": "Kieran Stream#1",
+    "description": "description",
+    "image": "https://ik.imagekit.io/gsozk5bngn/product/image-6_4EG5itATH.jpg",
+    "createdAt": "2022-10-14T10:04:51.281Z",
+    "updatedAt": "2022-10-14T10:04:51.281Z"
+  },
+  {
+    "id": "adc439a2-552d-4846-bf84-8d36c9bc717b",
+    "name": "Jast Flats#1",
+    "price": 10,
+    "description": "description",
+    "image": "https://ik.imagekit.io/gsozk5bngn/product/image-6_4EG5itATH.jpg",
+    "createdAt": "2022-10-14T10:05:17.402Z",
+    "updatedAt": "2022-10-14T10:05:17.402Z"
+  },
+  {
+    "id": "c5d8dac6-a2cc-4f54-b1dc-eaa5ce4710da",
+    "price": 100,
+    "name": "Schneider Expressway#1",
+    "description": "description",
+    "image": "https://ik.imagekit.io/gsozk5bngn/product/image-3_suhW2eBcF.jpg",
+    "createdAt": "2022-10-14T10:05:25.256Z",
+    "updatedAt": "2022-10-14T10:05:25.256Z"
+  }
+]

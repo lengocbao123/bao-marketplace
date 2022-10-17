@@ -2,26 +2,28 @@ import clsx from 'clsx';
 import { FC, HTMLAttributes, ReactNode } from 'react';
 
 export interface SectionProps extends HTMLAttributes<HTMLDivElement> {
+  lead?: ReactNode;
   heading?: ReactNode;
-  headingClass?: string;
-  subHeading?: ReactNode;
-  subHeadingClass?: string;
-  action?: ReactNode;
 }
-export const Section: FC<SectionProps> = ({
-  heading,
-  subHeading,
-  action,
-  headingClass = '',
-  subHeadingClass = '',
-  children
-}) => {
+export const Section: FC<SectionProps> = ({ lead, heading, className, children }) => {
   return (
-    <div className="flex-column w-full items-center justify-center">
-      <div className={clsx('pb-2 text-center text-lg font-medium', subHeadingClass)}>{subHeading}</div>
-      <div className={clsx('text-center text-3xl font-bold', headingClass)}>{heading}</div>
-      <div className="mt-4 mb-7">{action}</div>
-      {children}
+    <div className={clsx('container', className)}>
+      {lead && (
+        <div
+          data-component={'lead'}
+          className={'bg-gradient-2 mb-2 bg-clip-text text-center text-lg font-medium uppercase text-transparent'}
+        >
+          {lead}
+        </div>
+      )}
+
+      {heading && (
+        <div data-component={'heading'} className={'mb-4 text-center text-3xl font-bold'}>
+          {heading}
+        </div>
+      )}
+
+      <div className="mt-7.5">{children}</div>
     </div>
   );
 };

@@ -1,0 +1,46 @@
+{
+  "nfts": [
+    {
+      "id": "18d8b4f2-4cf9-11ed-bdc3-0242ac120002",
+      "label": "All",
+      "value": "all"
+    },
+    {
+      "label": "Art",
+      "id": "18d8b8a8-4cf9-11ed-bdc3-0242ac120002",
+      "value": "art"
+    },
+    {
+      "id": "18d8bc90-4cf9-11ed-bdc3-0242ac120002",
+      "label": "Metaverse",
+      "value": "metaverse"
+    },
+    {
+      "id": "18d8beac-4cf9-11ed-bdc3-0242ac120002",
+      "label": "Photography",
+      "value": "photography"
+    },
+    {
+      "id": "18d8c35c-4cf9-11ed-bdc3-0242ac120002",
+      "label": "Sports",
+      "value": "sports"
+    }
+  ],
+  "collections": [
+    {
+      "id": "18d8b4f2-4cf9-11ed-bdc3-0242ac120001",
+      "label": "24H",
+      "value": "24h"
+    },
+    {
+      "label": "7D",
+      "id": "18d8b8a8-4cf9-11ed-bdc3-0242ac120002",
+      "value": "7d"
+    },
+    {
+      "id": "18d8bc90-4cf9-11ed-bdc3-0242ac1200023",
+      "label": "30D",
+      "value": "30d"
+    }
+  ]
+}
