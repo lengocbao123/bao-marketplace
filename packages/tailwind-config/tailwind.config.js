@@ -78,7 +78,8 @@ module.exports = {
         3: '3px'
       },
       backgroundImage: {
-        'gradient-1': 'linear-gradient(61.1deg, #f6f6f6 -18.33%, #916ff2 20.35%, #4a20b0 60.96%, #2f107c 105.78%)'
+        'gradient-1': 'linear-gradient(61.1deg, #f6f6f6 -18.33%, #916ff2 20.35%, #4a20b0 60.96%, #2f107c 105.78%)',
+        'hero-overlay': 'linear-gradient(180deg, #ffffff 14.51%, rgba(255, 255, 255, 0) 100%)'
       },
       boxShadow: {
         dropdown: ['0px 0px 2px rgba(0, 0, 0, 0.2)', '0px 2px 10px rgba(10, 6, 34, 0.1)'],
