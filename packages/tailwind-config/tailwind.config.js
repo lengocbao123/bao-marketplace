@@ -88,6 +88,19 @@ module.exports = {
         'box-hover': '0px 4px 14px rgba(10, 6, 34, 0.12)',
         'box-pressed': ['0px 1px 10px rgba(0, 0, 0, 0.1)', '0px 2px 4px rgba(10, 6, 34, 0.08)'],
         'box-inner': ['inset 0 -2px 4px 0 rgba(0, 0, 0, 0.05)', 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)']
+      },
+      animation: {
+        'hero-small': 'hero-small 40s linear infinite',
+        'hero-large': 'hero-large 45s linear infinite'
+      },
+      keyframes: {
+        'hero-small': {
+          '0%': { transform: `translateY(-${((2642 - 874) / 2642) * 100}%)` },
+          '100%': { transform: 'translateY(0)' }
+        },
+        'hero-large': {
+          '100%': { transform: `translateY(-${((2834 - 938) / 2834) * 100}%)` }
+        }
       }
     }
   },
