@@ -29,12 +29,13 @@ export const CheckboxFilter: FC<CheckboxFilterProps> = ({ heading, name, options
     }
   };
   return (
-    <AccordionSection heading={heading}>
-      {action && <div className="mb-6">{action}</div>}
+    <AccordionSection heading={heading} className="py-5 pb-3" contentClassName="pb-0">
+      {action && <div className="mb-6 w-full">{action}</div>}
       {options.map((option) => (
         <CheckboxInput
-          key={option.value.toString()}
+          key={option.value}
           label={option.label}
+          checked={values.includes(option.value)}
           name={name}
           className="mb-5"
           disabled={option.disabled}
