@@ -18,12 +18,8 @@ export interface CardNftProps extends HTMLAttributes<HTMLDivElement> {
 export const CardNft: FC<CardNftProps> = ({ className, user, link, image, title, subtitle, price, ...rest }) => {
   return (
     <div className={clsx(className)} {...rest}>
-      <div
-        className={
-          'border-neutral-10 hover:shadow-box-hover flex-column flex-row gap-x-2 gap-y-3 rounded-xl border p-3'
-        }
-      >
-        <Link className="relative flex" {...link}>
+      <div className={'border-neutral-10 hover:shadow-box-hover space-y-2 rounded-xl border p-2 sm:p-4'}>
+        <Link className="flex" {...link}>
           {image ? (
             <Image
               alt={title}
@@ -31,42 +27,54 @@ export const CardNft: FC<CardNftProps> = ({ className, user, link, image, title,
               height={205}
               src={image}
               className={
-                'border-neutral-10/50 bg-neutral-10 aspect-[242/205] w-full rounded-xl border object-cover object-center'
+                'border-neutral-10/50 bg-neutral-10 aspect-[148/128] w-full rounded-xl border object-cover object-center'
               }
             />
           ) : (
             <div
               className={
-                'bg-neutral-10 aspect-square w-20 rounded-xl object-cover object-center sm:aspect-[242/205] sm:w-full'
+                'bg-neutral-10 aspect-square w-20 rounded-xl object-cover object-center sm:aspect-[148/128] sm:w-full'
               }
             />
           )}
         </Link>
 
-        <div className="flex-grow">
-          <div className="flex items-baseline justify-between gap-4">
-            <p className="text-secondary mt-0.5 text-xs font-medium">{subtitle}</p>
+        <div className="">
+          <div className="space-y-1">
+            <p className="text-secondary text-xs font-medium">{subtitle}</p>
+
+            <Link className={'flex'} {...link}>
+              <h3 className="text-neutral hover:text-secondary line-clamp-1 text-sm font-bold sm:text-base">{title}</h3>
+            </Link>
           </div>
 
-          <Link className={'mt-1 block'} {...link}>
-            <h3 className="text-neutral line-clamp-1 font-bold">{title}</h3>
-          </Link>
+          <div className="border-neutral-10 mt-2 border-t pt-2 sm:mt-3 sm:pt-3">
+            <div className="grid grid-cols-2">
+              <div className="space-y-1.5">
+                <div className="hidden text-xs text-neutral-50 sm:block">Price</div>
+                <div className="bg-gradient-2 bg-clip-text text-base font-bold text-transparent">
+                  {formatCurrency(price)}
+                </div>
+              </div>
 
-          <div className="border-neutral-10 min-h-10 mt-2 flex items-center justify-between border-t pt-3 sm:mt-3">
-            <div className="text-left">
-              <p className="hidden pb-1.5 text-xs text-neutral-50 sm:block">Price</p>
-              <p className="to-secondary bg-gradient-to-r from-[#DA22FF] bg-clip-text text-base font-bold text-transparent">
-                {formatCurrency(price)}
-              </p>
-            </div>
-            <div className="text-left">
-              <p className="hidden pb-1.5 text-xs text-neutral-50 sm:block">Creator</p>
-              <Avatar
-                name={user.username ?? getUsernameFromEmail(user.email)}
-                size="sm"
-                className={'text-sm font-medium'}
-                src={user.avatarUrl}
-              />
+              <div className={'justify-self-end sm:justify-self-start'}>
+                <Avatar
+                  name={user.username ?? getUsernameFromEmail(user.email)}
+                  size="sm"
+                  src={user.avatarUrl}
+                  onlyAvatar
+                  className={'sm:hidden'}
+                />
+                <Avatar
+                  name={user.username ?? getUsernameFromEmail(user.email)}
+                  size="sm"
+                  src={user.avatarUrl}
+                  className={
+                    'hidden flex-col gap-1.5 text-sm sm:flex [&_[data-component="label"]]:text-xs [&_[data-component="label"]]:text-neutral-50'
+                  }
+                  label={'Creator'}
+                />
+              </div>
             </div>
           </div>
         </div>

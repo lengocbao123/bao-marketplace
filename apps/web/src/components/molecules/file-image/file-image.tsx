@@ -40,27 +40,28 @@ export interface FileImageProps extends DropzoneOptions {
   innerClass?: string;
   value?: any;
   onSubmit?: (file: any) => void;
-  dropzoneRef?: React.RefObject<DropzoneRef>;
 }
 
 /* ---------------------------------------------------------------------------------------------------------------------
  * FileImage
  * ------------------------------------------------------------------------------------------------------------------ */
 
-export const FileImage = React.forwardRef<HTMLInputElement, FileImageProps>(
-  ({
-    maxSize = DEFAULT_MAX_IMAGE_SIZE,
-    acceptFile = DEFAULT_ALLOW_IMAGE_EXTENSIONS,
-    size = 'sm',
-    Icon = ImageIcon,
-    imageType = 'circle',
-    error,
-    className,
-    innerClass,
-    value = null,
-    onSubmit,
-    dropzoneRef
-  }) => {
+export const FileImage = React.forwardRef<DropzoneRef, FileImageProps>(
+  (
+    {
+      maxSize = DEFAULT_MAX_IMAGE_SIZE,
+      acceptFile = DEFAULT_ALLOW_IMAGE_EXTENSIONS,
+      size = 'sm',
+      Icon = ImageIcon,
+      imageType = 'circle',
+      error,
+      className,
+      innerClass,
+      value = null,
+      onSubmit
+    },
+    ref
+  ) => {
     const [file, setFile] = useState<File | null>(value);
     const [errorMessage, setErrorMessage] = useState<string>('');
 
@@ -142,7 +143,7 @@ export const FileImage = React.forwardRef<HTMLInputElement, FileImageProps>(
 
     return (
       <Dropzone
-        ref={dropzoneRef}
+        ref={ref}
         accept={acceptFile}
         maxSize={maxSize}
         multiple={false}

@@ -1,17 +1,25 @@
-import { Button } from '../../atoms';
+import { ButtonLink } from '../../atoms';
 import { DiscordIcon } from '../../icons/brand';
 import { Section } from '../../molecules';
 
 export const Community = () => {
   return (
-    <Section heading="Create and Sell Your NFTs" className="mb-20">
-      <p className="">
-        Every NFTs on Metabase is authentic and truly unique. Blockchain technology makes this new approach to digital
-        ownership possible. Use our platform to showcase and sell your work to collectors who care about authenticity.
-      </p>
-      <div className="flex items-center justify-center">
-        <Button icon={DiscordIcon} label="Launch Discord" />
-      </div>
-    </Section>
+    <div className="sm:pt-12.5 bg-[url(/assets/images/background/community-background.png)] bg-contain bg-center bg-no-repeat py-10 sm:pb-3.5">
+      <Section heading="Join Our Community">
+        <div className="space-y-7.5">
+          <div className="mx-auto max-w-4xl">
+            <p className="text-neutral-70 text-center text-sm">
+              Every NFTs on Metabase is authentic and truly unique. Blockchain technology makes this new approach to
+              digital ownership possible. Use our platform to showcase and sell your work to collectors who care about
+              authenticity.
+            </p>
+          </div>
+
+          <div className="mx-auto sm:max-w-xs">
+            <ButtonLink icon={DiscordIcon} label="Launch Discord" href={'/'} />
+          </div>
+        </div>
+      </Section>
+    </div>
   );
 };

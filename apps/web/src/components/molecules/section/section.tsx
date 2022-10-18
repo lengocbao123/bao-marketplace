@@ -11,19 +11,21 @@ export const Section: FC<SectionProps> = ({ lead, heading, className, children }
       {lead && (
         <div
           data-component={'lead'}
-          className={'bg-gradient-2 mb-2 bg-clip-text text-center text-lg font-medium uppercase text-transparent'}
+          className={
+            'bg-gradient-2 mb-2 bg-clip-text text-center text-sm font-medium uppercase text-transparent sm:text-lg'
+          }
         >
           {lead}
         </div>
       )}
 
       {heading && (
-        <div data-component={'heading'} className={'mb-4 text-center text-3xl font-bold'}>
+        <div data-component={'heading'} className={'mb-4 text-center text-2xl font-bold sm:text-3xl'}>
           {heading}
         </div>
       )}
 
-      <div className="mt-7.5">{children}</div>
+      <div className="sm:mt-7.5 mt-5">{children}</div>
     </div>
   );
 };

@@ -52,35 +52,33 @@ export const Avatar: FC<AvatarProps> = (props) => {
   const { src, name, size = 'md', onlyAvatar = false, label, ...avatarProps } = props;
 
   return (
-    <div className={'inline-flex items-center gap-2'} {...avatarProps}>
+    <div {...avatarProps}>
       {label && <span data-component={'label'}>{label}</span>}
 
-      {src ? (
-        <Image
-          src={src}
-          alt={name}
-          className={'bg-neutral-10 inline-block aspect-square rounded-full object-cover object-center'}
-          width={sizes[size]}
-          height={sizes[size]}
-          data-component={'image'}
-        />
-      ) : (
-        <span
-          className={clsx(
-            'bg-primary inline-flex aspect-square items-center justify-center rounded-full font-medium uppercase',
-            onlyNameSizeClasses[size]
-          )}
-          data-component={'placeholder'}
-        >
-          {getShortName(name)}
-        </span>
-      )}
+      <div className="inline-flex items-center gap-2">
+        {src ? (
+          <Image
+            src={src}
+            alt={name}
+            className={'bg-neutral-10 inline-block aspect-square rounded-full object-cover object-center'}
+            width={sizes[size]}
+            height={sizes[size]}
+            data-component={'image'}
+          />
+        ) : (
+          <span
+            className={clsx(
+              'bg-primary inline-flex aspect-square items-center justify-center rounded-full font-medium uppercase',
+              onlyNameSizeClasses[size]
+            )}
+            data-component={'placeholder'}
+          >
+            {getShortName(name)}
+          </span>
+        )}
 
-      {!onlyAvatar && (
-        <span data-component={'name'} className={'vertical-middle ml-2 inline-block'}>
-          {name}
-        </span>
-      )}
+        {!onlyAvatar && <span data-component={'name'}>{name}</span>}
+      </div>
     </div>
   );
 };

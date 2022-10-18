@@ -1,61 +1,84 @@
 import clsx from 'clsx';
-import Link, { LinkProps } from 'next/link';
-import { AnchorHTMLAttributes, forwardRef } from 'react';
+import { LinkProps } from 'next/dist/client/link';
+import Link from 'next/link';
+import React, { AnchorHTMLAttributes } from 'react';
 import { SpinIcon } from '../../icons/animate';
-import { ButtonIconOrientation, ButtonSize, ButtonVariant, IconButton } from './button';
 
-// Root size classes
-const sizes: Record<ButtonSize, string> = {
-  sm: 'text-sm py-1.5',
-  md: 'text-sm py-2.5',
-  lg: 'text-lg !leading-6 py-3'
-};
+export type IconButton = React.FC<React.SVGProps<SVGSVGElement>>;
+export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
+export type ButtonIconOrientation = 'left' | 'right';
 
-// Root outline size classes
-const outlineSizes: Record<ButtonSize, string> = {
-  sm: 'text-sm py-1.25',
-  md: 'text-sm py-2.25',
-  lg: 'text-lg !leading-6 py-2.75'
-};
+export type ButtonLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> &
+  LinkProps & {
+    size?: ButtonSize;
+    variant?: ButtonVariant;
+    icon?: IconButton;
+    iconOrientation?: ButtonIconOrientation;
+    loading?: boolean;
+    disabled?: boolean;
+    label?: string;
+  };
 
-// Root variant classes
-const variants: Record<ButtonVariant, string> = {
-  primary: 'text-primary',
-  secondary: 'text-secondary',
-  tertiary: 'text-neutral'
-};
-
-export interface ButtonLinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps>, LinkProps {
-  label?: string;
-  size?: ButtonSize;
-  variant?: ButtonVariant;
-  iconOrientation?: ButtonIconOrientation;
-  icon?: IconButton;
-  loading?: boolean;
-  disabled?: boolean;
-}
-
-export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(
+export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
   (
     {
-      className,
-      label,
       size = 'md',
       variant = 'primary',
       icon,
-      loading,
-      disabled = false,
       iconOrientation = 'left',
+      loading = false,
+      type = 'button',
+      className,
+      label,
+      onClick,
       ...rest
     },
     ref
   ) => {
     const Icon = loading ? SpinIcon : icon;
 
+    const buttonSize =
+      variant === 'tertiary'
+        ? { 'py-1.25 px-7.75': size === 'sm', 'py-2.25 px-7.75': size === 'md', 'py-2.75 px-7.75': size === 'lg' }
+        : { 'py-1.5 px-8': size === 'sm', 'py-2.5 px-8': size === 'md', 'py-3 px-8': size === 'lg' };
+
+    const iconSize =
+      variant === 'tertiary'
+        ? { 'px-1.75 py-1.25': size === 'sm', 'px-1.75 py-2.25': size === 'md', 'p-2.75': size === 'lg' }
+        : { 'px-2 py-1.5': size === 'sm', 'px-2 py-2.5': size === 'md', 'p-3': size === 'lg' };
+
+    const textSize = {
+      'text-sm': size === 'sm' || size === 'md',
+      'text-lg leading-6': size === 'lg'
+    };
+
     const iconTextSize = {
       'text-base': size === 'sm',
       'text-lg': size === 'md' || size === 'lg'
     };
+
+    const buttonVariant = {
+      'bg-secondary text-neutral-0 hover:bg-secondary-30 active:bg-secondary-70 disabled:bg-secondary/50':
+        variant === 'secondary',
+      'bg-primary text-neutral hover:bg-primary-30 active:bg-primary-50 disabled:bg-primary/50 disabled:text-neutral/50':
+        variant === 'primary',
+      'bg-neutral-0 border-neutral-10 hover:border-primary-30 hover:bg-primary-5 active:border-primary-50 active:bg-primary-20 disabled:border-neutral-30 disabled:text-neutral-30 border':
+        variant === 'tertiary'
+    };
+
+    const buttonClasses = clsx(
+      'whitespace-nowrap flex items-center justify-center gap-2 rounded-full font-semibold disabled:pointer-events-none',
+      {
+        'pointer-events-none': loading,
+        'flex-row-reverse': iconOrientation === 'right'
+      },
+      buttonVariant,
+      textSize,
+      label ? buttonSize : iconSize,
+      className
+    );
+
     const iconClasses = clsx(
       iconTextSize,
       {
@@ -71,20 +94,7 @@ export const ButtonLink = forwardRef<HTMLAnchorElement, ButtonLinkProps>(
     );
 
     return (
-      <Link
-        className={clsx(
-          'relative inline-flex min-w-max items-center justify-center gap-2 rounded-full px-2 font-semibold hover:underline hover:underline-offset-2',
-          {
-            'pointer-events-none': loading,
-            'flex-row-reverse': iconOrientation === 'right'
-          },
-          variant === 'tertiary' ? outlineSizes[size] : sizes[size],
-          !disabled ? variants[variant] : 'text-neutral-30 pointer-events-none',
-          className
-        )}
-        {...rest}
-        ref={ref}
-      >
+      <Link ref={ref} type={type} className={buttonClasses} onClick={onClick} {...rest}>
         {Icon && <Icon className={iconClasses} />}
         {label && !loading && <span>{label}</span>}
       </Link>

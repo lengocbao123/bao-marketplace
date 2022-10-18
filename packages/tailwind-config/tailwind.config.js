@@ -66,6 +66,7 @@ module.exports = {
         15: '3.75rem' /* 60px */,
         16.5: '4rem' /* 66px */,
         17.5: '4.375rem' /* 70px */,
+        18: '4.5rem' /* 72px */,
         22.5: '5.625rem' /* 90px */,
         24.5: '6.125rem' /* 98px */,
         25: '6.25rem' /* 100px */,
@@ -95,8 +96,8 @@ module.exports = {
         'box-inner': ['inset 0 -2px 4px 0 rgba(0, 0, 0, 0.05)', 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)']
       },
       animation: {
-        'hero-small': 'hero-small 40s linear infinite',
-        'hero-large': 'hero-large 45s linear infinite'
+        'hero-small': 'hero-small 50s linear infinite',
+        'hero-large': 'hero-large 60s linear infinite'
       },
       keyframes: {
         'hero-small': {

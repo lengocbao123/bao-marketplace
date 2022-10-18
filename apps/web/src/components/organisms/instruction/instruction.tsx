@@ -21,21 +21,22 @@ export const Instruction = () => {
         'Choose between auctions, fixed-price listings, and declining-price listings, and we help you sell them!'
     }
   ];
+
   return (
     <div className="container">
-      <div className={'bg-secondary/10 px-12.5 sm:pt-15 pb-17.5 sm:pb-22.5 mb-20 rounded-[2.5rem] pt-10'}>
-        <Section heading="Create and Sell Your NFTs" lead="How to be a creator" className="">
-          <div className="grid grid-cols-1 gap-16 md:grid-cols-3">
+      <div className={'bg-secondary/10 rounded-[2.5rem] py-10'}>
+        <Section heading="Create and Sell Your NFTs" lead="How to be a creator">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
             {steps.map((step) => {
               const Icon = step.image;
 
               return (
-                <div key={step.title} className="flex-col items-center justify-center">
-                  <Icon width="72" height="72" className="mx-auto" />
+                <div key={step.title} className="py-7.5 flex-col items-center justify-center text-center sm:px-5">
+                  <Icon width="72" height="72" className="sm:w-18 sm:h-18 mx-auto h-16 w-16" />
 
-                  <p className="mt-6 text-center text-base font-bold">{step.title}</p>
+                  <p className="mt-5 text-sm font-bold sm:text-base">{step.title}</p>
 
-                  <p className="mt-2 text-center text-sm font-medium text-neutral-50">{step.description}</p>
+                  <p className="mt-2 text-sm font-medium text-neutral-50">{step.description}</p>
                 </div>
               );
             })}
