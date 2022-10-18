@@ -5,4 +5,5 @@ export * from './list';
 export * from './community';
 export * from './instruction';
 export * from './explorer';
+export * from './popular-collections';
 export * from './top-collections';

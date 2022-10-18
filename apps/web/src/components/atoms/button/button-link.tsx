@@ -14,6 +14,7 @@ export type ButtonLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyo
     loading?: boolean;
     disabled?: boolean;
     label?: string;
+    block?: boolean;
   };
 
 export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
@@ -28,6 +29,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
       className,
       label,
       onClick,
+      block = false,
       ...rest
     },
     ref
@@ -64,7 +66,8 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
     };
 
     const buttonClasses = clsx(
-      'whitespace-nowrap flex items-center justify-center gap-2 rounded-full font-semibold disabled:pointer-events-none',
+      'whitespace-nowrap items-center justify-center gap-2 rounded-full font-semibold disabled:pointer-events-none',
+      block ? 'flex' : 'inline-flex',
       {
         'pointer-events-none': loading,
         'flex-row-reverse': iconOrientation === 'right'

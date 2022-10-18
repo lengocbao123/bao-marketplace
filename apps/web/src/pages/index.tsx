@@ -1,5 +1,5 @@
 import { Layout } from '../components/layouts';
-import { Community, Explorer, Hero, Instruction, TopCollections } from '../components/organisms';
+import { Community, Explorer, Hero, Instruction, PopularCollections, TopCollections } from '../components/organisms';
 import { COLLECTIONS } from '../lib/dummy';
 import { NextPageWithLayout } from './_app';
 
@@ -8,6 +8,7 @@ const Home: NextPageWithLayout = () => {
     <div className={'space-y-10 sm:space-y-20'}>
       <Hero />
       <Explorer />
+      <PopularCollections />
       <TopCollections collections={COLLECTIONS} />
       <Instruction />
       <Community />
