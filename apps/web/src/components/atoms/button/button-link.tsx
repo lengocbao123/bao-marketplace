@@ -3,11 +3,7 @@ import { LinkProps } from 'next/dist/client/link';
 import Link from 'next/link';
 import React, { AnchorHTMLAttributes } from 'react';
 import { SpinIcon } from '../../icons/animate';
-
-export type IconButton = React.FC<React.SVGProps<SVGSVGElement>>;
-export type ButtonSize = 'sm' | 'md' | 'lg';
-export type ButtonVariant = 'primary' | 'secondary' | 'tertiary';
-export type ButtonIconOrientation = 'left' | 'right';
+import { ButtonIconOrientation, ButtonSize, ButtonVariant, IconButton } from './button';
 
 export type ButtonLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> &
   LinkProps & {
