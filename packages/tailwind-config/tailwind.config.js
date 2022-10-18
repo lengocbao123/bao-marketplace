@@ -96,8 +96,8 @@ module.exports = {
         'box-inner': ['inset 0 -2px 4px 0 rgba(0, 0, 0, 0.05)', 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)']
       },
       animation: {
-        'hero-small': 'hero-small 50s linear infinite',
-        'hero-large': 'hero-large 60s linear infinite'
+        'hero-small': 'hero-small 140s linear infinite',
+        'hero-large': 'hero-large 150s linear infinite'
       },
       keyframes: {
         'hero-small': {
