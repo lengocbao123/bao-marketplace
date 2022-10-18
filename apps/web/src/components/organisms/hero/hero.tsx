@@ -7,7 +7,10 @@ export type HeroProps = HTMLAttributes<HTMLElement>;
 
 export const Hero: FC<HeroProps> = (props) => {
   return (
-    <section className={'bg-[url(/assets/images/hero/hero-background.png)] bg-cover bg-center bg-no-repeat'} {...props}>
+    <section
+      className={'bg-[url(/assets/images/background/hero-background.png)] bg-cover bg-center bg-no-repeat'}
+      {...props}
+    >
       <div className="gap-7.5 container grid overflow-hidden md:grid-cols-2">
         <div className="py-10 sm:pb-0 lg:py-20">
           <h1 className={'text-4xl font-bold lg:text-5xl xl:text-6xl'}>
