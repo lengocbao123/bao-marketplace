@@ -3,12 +3,12 @@ import { FC, HtmlHTMLAttributes } from 'react';
 import { Button } from '../../atoms';
 import { ArrowLeftIcon, FilterIcon } from '../../icons/outline';
 
-export interface NftsFilterToggleProps extends HtmlHTMLAttributes<HTMLDivElement> {
+export interface ExploreFilterToggleProps extends HtmlHTMLAttributes<HTMLDivElement> {
   numOfFilters: number;
   isDisplayingFilter?: boolean;
   onToggle: () => void;
 }
-const NftsFilterToggle: FC<NftsFilterToggleProps> = ({ numOfFilters, isDisplayingFilter, onToggle }) => {
+export const ExploreFilterToggle: FC<ExploreFilterToggleProps> = ({ numOfFilters, isDisplayingFilter, onToggle }) => {
   return (
     <div className="relative w-fit">
       <Button
@@ -23,5 +23,3 @@ const NftsFilterToggle: FC<NftsFilterToggleProps> = ({ numOfFilters, isDisplayin
     </div>
   );
 };
-
-export default NftsFilterToggle;

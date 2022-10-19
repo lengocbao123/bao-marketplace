@@ -1,11 +1,10 @@
 import clsx from 'clsx';
 import { HTMLAttributes, FC } from 'react';
-import { Button, ButtonText } from '../../atoms';
-import { ArrowLeftIcon, FilterIcon } from '../../icons/outline';
+import {  ButtonText } from '../../atoms';
 import { DropdownSelect } from '../../molecules';
-import NftsFilterToggle from './nfts-filter-toggle';
+import { ExploreFilterToggle } from './explore-filter-toggle';
 
-export interface NftsActionProps extends HTMLAttributes<HTMLDivElement> {
+export interface ExploreActionsProps extends HTMLAttributes<HTMLDivElement> {
   isDisplayingFilter: boolean;
   numOfFilters: number;
   onClearFilter?: () => void;
@@ -13,7 +12,7 @@ export interface NftsActionProps extends HTMLAttributes<HTMLDivElement> {
   onSelectSort?: (sort: any) => void;
 }
 
-export const NftsAction: FC<NftsActionProps> = ({
+export const ExploreActions: FC<ExploreActionsProps> = ({
   numOfFilters,
   className,
   isDisplayingFilter,
@@ -24,7 +23,11 @@ export const NftsAction: FC<NftsActionProps> = ({
   return (
     <div className={clsx('flex w-fit sm:w-full sm:justify-between', className)}>
       <div className="hidden gap-5 sm:flex">
-        <NftsFilterToggle isDisplayingFilter={isDisplayingFilter} numOfFilters={numOfFilters} onToggle={toggleFilter} />
+        <ExploreFilterToggle
+          isDisplayingFilter={isDisplayingFilter}
+          numOfFilters={numOfFilters}
+          onToggle={toggleFilter}
+        />
         {numOfFilters > 0 && (
           <ButtonText label="Clear all" variant="secondary" className="hidden sm:block" onClick={onClearFilter} />
         )}
