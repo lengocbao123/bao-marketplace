@@ -16,7 +16,7 @@ export const Community = () => {
           </div>
 
           <div className="mx-auto sm:max-w-xs">
-            <ButtonLink icon={DiscordIcon} label="Launch Discord" href={'/'} />
+            <ButtonLink icon={DiscordIcon} label="Launch Discord" href={'/'} block />
           </div>
         </div>
       </Section>

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { HTMLAttributes, FC } from 'react';
-import {  ButtonText } from '../../atoms';
+import { ButtonText } from '../../atoms';
 import { DropdownSelect } from '../../molecules';
 import { ExploreFilterToggle } from './explore-filter-toggle';
 
