@@ -115,10 +115,10 @@ export const Header: FC<HeaderProps> = (props) => {
             </Link>
 
             <nav className="hidden grow gap-5 font-medium lg:flex">
-              <Link className={'px-2.5'} href={'/'}>
+              <Link className={'px-2.5'} href={'/explore/nfts'}>
                 Explore
               </Link>
-              <Link className={'px-2.5'} href={'/'}>
+              <Link className={'px-2.5'} href={'/explore/collections'}>
                 Collection
               </Link>
               <Link className={'px-2.5'} href={'/'}>

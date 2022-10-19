@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { FC } from 'react';
 import { InputLabel } from '../../atoms';
 import { BinanceIcon, EthereumIcon, PolygonIcon } from '../../icons/blockchain';
-import { CheckboxFilter } from '../../molecules';
+import { CheckboxFilter, RangeFilter } from '../../molecules';
 
 export interface CollectionsFiltersProps {
   collections: any[];
@@ -33,6 +33,11 @@ export const CollectionsFilters: FC<CollectionsFiltersProps> = ({ className = ''
         ]}
         onChange={onChange}
         values={filter.blockchain}
+      />
+      <RangeFilter
+        className="py-5"
+        heading="Price"
+        onApply={(formData) => onChange('price', Object.values(formData))}
       />
     </div>
   );

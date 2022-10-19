@@ -36,7 +36,7 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
         </ListItem>
 
         <div className="flex justify-center">
-          <ButtonLink variant="tertiary" label="View more" href={'/'} />
+          <ButtonLink variant="tertiary" label="View more" href={'/explore/nfts'} />
         </div>
       </div>
     </Section>

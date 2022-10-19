@@ -10,7 +10,7 @@ import { COLLECTIONS, CATEGORIES } from '../../../lib/dummy';
 import { NextPageWithLayout } from '../../_app';
 import { CollectionsFilters } from '../../../components/organisms';
 
-const DEFAULT_FILTERS = { blockchain: [] };
+const DEFAULT_FILTERS = { blockchain: [], price: [] };
 const ExploreCollectionPage: NextPageWithLayout = () => {
   const [isDisplayingFilter, setIsDisplayingFilter] = useState(true);
   const [filter, setFilter] = useState(DEFAULT_FILTERS);
