@@ -19,12 +19,12 @@ const ExplorePage: NextPageWithLayout = () => {
 
   const handleChangeFilter = (key: string, value: any) => {
     const newFilter = { ...filter, [key]: value };
-    let num = 0;
+    let count = 0;
     Object.values(newFilter).forEach((filterValue) => {
-      num += filterValue.length;
+      count += filterValue.length;
     });
     setFilter(newFilter);
-    setNumOfFilters(num);
+    setNumOfFilters(count);
   };
 
   return (
@@ -33,7 +33,7 @@ const ExplorePage: NextPageWithLayout = () => {
         src={'/assets/images/banner/banner.png'}
         width={1440}
         height={144}
-        alt={'collection.name'}
+        alt="Explore Banner"
         className={'bg-neutral-10 aspect-[1440/144] w-full object-cover object-center'}
       />
       <Tabs

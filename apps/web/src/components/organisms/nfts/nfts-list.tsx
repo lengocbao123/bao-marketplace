@@ -8,7 +8,13 @@ export interface NftsListProps extends HTMLAttributes<HTMLDivElement> {
 }
 export const NftsList: FC<NftsListProps> = ({ nfts, meta, className }) => {
   return (
-    <List hasData={true} totalItems={meta.totalItems} className={className}>
+    <List
+      hasData={true}
+      totalItems={meta.totalItems}
+      totalPages={meta.totalPages}
+      page={meta.page}
+      className={className}
+    >
       {nfts.map((nft) => (
         <CardNft
           key={nft.id}

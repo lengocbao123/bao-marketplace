@@ -20,7 +20,7 @@ export const Tabs: FC<TabsProps> = ({ className, data, onChange, ...rest }) => {
             className={clsx(
               'flex items-center border-b px-5 py-4',
               active
-                ? 'text-secondary border-secondary font-bold bg-secondary-10'
+                ? 'text-secondary border-secondary bg-secondary-10 font-bold'
                 : 'hover:text-secondary/80 focus:text-secondary/80 border-transparent font-medium text-neutral-50'
             )}
           >

@@ -1,15 +1,27 @@
 import { pluralize } from '../../../lib/utils/plural-count';
 import clsx from 'clsx';
 import React, { FC, Fragment, HTMLAttributes } from 'react';
+import { Pagination } from '../../molecules';
 
 export interface ListProps extends HTMLAttributes<HTMLDivElement> {
   label?: string;
-  totalItems?: number;
   hasData: boolean;
   gridClassName?: string;
+  totalItems?: number;
+  totalPages?: number;
+  page: number;
 }
 
-export const List: FC<ListProps> = ({ className, children, label, totalItems, hasData, gridClassName }) => {
+export const List: FC<ListProps> = ({
+  className,
+  children,
+  label,
+  totalItems = 0,
+  totalPages = 0,
+  page,
+  hasData,
+  gridClassName
+}) => {
   const hasPagination = totalItems > 1;
 
   return (
@@ -34,7 +46,7 @@ export const List: FC<ListProps> = ({ className, children, label, totalItems, ha
           <Fragment>
             <div
               className={clsx(
-                'grid grid-cols-2 gap-x-5 gap-y-6 pb-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5',
+                'grid grid-cols-2 gap-x-5 gap-y-6 pb-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5',
                 gridClassName
               )}
             >
@@ -42,11 +54,8 @@ export const List: FC<ListProps> = ({ className, children, label, totalItems, ha
             </div>
             {hasPagination && hasData && (
               <div className="-mx-4 mt-auto px-4 md:-mx-6 md:px-6">
-                <div className="py-4.5">
-                  <div className="flex items-center justify-center">
-                    {/* <Pagination totalPages={totalPages} page={page} /> */}
-                    Pagination
-                  </div>
+                <div className="flex items-center justify-center">
+                  <Pagination variant="icon" totalPages={totalPages} page={page} />
                 </div>
               </div>
             )}

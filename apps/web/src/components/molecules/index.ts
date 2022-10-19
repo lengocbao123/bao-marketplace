@@ -6,3 +6,4 @@ export * from './form';
 export * from './section';
 export * from './text-field';
 export * from './tabs';
+export * from './pagination';
