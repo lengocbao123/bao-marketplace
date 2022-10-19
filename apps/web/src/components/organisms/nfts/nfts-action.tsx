@@ -30,14 +30,14 @@ export const NftsAction: FC<NftsActionProps> = ({
             icon={isDisplayingFilter ? ArrowLeftIcon : FilterIcon}
             onClick={toggleFilter}
           />
-          <div className="bg-accent-success text-neutral absolute -top-2 -right-2 h-6 w-6 rounded-full text-center">
+          <div className="bg-primary text-neutral absolute -top-2 -right-2 h-6 w-6 rounded-full text-center">
             {numOfFilters}
           </div>
         </div>
-        {numOfFilters > 0 && <ButtonText label="Clear all" variant="secondary" onClick={onClearFilter} />}
+        {numOfFilters > 0 && <ButtonText label="Clear all" variant="secondary" className='hidden md:block' onClick={onClearFilter} />}
       </div>
       <div className="flex items-center gap-3">
-        <span>Sort by</span>
+        <span className='hidden sm:block'>Sort by</span>
         <DropdownSelect
           options={[
             {

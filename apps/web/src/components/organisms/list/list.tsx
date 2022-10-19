@@ -34,7 +34,7 @@ export const List: FC<ListProps> = ({ className, children, label, totalItems, ha
           <Fragment>
             <div
               className={clsx(
-                'grid grid-cols-1 gap-x-5 gap-y-6 pb-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5',
+                'grid grid-cols-2 gap-x-5 gap-y-6 pb-20 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5',
                 gridClassName
               )}
             >

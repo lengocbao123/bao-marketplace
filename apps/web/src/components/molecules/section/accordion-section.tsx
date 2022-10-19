@@ -8,6 +8,7 @@ export interface AccordionSectionProps extends HTMLAttributes<HTMLDivElement> {
   hasArrowIcon?: boolean;
   headingClassName?: string;
   contentClassName?: string;
+  defaultOpen?: boolean;
 }
 
 export const AccordionSection: FC<AccordionSectionProps> = ({
@@ -16,11 +17,12 @@ export const AccordionSection: FC<AccordionSectionProps> = ({
   hasArrowIcon = true,
   className,
   headingClassName = '',
-  contentClassName = ''
+  contentClassName = '',
+  defaultOpen = true
 }) => {
   return (
     <div className={clsx('w-full bg-transparent p-2', className)}>
-      <Disclosure>
+      <Disclosure defaultOpen={defaultOpen}>
         {({ open }) => (
           <Fragment>
             <Disclosure.Button className={clsx('flex w-full items-center justify-between', headingClassName)}>
