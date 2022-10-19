@@ -1,9 +1,12 @@
 import clsx from 'clsx';
 import Image from 'next/future/image';
 import { Fragment, useState } from 'react';
+import { Button } from '../../components/atoms';
+import { FilterIcon } from '../../components/icons/outline';
 import { Layout } from '../../components/layouts';
-import { Tabs } from '../../components/molecules';
+import { HamburgerSection, Tabs } from '../../components/molecules';
 import { NftsFilters, NftsList, NftsAction } from '../../components/organisms/nfts';
+import NftsFilterToggle from '../../components/organisms/nfts/nfts-filter-toggle';
 import { NFTS, COLLECTIONS, CATEGORIES } from '../../lib/dummy';
 import { NextPageWithLayout } from '../_app';
 
@@ -44,27 +47,54 @@ const ExplorePage: NextPageWithLayout = () => {
         className="border-neutral-10 mb-7.5 bottom-1 border"
       />
       <div className="container">
-        <NftsAction
-          isDisplayingFilter={isDisplayingFilter}
-          numOfFilters={numOfFilters}
-          className="mb-5"
-          toggleFilter={() => setIsDisplayingFilter(!isDisplayingFilter)}
-          onClearFilter={() => {
-            setFilter(DEFAULT_FILTERS);
-            setNumOfFilters(0);
-          }}
-        />
+        <div className="flex justify-between">
+          <HamburgerSection
+            className="block sm:hidden"
+            openButton={
+              <NftsFilterToggle
+                numOfFilters={numOfFilters}
+                onToggle={() => setIsDisplayingFilter(!isDisplayingFilter)}
+              />
+            }
+            heading="Filters"
+            openButtonIcon={FilterIcon}
+          >
+            <NftsFilters className="px-5" collections={COLLECTIONS} filter={filter} onChange={handleChangeFilter} />
+            <div className="border-neutral-10 bg-neutral-0 sticky bottom-0 z-10 grid grid-cols-2 gap-4 border-t p-5">
+              <Button
+                label="Clear all"
+                variant="tertiary"
+                onClick={() => {
+                  setFilter(DEFAULT_FILTERS);
+                  setNumOfFilters(0);
+                }}
+              />
+              <Button label="Apply" variant="secondary" />
+            </div>
+          </HamburgerSection>
+          <NftsAction
+            isDisplayingFilter={isDisplayingFilter}
+            numOfFilters={numOfFilters}
+            className="mb-5"
+            toggleFilter={() => setIsDisplayingFilter(!isDisplayingFilter)}
+            onClearFilter={() => {
+              setFilter(DEFAULT_FILTERS);
+              setNumOfFilters(0);
+            }}
+          />
+        </div>
+
         <div className="flex flex-row gap-6">
           {isDisplayingFilter && (
             <NftsFilters
               collections={COLLECTIONS}
-              className="hidden basis-1/4 md:block"
+              className="hidden basis-1/4 sm:block"
               filter={filter}
               onChange={handleChangeFilter}
             />
           )}
           <NftsList
-            className={clsx('w-full', isDisplayingFilter ? 'md:basis-3/4' : '')}
+            className={clsx('w-full', isDisplayingFilter ? 'sm:basis-3/4' : '')}
             nfts={NFTS}
             meta={{ totalItems: 8, itemCount: 8, itemsPerPage: 10, totalPages: 1, currentPage: 1 }}
           />

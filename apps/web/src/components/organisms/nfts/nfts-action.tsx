@@ -3,6 +3,7 @@ import { HTMLAttributes, FC } from 'react';
 import { Button, ButtonText } from '../../atoms';
 import { ArrowLeftIcon, FilterIcon } from '../../icons/outline';
 import { DropdownSelect } from '../../molecules';
+import NftsFilterToggle from './nfts-filter-toggle';
 
 export interface NftsActionProps extends HTMLAttributes<HTMLDivElement> {
   isDisplayingFilter: boolean;
@@ -21,23 +22,15 @@ export const NftsAction: FC<NftsActionProps> = ({
   onSelectSort
 }) => {
   return (
-    <div className={clsx('flex w-full justify-between', className)}>
-      <div className="flex gap-5">
-        <div className="relative w-fit">
-          <Button
-            variant="tertiary"
-            label="Filter"
-            icon={isDisplayingFilter ? ArrowLeftIcon : FilterIcon}
-            onClick={toggleFilter}
-          />
-          <div className="bg-primary text-neutral absolute -top-2 -right-2 h-6 w-6 rounded-full text-center">
-            {numOfFilters}
-          </div>
-        </div>
-        {numOfFilters > 0 && <ButtonText label="Clear all" variant="secondary" className='hidden md:block' onClick={onClearFilter} />}
+    <div className={clsx('flex w-fit sm:w-full sm:justify-between', className)}>
+      <div className="hidden gap-5 sm:flex">
+        <NftsFilterToggle isDisplayingFilter={isDisplayingFilter} numOfFilters={numOfFilters} onToggle={toggleFilter} />
+        {numOfFilters > 0 && (
+          <ButtonText label="Clear all" variant="secondary" className="hidden sm:block" onClick={onClearFilter} />
+        )}
       </div>
       <div className="flex items-center gap-3">
-        <span className='hidden sm:block'>Sort by</span>
+        <span className="hidden sm:block">Sort by</span>
         <DropdownSelect
           options={[
             {
