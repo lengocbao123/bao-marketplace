@@ -6,6 +6,7 @@ import Head from 'next/head';
 import { Router, useRouter } from 'next/router';
 import Script from 'next/script';
 import { ReactElement, ReactNode, useEffect } from 'react';
+import { Toaster } from 'react-hot-toast';
 import nextSeoConfig from '../../next-seo.config';
 import { GTM_ID, pageView } from '../lib/gtm';
 import '../styles/globals.css';
@@ -68,7 +69,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         }}
       />
       <DefaultSeo {...nextSeoConfig} />
-      {getLayout(<Component {...pageProps} />)}{' '}
+      {getLayout(<Component {...pageProps} />)} <Toaster position="top-center" />
     </>
   );
 }
