@@ -8,3 +8,4 @@ export * from './explorer';
 export * from './popular-collections';
 export * from './top-collections';
 export * from './collections';
+export * from './profile-inventory';
