@@ -26,7 +26,7 @@ export const getShortAddress = (address?: string): string => {
     return '';
   }
 
-  return `${address.substring(0, 8)}...${address.substring(address.length - 8)}`;
+  return `${address.substring(0, 4)}...${address.substring(address.length - 4)}`;
 };
 
 // Shorthand card number
