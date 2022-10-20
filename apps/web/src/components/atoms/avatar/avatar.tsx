@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import Image from 'next/future/image';
 import { FC, HTMLAttributes } from 'react';
 
-export type Size = 'sm' | 'md' | 'lg';
+export type Size = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
 /**
  * Size for image
@@ -10,7 +10,9 @@ export type Size = 'sm' | 'md' | 'lg';
 const sizes: Record<Size, number> = {
   sm: 24,
   md: 40,
-  lg: 60
+  lg: 60,
+  xl: 100,
+  '2xl': 160
 } as const;
 
 /**
@@ -19,7 +21,9 @@ const sizes: Record<Size, number> = {
 const onlyNameSizeClasses: Record<Size, string> = {
   sm: 'text-xs w-6 h-6',
   md: 'text-base w-10 h-10',
-  lg: 'text-2xl w-15 h-15'
+  lg: 'text-2xl w-15 h-15',
+  xl: 'text-3xl w-25 h-25',
+  '2xl': 'text-4xl w-40 h-40'
 } as const;
 
 /**
