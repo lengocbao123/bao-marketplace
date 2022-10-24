@@ -2,7 +2,12 @@
   {
     "id": "0a188515-dbce-4b96-8885-4761787b355b",
     "name": "Eunice Wilkinson",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,
@@ -12,7 +17,7 @@
     "status": "colleciton_created_on_chain",
     "nftType": "erc721",
     "nftContractAddress": "0xE80Dca5a68cb4dD710f1389946C763f98aBd4A20",
-    "description": null,
+    "description": "I really like this one. I was playing around with some Illustrator tutorials when I decided I wanted to make a pixel styled wallpaper. It started with the idea if having well known pixel game characters and the text I <3 Pixel",
     "createdBy": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
     "createdAt": "2022-10-14T10:02:48.103Z",
     "updatedAt": "2022-10-14T10:09:41.103Z"
@@ -20,7 +25,12 @@
   {
     "id": "9e052517-79d7-48e6-a072-4d55da001120",
     "name": "Jessie Okuneva",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,
@@ -38,7 +48,12 @@
   {
     "id": "9930e845-7ac1-4dd3-a168-f338a09ff85d",
     "name": "Merle Hills",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,
@@ -56,7 +71,12 @@
   {
     "id": "a33461e7-c5b9-4bcc-967a-fee5d0a6c028",
     "name": "Byron Torphy",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,
@@ -74,7 +94,12 @@
   {
     "id": "17fe272f-a061-4173-a133-cbc063bfdb5d",
     "name": "Marty Walter",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,
@@ -92,7 +117,12 @@
   {
     "id": "8342db8b-a889-443b-89f4-259024ead097",
     "name": "Willie Torphy",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,
@@ -102,7 +132,7 @@
     "status": "collection_created_off_chain",
     "nftType": null,
     "nftContractAddress": null,
-    "description": null,
+    "description": "I really like this one. I was playing around with some Illustrator tutorials when I decided I wanted to make a pixel styled wallpaper. It started with the idea if having well known pixel game characters and the text I <3 Pixel",
     "createdBy": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
     "createdAt": "2022-10-17T09:02:44.233Z",
     "updatedAt": "2022-10-17T09:02:44.233Z"
@@ -110,7 +140,12 @@
   {
     "id": "4838edc7-003f-44fd-a480-839aec6e9572",
     "name": "Lonnie Mraz",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,
@@ -128,7 +163,12 @@
   {
     "id": "bb177787-a6e6-43b5-a08d-70f6755f2db5",
     "name": "Amelia Hoeger",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,
@@ -146,7 +186,12 @@
   {
     "id": "ea17bb9e-b967-4607-be41-8e2849edb112",
     "name": "Ms. Camille Hudson",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,
@@ -164,7 +209,12 @@
   {
     "id": "ce816a00-0287-4eee-b6dd-1331438da335",
     "name": "Wendy Spinka",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,
@@ -182,7 +232,12 @@
   {
     "id": "50e326b1-dfc1-407a-bb85-cfe1f34110c0",
     "name": "Marcus Dach",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,
@@ -200,7 +255,12 @@
   {
     "id": "ea5a6e60-b01a-4d9c-95e4-5a61c1e4f2fb",
     "name": "Everett Huel MD",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,
@@ -232,7 +292,12 @@
   {
     "id": "e6d3df15-fd98-4cfa-8c6a-9363be9b1eae",
     "name": "Craig Cummings",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,
@@ -250,7 +315,12 @@
   {
     "id": "59c96b96-2988-4492-a7f0-e383e5e49561",
     "name": "Barbara Hirthe",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,
@@ -268,7 +338,12 @@
   {
     "id": "39bb129f-d0d6-404e-b0cb-91b532eee1f4",
     "name": "Dr. Ollie Pagac",
-    "owner": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+    "owner": {
+      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "email": "baole@codelight.co",
+      "username": null,
+      "avatarUrl": null
+    },
     "logoImage": "https://ik.imagekit.io/gsozk5bngn/product/image-1_HRUddlQx84.jpg",
     "featuredImage": null,
     "bannerImage": null,

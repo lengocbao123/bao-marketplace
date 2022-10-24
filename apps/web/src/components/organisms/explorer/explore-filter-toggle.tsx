@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import { FC, HtmlHTMLAttributes } from 'react';
 import { Button } from '../../atoms';
 import { ArrowLeftIcon, FilterIcon } from '../../icons/outline';

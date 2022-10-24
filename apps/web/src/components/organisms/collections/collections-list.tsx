@@ -1,6 +1,7 @@
 import { FC, HTMLAttributes } from 'react';
 import { List } from '../list';
 import { CardCollection } from '../../molecules';
+import { convertToSlug } from '../../../lib/utils/string';
 export interface CollectionsListProps extends HTMLAttributes<HTMLDivElement> {
   collections: any[];
   meta?: any;
@@ -20,7 +21,7 @@ export const CollectionsList: FC<CollectionsListProps> = ({ collections, meta, c
         <CardCollection
           key={collection.id}
           link={{
-            href: '/'
+            href: `/explore/collections/${convertToSlug(collection.name)}-${collection.id}`
           }}
           title={collection.name}
           countOwners={10000}

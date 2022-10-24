@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { FC } from 'react';
+import { FilterType } from '../../../hooks/use-filters';
 import { Input, InputLabel } from '../../atoms';
 import { BinanceIcon, EthereumIcon, PolygonIcon } from '../../icons/blockchain';
 import { SearchIcon } from '../../icons/outline';
@@ -7,7 +8,7 @@ import { CheckboxFilter, RangeFilter } from '../../molecules';
 
 export interface NftsFiltersProps {
   collections: any[];
-  filter: any;
+  filter: FilterType;
   onChange: (key: string, value: any) => void;
   className?: string;
 }

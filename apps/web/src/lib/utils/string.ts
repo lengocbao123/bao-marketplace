@@ -37,3 +37,10 @@ export const getShortCardNumber = (cardNumber?: string): string => {
 
   return `${cardNumber.substring(0, 4)}****${cardNumber.substring(cardNumber.length - 4)}`;
 };
+
+export const convertToSlug = (text: string) => {
+  return text
+    .toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[^\w-]+/g, '');
+};

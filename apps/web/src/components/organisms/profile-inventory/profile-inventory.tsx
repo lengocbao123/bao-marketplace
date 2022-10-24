@@ -51,9 +51,17 @@ export const ProfileInventory: FC<ProfileInventoryProps> = (props) => {
 
   return (
     <div className={clsx(className)} {...profileProps}>
-      <div className="h-25 md:h-50 relative w-full lg:h-[17.5rem]">
-        <Image src={banner} fill alt={name} className="object-cover object-center" />
-      </div>
+      {banner ? (
+        <Image
+          src={banner}
+          width={1440}
+          height={280}
+          alt={name}
+          className={'bg-neutral-10 aspect-[1440/280] w-full object-cover object-center'}
+        />
+      ) : (
+        <div className={'bg-neutral-10 aspect-[1440/280] w-full object-cover object-center'} />
+      )}
       <div className={'container relative flex flex-col md:flex-row md:justify-between md:gap-6'}>
         <div className={'md:flex-1'}>
           <Avatar

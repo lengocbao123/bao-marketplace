@@ -28,9 +28,7 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
               title={nft.name}
               subtitle="Game NFTs"
               price={nft.price}
-              user={{
-                email: 'baole@codelight.co'
-              }}
+              user={nft.user}
             />
           ))}
         </ListItem>

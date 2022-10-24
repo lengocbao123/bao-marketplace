@@ -1,15 +1,16 @@
 import clsx from 'clsx';
 import { FC } from 'react';
+import { FilterType } from '../../../hooks/use-filters';
 import { InputLabel } from '../../atoms';
 import { BinanceIcon, EthereumIcon, PolygonIcon } from '../../icons/blockchain';
 import { CheckboxFilter, RangeFilter } from '../../molecules';
 
 export interface CollectionsFiltersProps {
-  collections: any[];
-  filter: any;
+  filter: FilterType;
   onChange: (key: string, value: any) => void;
   className?: string;
 }
+
 export const CollectionsFilters: FC<CollectionsFiltersProps> = ({ className = '', filter, onChange }) => {
   return (
     <div className={clsx('flex min-h-screen flex-col items-start justify-start divide-y', className)}>

@@ -58,22 +58,26 @@ export const CardNft: FC<CardNftProps> = ({ className, user, link, image, title,
               </div>
 
               <div className={'justify-self-end sm:justify-self-start'}>
-                <Avatar
-                  name={user.username ?? getUsernameFromEmail(user.email)}
-                  size="sm"
-                  src={user.avatarUrl}
-                  onlyAvatar
-                  className={'sm:hidden'}
-                />
-                <Avatar
-                  name={user.username ?? getUsernameFromEmail(user.email)}
-                  size="sm"
-                  src={user.avatarUrl}
-                  className={
-                    'hidden flex-col gap-1.5 text-sm sm:flex [&_[data-component="label"]]:text-xs [&_[data-component="label"]]:text-neutral-50'
-                  }
-                  label={'Creator'}
-                />
+                <Link href={`/profile/${user.id}`}>
+                  <Avatar
+                    name={user.username ?? getUsernameFromEmail(user.email)}
+                    size="sm"
+                    src={user.avatarUrl}
+                    onlyAvatar
+                    className={'sm:hidden'}
+                  />
+                </Link>
+                <Link href={`/profile/${user.id}`}>
+                  <Avatar
+                    name={user.username ?? getUsernameFromEmail(user.email)}
+                    size="sm"
+                    src={user.avatarUrl}
+                    className={
+                      'hidden flex-col gap-1.5 text-sm sm:flex [&_[data-component="label"]]:text-xs [&_[data-component="label"]]:text-neutral-50'
+                    }
+                    label={'Creator'}
+                  />
+                </Link>
               </div>
             </div>
           </div>
