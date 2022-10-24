@@ -30,7 +30,7 @@ export const Hero: FC<HeroProps> = (props) => {
               icon={ChevronRightIcon}
               iconOrientation={'right'}
               size={'lg'}
-              href={'/'}
+              href={'/nfts'}
               className={'inline-flex'}
             />
           </div>

@@ -20,9 +20,7 @@ export const TopCollections: FC<TopCollectionsProps> = ({ collections }) => {
             <CardCollectionRanking
               key={collection.id}
               order={index + 1}
-              link={{
-                href: '/collections/' + collection.id
-              }}
+              link={{ as: '/collections/async-music-auctions-' + collection.id, href: '/collections/[slug]' }}
               logoImage={collection.logoImage}
               title={collection.name}
               floor={2300}
@@ -33,7 +31,7 @@ export const TopCollections: FC<TopCollectionsProps> = ({ collections }) => {
         </div>
 
         <div className="flex justify-center">
-          <ButtonLink variant="tertiary" label="View All Collections" href={'/'} />
+          <ButtonLink variant="tertiary" label="View All Collections" href={'/collections'} />
         </div>
       </div>
     </Section>

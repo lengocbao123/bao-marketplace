@@ -10,23 +10,22 @@ export interface CollectionProfileProps extends HTMLAttributes<HTMLDivElement> {
   collection: any;
 }
 
-export const CollectionProfile: FC<CollectionProfileProps> = ({ className, collection, ...rest }) => {
+export const CollectionProfile: FC<CollectionProfileProps> = ({ className, collection }) => {
   return (
-    <div className={clsx(className)} {...rest}>
-      <div className="">
-        {collection.bannerImage ? (
-          <Image
-            src={collection.bannerImage}
-            width={1440}
-            height={280}
-            alt={collection.name}
-            className={'bg-neutral-10 aspect-[1440/280] w-full object-cover object-center'}
-          />
-        ) : (
-          <div className={'bg-neutral-10 aspect-[1440/280] w-full object-cover object-center'} />
-        )}
-      </div>
-      <div className="mx-0 flex flex-wrap gap-5 sm:gap-0">
+    <div className={clsx(className)}>
+      {collection.bannerImage ? (
+        <Image
+          src={collection.bannerImage}
+          width={1440}
+          height={280}
+          alt={collection.name}
+          className={'bg-neutral-10 aspect-[1440/280] w-full object-cover object-center'}
+        />
+      ) : (
+        <div className={'bg-neutral-10 aspect-[1440/280] w-full object-cover object-center'} />
+      )}
+
+      <div className="container flex flex-wrap gap-5 sm:gap-0">
         <div className="relative basis-full sm:basis-3/5 lg:flex">
           <div className="lg:w-full lg:gap-5">
             <div className="relative -top-12 -mb-12 flex flex-none items-end justify-between lg:-top-20 lg:-mb-20">

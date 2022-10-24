@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo';
 import { Fragment, ReactElement } from 'react';
-import { Layout } from '../../../../components/layouts';
-import { Breadcrumb } from '../../../../components/molecules';
+import { Layout } from '../../../components/layouts';
+import { Breadcrumb } from '../../../components/molecules';
 import {
   ProductInfo,
   ProductImage,
@@ -11,9 +11,9 @@ import {
   ProductSaleHistory,
   ProductSimilar,
   ProductOfferHistory
-} from '../../../../components/organisms';
-import { NFTS } from '../../../../lib/dummy';
-import { NextPageWithLayout } from '../../../_app';
+} from '../../../components/organisms';
+import { NFTS } from '../../../lib/dummy';
+import { NextPageWithLayout } from '../../_app';
 
 const Index: NextPageWithLayout = () => {
   const nft = NFTS[0];
@@ -25,11 +25,11 @@ const Index: NextPageWithLayout = () => {
       <Breadcrumb
         className="bg-neutral-10 mb-7.5 py-2.5"
         links={[
-          { label: 'Collections', href: '/explore/collections', as: '/explore/collections' },
+          { label: 'Collections', href: '/collections', as: '/collections' },
           {
             label: 'Monkey collection 69',
-            href: '/explore/collections/monkey-collection-69',
-            as: '/explore/collections/[slug]'
+            as: '/collections/monkey-collection-69',
+            href: '/collections/[slug]'
           },
           { label: nft.name, href: '/', as: '/' }
         ]}

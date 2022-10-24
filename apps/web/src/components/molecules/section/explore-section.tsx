@@ -1,7 +1,6 @@
 import clsx from 'clsx';
-import { useRouter } from 'next/router';
 import { FC, Fragment, HTMLAttributes, ReactNode, useEffect, useState } from 'react';
-import { HamburgerSection, Tabs } from '..';
+import { HamburgerSection, TabLinkData, TabsLink } from '..';
 import { FilterType } from '../../../hooks/use-filters';
 import { Button } from '../../atoms';
 import { FilterIcon } from '../../icons/outline';
@@ -9,12 +8,7 @@ import { ExploreActions, ExploreFilterToggle } from '../../organisms';
 
 export interface ExploreSectionProps extends HTMLAttributes<HTMLDivElement> {
   filtersComponent: ReactNode;
-  tabs?: Array<{
-    id: string;
-    label: string;
-    value: string;
-  }>;
-
+  tabs?: Array<TabLinkData>;
   tabsClassName?: string;
   bodyClassName?: string;
   filter: FilterType;
@@ -28,10 +22,7 @@ export const ExploreSection: FC<ExploreSectionProps> = ({
   filter
 }) => {
   const [isDisplayingFilter, setIsDisplayingFilter] = useState(true);
-  const defaultTab = tabs && tabs.length > 0 ? tabs[0].value : '';
-  const [activeTab, setActiveTab] = useState(defaultTab);
   const [numOfFilters, setNumOfFilters] = useState(0);
-  const router = useRouter();
 
   useEffect(() => {
     let count = 0;
@@ -41,20 +32,12 @@ export const ExploreSection: FC<ExploreSectionProps> = ({
     setNumOfFilters(count);
   }, [filter]);
 
-  const handleTabsChange = (value: string) => {
-    const { pathname, query } = router;
-    setActiveTab(value);
-    router.push({ pathname, query: { ...query, tab: value } }, undefined, { scroll: false });
-  };
-
   return (
     <Fragment>
-      <Tabs
+      <TabsLink
         data={tabs.map((item) => ({
-          ...item,
-          active: item.value === activeTab
+          ...item
         }))}
-        onChange={handleTabsChange}
         className={clsx(tabsClassName)}
       />
       <div className={clsx(bodyClassName)}>

@@ -1,14 +1,30 @@
+import { InferGetServerSidePropsType } from 'next';
 import Image from 'next/future/image';
 import { Fragment } from 'react';
-import { Layout } from '../../../components/layouts';
-import { ExploreSection } from '../../../components/molecules';
-import { NftsFilters, NftsList } from '../../../components/organisms/nfts';
-import { useFilter } from '../../../hooks/use-filters';
-import { NFTS, COLLECTIONS, CATEGORIES } from '../../../lib/dummy';
-import { NextPageWithLayout } from '../../_app';
+import { Layout } from '../../components/layouts';
+import { ExploreSection } from '../../components/molecules';
+import { NftsFilters, NftsList } from '../../components/organisms/nfts';
+import { useFilter } from '../../hooks/use-filters';
+import { NFTS, COLLECTIONS, CATEGORIES } from '../../lib/dummy';
+import { NextPageWithLayout } from '../_app';
 
 const DEFAULT_FILTERS = { status: [], blockchain: [], price: [], collection: [] };
-const ExplorePage: NextPageWithLayout = () => {
+
+export async function getServerSideProps({ query, resolvedUrl }) {
+  if (!query.category) {
+    return {
+      redirect: {
+        destination: resolvedUrl + '?category=' + CATEGORIES.nfts[0].value,
+        permanent: false
+      }
+    };
+  }
+  return {
+    props: {}
+  };
+}
+
+const ExplorePage: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { filter, onFiltersChange } = useFilter(DEFAULT_FILTERS);
 
   return (
@@ -24,7 +40,7 @@ const ExplorePage: NextPageWithLayout = () => {
         filtersComponent={
           <NftsFilters className="px-0" collections={COLLECTIONS} filter={filter} onChange={onFiltersChange} />
         }
-        tabs={CATEGORIES.nfts}
+        tabs={CATEGORIES.nfts.map((item) => ({ ...item, url: '?category=' + item.value }))}
         tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border sm:justify-center"
         bodyClassName="container"
         filter={filter}

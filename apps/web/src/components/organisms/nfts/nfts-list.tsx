@@ -18,9 +18,7 @@ export const NftsList: FC<NftsListProps> = ({ nfts, meta, className }) => {
       {nfts.map((nft) => (
         <CardNft
           key={nft.id}
-          link={{
-            href: '/'
-          }}
+          link={{ as: '/nfts/async-music-auctions-' + nft.id, href: '/nfts/[slug]' }}
           image={nft.image}
           title={nft.name}
           subtitle={'Monkey collection'}

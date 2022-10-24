@@ -42,7 +42,7 @@ export const ProductOfferHistory: FC<ProductOfferHistoryProps> = ({ className })
             <tr>
               <td colSpan={4} className="py-44 px-3 text-center">
                 No offers yet
-                <Button className="m-auto mt-2" variant="tertiary" label="Make offer" />
+                <Button className="m-auto mt-2" variant="tertiary" label="Make offer" disabled />
               </td>
             </tr>
           )}

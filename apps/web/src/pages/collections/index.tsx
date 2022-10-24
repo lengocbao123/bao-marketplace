@@ -1,15 +1,30 @@
 import Image from 'next/future/image';
 import { Fragment } from 'react';
-import { Layout } from '../../../components/layouts';
-import { ExploreSection } from '../../../components/molecules';
-import { CollectionsFilters, CollectionsList } from '../../../components/organisms';
-import { useFilter } from '../../../hooks/use-filters';
-import { CATEGORIES, COLLECTIONS } from '../../../lib/dummy';
-import { NextPageWithLayout } from '../../_app';
+import { Layout } from '../../components/layouts';
+import { ExploreSection } from '../../components/molecules';
+import { CollectionsFilters, CollectionsList } from '../../components/organisms';
+import { useFilter } from '../../hooks/use-filters';
+import { CATEGORIES, COLLECTIONS } from '../../lib/dummy';
+import { NextPageWithLayout } from '../_app';
+import { InferGetServerSidePropsType } from 'next';
 
 const DEFAULT_FILTERS = { blockchain: [], price: [] };
 
-const ExploreCollectionPage: NextPageWithLayout = () => {
+export async function getServerSideProps({ query, resolvedUrl }) {
+  if (!query.category) {
+    return {
+      redirect: {
+        destination: resolvedUrl + '?category=' + CATEGORIES.collections[0].value,
+        permanent: false
+      }
+    };
+  }
+  return {
+    props: {}
+  };
+}
+
+const ExploreCollectionPage: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { filter, onFiltersChange } = useFilter(DEFAULT_FILTERS);
 
   return (
@@ -25,7 +40,7 @@ const ExploreCollectionPage: NextPageWithLayout = () => {
         <ExploreSection
           filtersComponent={<CollectionsFilters className="px-5" filter={filter} onChange={onFiltersChange} />}
           filter={filter}
-          tabs={CATEGORIES.nfts}
+          tabs={CATEGORIES.collections.map((item) => ({ ...item, url: '?category=' + item.value }))}
           tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border sm:justify-center"
           bodyClassName="container"
         >

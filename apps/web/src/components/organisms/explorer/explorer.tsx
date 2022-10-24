@@ -23,7 +23,7 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
           {nfts.map((nft) => (
             <CardNft
               key={nft.id}
-              link={{ href: 'nfts/' + nft.id }}
+              link={{ as: '/nfts/async-music-auctions' + nft.id, href: '/nfts/[slug]' }}
               image={nft.image}
               title={nft.name}
               subtitle="Game NFTs"
@@ -34,7 +34,7 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
         </ListItem>
 
         <div className="flex justify-center">
-          <ButtonLink variant="tertiary" label="View more" href={'/explore/nfts'} />
+          <ButtonLink variant="tertiary" label="View more" href={'/nfts'} />
         </div>
       </div>
     </Section>

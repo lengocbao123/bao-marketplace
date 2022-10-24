@@ -13,7 +13,20 @@
       "username": null,
       "avatarUrl": null
     },
-    "attributes": [],
+    "attributes": [
+      {
+        "type": "Color",
+        "value": "Yellow"
+      },
+      {
+        "type": "Hair",
+        "value": "Red"
+      },
+      {
+        "type": "XXX",
+        "value": "XXX"
+      }
+    ],
     "order": {
       "id": null
     },
