@@ -70,9 +70,11 @@ export const ExploreSection: FC<ExploreSectionProps> = ({
           />
         </div>
 
-        <div className="grid grid-cols-4 gap-6">
-          {isDisplayingFilter && <div className="col-span-1 hidden sm:block">{filtersComponent}</div>}
-          <div className={clsx('col-span-4', isDisplayingFilter ? 'sm:col-span-3' : '')}>{children}</div>
+        <div className="flex space-x-6">
+          {isDisplayingFilter && (
+            <div className="hidden w-full sm:block sm:w-[282px] sm:flex-none">{filtersComponent}</div>
+          )}
+          <div className="grow">{children}</div>
         </div>
       </div>
     </Fragment>

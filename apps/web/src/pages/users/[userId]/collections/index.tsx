@@ -32,7 +32,7 @@ const Home: NextPageWithLayout = () => {
       />
       <div className="container">
         <ExploreSection
-          filtersComponent={<CollectionsFilters className="px-5" filter={filter} onChange={onFiltersChange} />}
+          filtersComponent={<CollectionsFilters filter={filter} onChange={onFiltersChange} />}
           tabs={generateTabLinkData(USER_INVENTORY_TABS, '/users/' + query.userId)}
           filter={filter}
           tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border-b"

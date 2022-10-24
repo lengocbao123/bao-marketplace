@@ -37,9 +37,7 @@ const ExplorePage: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof 
         className={'bg-neutral-10 aspect-[1440/144] w-full object-cover object-center'}
       />
       <ExploreSection
-        filtersComponent={
-          <NftsFilters className="px-0" collections={COLLECTIONS} filter={filter} onChange={onFiltersChange} />
-        }
+        filtersComponent={<NftsFilters collections={COLLECTIONS} filter={filter} onChange={onFiltersChange} />}
         tabs={CATEGORIES.nfts.map((item) => ({ ...item, url: '?category=' + item.value }))}
         tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border sm:justify-center"
         bodyClassName="container"

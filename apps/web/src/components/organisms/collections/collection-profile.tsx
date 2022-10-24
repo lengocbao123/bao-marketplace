@@ -25,9 +25,9 @@ export const CollectionProfile: FC<CollectionProfileProps> = ({ className, colle
         <div className={'bg-neutral-10 aspect-[1440/280] w-full object-cover object-center'} />
       )}
 
-      <div className="container flex flex-wrap gap-5 sm:gap-0">
-        <div className="relative basis-full sm:basis-3/5 lg:flex">
-          <div className="lg:w-full lg:gap-5">
+      <div className="container flex flex-wrap sm:flex-nowrap">
+        <div className="relative flex grow">
+          <div className="lg:gap-5">
             <div className="relative -top-12 -mb-12 flex flex-none items-end justify-between lg:-top-20 lg:-mb-20">
               {collection.logoImage ? (
                 <Image
@@ -80,7 +80,7 @@ export const CollectionProfile: FC<CollectionProfileProps> = ({ className, colle
             {/* Title with description */}
           </div>
         </div>
-        <div className="basis-full sm:basis-2/5">
+        <div className="w-screen sm:w-[282px] sm:flex-none">
           <CollectionSocials className="hidden sm:block" />
           <CollectionInfo />
         </div>

@@ -48,7 +48,7 @@ export const DropdownSelect: FC<DropdownSelectProps> = ({ options, onChange }) =
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute z-10 mt-2 w-56 rounded-xl bg-white p-2 shadow-lg">
+        <Menu.Items className="absolute z-10 mt-2 w-56 space-y-2 rounded-xl bg-white p-2 shadow-lg">
           {options.map((option, index) => (
             <Menu.Item key={`dropdown-menu-item-${index}`}>
               {({ active }) => {

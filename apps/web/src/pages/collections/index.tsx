@@ -36,20 +36,18 @@ const ExploreCollectionPage: NextPageWithLayout = ({}: InferGetServerSidePropsTy
         alt="Explore Banner"
         className={'bg-neutral-10 aspect-[1440/144] w-full object-cover object-center'}
       />
-      <div className="container">
-        <ExploreSection
-          filtersComponent={<CollectionsFilters className="px-5" filter={filter} onChange={onFiltersChange} />}
-          filter={filter}
-          tabs={CATEGORIES.collections.map((item) => ({ ...item, url: '?category=' + item.value }))}
-          tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border sm:justify-center"
-          bodyClassName="container"
-        >
-          <CollectionsList
-            collections={COLLECTIONS}
-            meta={{ totalItems: 8, itemCount: 8, itemsPerPage: 10, totalPages: 1, currentPage: 1 }}
-          />
-        </ExploreSection>
-      </div>
+      <ExploreSection
+        filtersComponent={<CollectionsFilters filter={filter} onChange={onFiltersChange} />}
+        filter={filter}
+        tabs={CATEGORIES.collections.map((item) => ({ ...item, url: '?category=' + item.value }))}
+        tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border sm:justify-center"
+        bodyClassName="container"
+      >
+        <CollectionsList
+          collections={COLLECTIONS}
+          meta={{ totalItems: 8, itemCount: 8, itemsPerPage: 10, totalPages: 1, currentPage: 1 }}
+        />
+      </ExploreSection>
     </Fragment>
   );
 };
