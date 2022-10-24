@@ -7,4 +7,7 @@ export * from './section';
 export * from './text-field';
 export * from './tabs';
 export * from './pagination';
+export * from './breadcrumb';
+export * from './table';
+export * from './breadcrumb';
 export * from './text';

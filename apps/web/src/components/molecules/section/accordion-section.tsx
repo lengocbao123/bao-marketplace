@@ -21,11 +21,11 @@ export const AccordionSection: FC<AccordionSectionProps> = ({
   defaultOpen = true
 }) => {
   return (
-    <div className={clsx('w-full bg-transparent p-2', className)}>
+    <div className={clsx('w-full', className)}>
       <Disclosure defaultOpen={defaultOpen}>
         {({ open }) => (
           <Fragment>
-            <Disclosure.Button className={clsx('flex w-full items-center justify-between', headingClassName)}>
+            <Disclosure.Button className={clsx('flex w-full items-center justify-between p-2', headingClassName)}>
               {heading}
               {hasArrowIcon && (
                 <CaretDownIcon
@@ -35,7 +35,7 @@ export const AccordionSection: FC<AccordionSectionProps> = ({
                 />
               )}
             </Disclosure.Button>
-            <Disclosure.Panel className={clsx('py-4', contentClassName)}>{children}</Disclosure.Panel>
+            <Disclosure.Panel className={clsx('py-4 px-2', contentClassName)}>{children}</Disclosure.Panel>
           </Fragment>
         )}
       </Disclosure>
