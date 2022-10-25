@@ -2,7 +2,7 @@ import { Menu, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { FC, Fragment, HTMLAttributes } from 'react';
-import { Avatar, Button, ButtonIcon, Input } from '../../atoms';
+import { Avatar, Button, ButtonIcon, ButtonLink, Input } from '../../atoms';
 import { PikassoColorIcon } from '../../icons/brand';
 import { EditIcon, MenuIcon, PersonIcon, SearchIcon, WalletIcon } from '../../icons/outline';
 import { CaretDownIcon } from '../../icons/solid';
@@ -144,7 +144,7 @@ export const Header: FC<HeaderProps> = (props) => {
               </div>
 
               <div className={'hidden sm:block'}>
-                <Button label={'Sign in'} />
+                <ButtonLink href={'/auth/sign-in'} label={'Sign in'} />
               </div>
             </div>
           ) : (
