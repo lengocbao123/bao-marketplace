@@ -16,7 +16,7 @@ const Home: NextPageWithLayout = () => {
   return (
     <div className={'space-y-10 sm:space-y-20'}>
       <ProfileInventory
-        banner=""
+        banner="https://ik.imagekit.io/gsozk5bngn/Rectangle_287_DpMLXUW9H.png"
         avatar={'https://ik.imagekit.io/gsozk5bngn/product/image-3_suhW2eBcF.jpg'}
         name={'Shushio'}
         bio={

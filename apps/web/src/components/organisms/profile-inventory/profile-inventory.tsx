@@ -57,7 +57,7 @@ export const ProfileInventory: FC<ProfileInventoryProps> = (props) => {
           width={1440}
           height={280}
           alt={name}
-          className={'bg-neutral-10 aspect-[1440/280] w-full object-cover object-center'}
+          className={'bg-neutral-10 aspect-[1440/280] w-full object-cover object-top'}
         />
       ) : (
         <div className={'bg-neutral-10 aspect-[1440/280] w-full object-cover object-center'} />

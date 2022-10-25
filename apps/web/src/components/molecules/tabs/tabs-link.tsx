@@ -24,7 +24,7 @@ export const TabsLink: FC<TabLinkProps> = ({ className, data }) => {
   const router = useRouter();
 
   return (
-    <ul className={clsx('scrollbar-hide gap-5 overflow-x-auto', className)}>
+    <ul className={clsx('scrollbar-hide gap-5 overflow-x-auto px-2', className)}>
       {data.map(({ url, label }) => (
         <li
           key={url}

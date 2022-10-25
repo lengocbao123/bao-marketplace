@@ -70,7 +70,7 @@ export const ExploreSection: FC<ExploreSectionProps> = ({
           />
         </div>
 
-        <div className="flex space-x-6">
+        <div className="flex space-x-0 sm:space-x-6">
           {isDisplayingFilter && (
             <div className="hidden w-full sm:block sm:w-[282px] sm:flex-none">{filtersComponent}</div>
           )}
