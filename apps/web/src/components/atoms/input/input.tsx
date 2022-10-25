@@ -1,7 +1,8 @@
 import clsx from 'clsx';
-import { createRef, forwardRef, InputHTMLAttributes, ReactElement, RefObject, useId } from 'react';
+import { createRef, forwardRef, InputHTMLAttributes, ReactElement, RefObject, useId, useState } from 'react';
+import { ButtonIcon } from '../../../components/atoms/button';
 import { SVG } from '../../../types/index';
-import { AlertIcon } from '../../icons/outline';
+import { AlertIcon, EyeClosedIcon, EyeIcon } from '../../icons/outline';
 
 export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
@@ -36,6 +37,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, forwardedR
   const TrailingVisual = error ? AlertIcon : trailingVisual;
 
   const inputRef = (forwardedRef as RefObject<HTMLInputElement>) || createRef<HTMLInputElement>();
+
+  // Switch type when click show password icon
+  const [currentInputType, setCurrentInputType] = useState(inputRef.current?.type);
+  const handleShowPassword = () => {
+    if (inputRef.current) {
+      inputRef.current.type = inputRef.current.type === 'password' ? 'text' : 'password';
+      setCurrentInputType(inputRef.current.type);
+    }
+  };
 
   return (
     <div className={clsx('flex-col gap-2.5', block ? 'flex' : 'inline-flex')}>
@@ -78,10 +88,19 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, forwardedR
             }
           />
 
-          {trailingVisual && (
-            <span className={'text-sm'}>
-              {typeof trailingVisual === 'string' ? trailingVisual : <TrailingVisual className={'text-2xl'} />}
-            </span>
+          {inputProps.type !== 'password' ? (
+            trailingVisual && (
+              <span className={'text-sm'}>
+                {typeof trailingVisual === 'string' ? trailingVisual : <TrailingVisual className={'text-2xl'} />}
+              </span>
+            )
+          ) : (
+            <ButtonIcon
+              onClick={handleShowPassword}
+              variant={'tertiary'}
+              className={'border-none bg-transparent'}
+              icon={currentInputType === 'password' ? EyeIcon : EyeClosedIcon}
+            />
           )}
 
           {trailingAction}
