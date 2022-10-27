@@ -64,7 +64,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, forwardedR
           className={clsx(
             'focus-within:border-primary focus-within:bg-primary-5 border-neutral-10 inline-flex items-center rounded-full border',
             disabled ? 'border-neutral-30 bg-neutral-10' : 'hover:border-primary-30',
-            error && 'border-accent-error bg-accent-error/10',
+            error && '!border-accent-error !bg-accent-error/10',
             {
               'pl-4': leadingVisual,
               'pr-4': trailingVisual || trailingAction
