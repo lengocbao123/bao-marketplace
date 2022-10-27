@@ -22,15 +22,7 @@ export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
             {action && <div data-component={'action'}>{action}</div>}
           </div>
         )}
-        <Input id={id} ref={ref} {...rest} error={error} disabled={disabled} data-component={'input'} />
-        {(help) && (
-          <div
-            className={clsx('text-neutral-50 mt-2.5 px-3 text-xs font-normal')}
-            data-component={'helper-text'}
-          >
-            {help}
-          </div>
-        )}
+        <Input id={id} ref={ref} {...rest} error={error} disabled={disabled} data-component={'input'} hint={help} />
       </div>
     );
   }
