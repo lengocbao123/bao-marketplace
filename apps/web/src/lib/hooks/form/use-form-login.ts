@@ -9,19 +9,17 @@ export interface UseFormLogin {
   password: string;
 }
 
-export const useFormLogin = (
-  options: { initialData?: UseFormLogin } & UserForm<UseFormLogin, any>
-) => {
+export const useFormLogin = (options: { initialData?: UseFormLogin } & UserForm<UseFormLogin, any>) => {
   const schema = yup.object().shape({
-    email: yup.string().email("Email is invalid").required("Email is required"),
-    password: yup.string().required("Password is required"),
+    email: yup.string().email('Email is invalid').required('Email is required'),
+    password: yup.string().required('Password is required')
   });
 
   const defaultValues = useMemo(() => options.initialData, [options.initialData]);
 
   const methods = useForm<UseFormLogin>({
     resolver: yupResolver(schema),
-    mode: 'onBlur',
+    mode: 'onSubmit',
     reValidateMode: 'onChange',
     defaultValues
   });
