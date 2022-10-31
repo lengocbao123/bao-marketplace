@@ -190,6 +190,7 @@ export const usePagination = (options?: UsePaginationOptions) => {
         }
       : {
           onClick: (event: any) => {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             handleClick(event, buttonPage(item)!);
           },
           type: item,

@@ -1,6 +1,6 @@
-import { FC, Fragment, useEffect, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
 import clsx from 'clsx';
+import { FC, Fragment, useEffect, useState } from 'react';
 import { Button } from '../../atoms';
 import { ChevronDownIcon } from '../../icons/outline';
 
@@ -25,8 +25,10 @@ export const DropdownSelect: FC<DropdownSelectProps> = ({ options, onChange }) =
   };
 
   useEffect(() => {
-    if (options.length > 0) setSelectedOption(options[0]);
-  }, []);
+    if (options.length > 0) {
+      setSelectedOption(options[0]);
+    }
+  }, [options]);
   return (
     <Menu as="div" className="relative">
       <Menu.Button as={Fragment}>
