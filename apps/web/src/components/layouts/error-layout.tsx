@@ -1,4 +1,5 @@
-import { FC, Fragment, HTMLAttributes } from 'react';
+import { FC, HTMLAttributes } from 'react';
+import { Header, SimpleFooter } from '../organisms';
 
 export type ErrorLayoutProps = HTMLAttributes<HTMLElement>;
 
@@ -11,8 +12,12 @@ export const ErrorLayout: FC<ErrorLayoutProps> = (props) => {
   const { children, ...errorLayoutProps } = props;
 
   return (
-    <Fragment>
-      <main {...errorLayoutProps}>{children}</main>
-    </Fragment>
+    <div className={'flex min-h-screen flex-col'}>
+      <Header />
+      <main {...errorLayoutProps} className={'grid grow place-content-center'}>
+        {children}
+      </main>
+      <SimpleFooter />
+    </div>
   );
 };
