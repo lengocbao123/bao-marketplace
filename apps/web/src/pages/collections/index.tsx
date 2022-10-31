@@ -1,4 +1,4 @@
-import Image from 'next/future/image';
+import Image from 'next/image';
 import { Fragment } from 'react';
 import { Layout } from '../../components/layouts';
 import { ExploreSection } from '../../components/molecules';

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { format } from 'date-fns';
-import Image from 'next/future/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import { FC, HTMLAttributes, ReactNode } from 'react';
 import toast from 'react-hot-toast';

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import Image from 'next/future/image';
+import Image from 'next/image';
 import React, { FC, HTMLAttributes } from 'react';
 import { getAvatarLetter } from '../../../lib/utils/string';
 import { TextTruncate } from '../../molecules';

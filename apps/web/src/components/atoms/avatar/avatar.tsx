@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import Image from 'next/future/image';
+import Image from 'next/image';
 import { FC, HTMLAttributes } from 'react';
 
 export type Size = 'sm' | 'md' | 'lg' | 'xl' | '2xl';

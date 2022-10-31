@@ -1,4 +1,4 @@
-import Image from 'next/future/image';
+import Image from 'next/image';
 import Link from 'next/link';
 import { FC, HTMLAttributes } from 'react';
 import { DiscordIcon, MediumIcon, TwitterIcon } from '../../icons/brand';
