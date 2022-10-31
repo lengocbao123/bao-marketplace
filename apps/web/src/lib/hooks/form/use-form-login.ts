@@ -1,8 +1,10 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import { signIn } from 'next-auth/react';
 import * as yup from 'yup';
 import { UserForm } from '../../../types';
+import { useRouter } from 'next/router';
 
 export interface UseFormLogin {
   email: string;
@@ -10,6 +12,8 @@ export interface UseFormLogin {
 }
 
 export const useFormLogin = (options: { initialData?: UseFormLogin } & UserForm<UseFormLogin, any>) => {
+  const router = useRouter();
+  const { callbackUrl } = router.query as { callbackUrl: string };
   const schema = yup.object().shape({
     email: yup.string().email('Email is invalid').required('Email is required'),
     password: yup.string().required('Password is required')
@@ -30,21 +34,16 @@ export const useFormLogin = (options: { initialData?: UseFormLogin } & UserForm<
       body.append('email', formData.email);
       body.append('password', formData.password);
 
-      // Wait for 1 second to simulate a slow network
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      // Random result to simulate a random error
-      const result =
-        Math.random() > 0.5
-          ? { success: true, statusCode: 200 }
-          : {
-              success: false,
-              message: 'Internal server error',
-              statusCode: 500
-            };
-      if (result.statusCode === 200) {
-        await options?.onSuccess?.(formData, result);
+      const result = await signIn('credentials', {
+        email: formData.email,
+        password: formData.password,
+        redirect: false,
+        callbackUrl: callbackUrl || '/'
+      });
+      if (result.ok) {
+        await router.replace(result?.url || '/') /* .then(router.reload) */;
       } else {
-        await options?.onError?.(`StatusCode: ${result.statusCode}. message: ${result.message}`);
+        await options?.onError?.(`StatusCode: ${result.status}. message: ${result.error}`);
       }
     } catch (error) {
       await options?.onError?.(error);

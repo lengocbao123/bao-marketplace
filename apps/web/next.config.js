@@ -12,9 +12,12 @@ const nextConfig = {
   },
   publicRuntimeConfig: {
     // Will be available on both server and client
-    googleTagManagerId: process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID
+    googleTagManagerId: process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID,
+    apiBaseUrl: process.env.OPENAPI_BASE_URL
   },
-
+  serverRuntimeConfig: {
+    encryptionSecret: process.env.ENCRYPTION_SECRET
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/i,
