@@ -11,6 +11,7 @@ import nextSeoConfig from '../../next-seo.config';
 import { GTM_ID, pageView } from '../lib/gtm';
 import '../styles/globals.css';
 import { SessionProvider } from 'next-auth/react';
+import { Session } from 'next-auth';
 
 const progress = new ProgressBar({
   size: 2,
@@ -34,11 +35,15 @@ export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout;
+type AppPropsWithLayout<P = {}, IP = P> = AppProps<P> & {
+  Component: NextPageWithLayout<P, IP>;
 };
 
-export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+type PageProps = {
+  session?: Session;
+};
+
+export default function MyApp({ Component, pageProps }: AppPropsWithLayout<PageProps>) {
   // Use the layout defined at the page level, if available
   const getLayout = Component.getLayout ?? ((page) => page);
   const router = useRouter();

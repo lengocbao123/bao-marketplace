@@ -1,5 +1,6 @@
 import { Menu, Transition } from '@headlessui/react';
 import clsx from 'clsx';
+import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { FC, Fragment, HTMLAttributes } from 'react';
 import { Avatar, Button, ButtonIcon, ButtonLink, Input } from '../../atoms';
@@ -10,9 +11,11 @@ import { CaretDownIcon } from '../../icons/solid';
 /* ---------------------------------------------------------------------------------------------------------------------
  * User Menu
  * ------------------------------------------------------------------------------------------------------------------ */
-export type HeaderUserMenuProps = HTMLAttributes<HTMLElement>;
+export interface HeaderUserMenuProps extends HTMLAttributes<HTMLElement> {
+  user: any;
+}
 
-const HeaderUserMenu: FC<HeaderUserMenuProps> = () => {
+const HeaderUserMenu: FC<HeaderUserMenuProps> = ({ user }) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
       {({ open }) => (
@@ -20,8 +23,9 @@ const HeaderUserMenu: FC<HeaderUserMenuProps> = () => {
           <div className="">
             <Menu.Button className={clsx('flex items-center gap-2', open && 'bg-neutral-10 -m-1 rounded-full p-1')}>
               <Avatar
-                name={'John Doe'}
+                name={user.name}
                 src={
+                  user.avatarUrl ||
                   'https://images.unsplash.com/photo-1590031905470-a1a1feacbb0b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1288&q=80'
                 }
                 onlyAvatar
@@ -40,7 +44,7 @@ const HeaderUserMenu: FC<HeaderUserMenuProps> = () => {
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="shadow-box-hover absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="shadow-box-hover absolute right-0 z-20 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-xl bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="px-1 py-1">
                 <Menu.Item>
                   {({ active }) => (
@@ -49,7 +53,7 @@ const HeaderUserMenu: FC<HeaderUserMenuProps> = () => {
                         'flex w-full items-center rounded-md px-2 py-2 text-sm',
                         active && 'bg-neutral-10'
                       )}
-                      href="/"
+                      href="/settings/profile"
                     >
                       My Profile
                     </Link>
@@ -76,6 +80,7 @@ const HeaderUserMenu: FC<HeaderUserMenuProps> = () => {
                         'text-accent-error active:bg-accent-error/20 flex w-full items-center rounded-md px-2 py-2.5 text-sm',
                         active && 'bg-accent-error/10'
                       )}
+                      onClick={() => signOut()}
                     >
                       Log Out
                     </button>
@@ -98,7 +103,8 @@ export type HeaderProps = HTMLAttributes<HTMLElement>;
 export const Header: FC<HeaderProps> = (props) => {
   const { ...headerProps } = props;
 
-  const isSignin = true;
+  const { data } = useSession();
+  const isSignIn = !!data;
 
   return (
     <header {...headerProps}>
@@ -137,7 +143,7 @@ export const Header: FC<HeaderProps> = (props) => {
             </form>
           </div>
 
-          {isSignin ? (
+          {!isSignIn ? (
             <div className="">
               <div className={'sm:hidden'}>
                 <ButtonIcon variant={'tertiary'} icon={PersonIcon} title={'Sign in'} />
@@ -163,7 +169,7 @@ export const Header: FC<HeaderProps> = (props) => {
                 <ButtonIcon variant={'tertiary'} icon={WalletIcon} title={'Wallet'} />
               </div>
 
-              <HeaderUserMenu />
+              <HeaderUserMenu user={data.user} />
             </div>
           )}
         </div>

@@ -1,4 +1,6 @@
 import clsx from 'clsx';
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { unstable_getServerSession } from 'next-auth';
 import { NextSeo } from 'next-seo';
 import React, { createRef, Fragment, ReactElement, useEffect, useState } from 'react';
 import { DropzoneRef } from 'react-dropzone';
@@ -12,9 +14,18 @@ import { CardPaymentMethod, FileImage } from '../../../components/molecules';
 import { USER } from '../../../lib/dummy';
 import { useFormCreateProfile } from '../../../lib/hooks/form/use-form-create-profile';
 import { convertImageUrlToFile } from '../../../lib/utils/navigator';
+import { authOptions } from '../../api/auth/[...nextauth]';
 import { NextPageWithLayout } from '../../_app';
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await unstable_getServerSession(req, res, authOptions);
 
-const Index: NextPageWithLayout = () => {
+  return {
+    props: {
+      session
+    }
+  };
+};
+const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const dropzoneRef = createRef<DropzoneRef>();
   const [avatarUrl, setAvatarUrl] = useState<any>(null);
   const [bannerUrl, setBannerUrl] = useState<any>(null);

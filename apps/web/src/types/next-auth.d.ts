@@ -1,15 +1,13 @@
-import { Maybe, Scalars } from '@/lib/graphql/generated/graphql';
-import { DataUserRolesItems } from '@/types/index';
 import { DefaultSession } from 'next-auth';
 
 declare module 'next-auth' {
   interface User extends DefaultSession['user'] {
-    roles: Array<Maybe<DataUserRolesItems>>;
-    id: Scalars['ID'];
+    roles: any[];
+    id: string;
     accessToken: string;
     status: string;
-    username?: Maybe<Scalars['String']>;
-    avatarUrl?: Maybe<Scalars['String']>;
+    username?: string;
+    avatarUrl?: string;
   }
 
   interface Session extends DefaultSession {
@@ -20,12 +18,12 @@ declare module 'next-auth' {
 
 declare module 'next-auth/jwt' {
   interface DefaultJWT {
-    avatarUrl?: Maybe<Scalars['String']>;
+    avatarUrl?: string;
     accessToken: string;
-    roles: Array<Maybe<DataUserRolesItems>>;
-    username?: Maybe<Scalars['String']>;
+    roles: any[];
+    username?: string;
   }
   interface JWT extends DefaultJWT {
-    id: Scalars['ID'];
+    id: string;
   }
 }
