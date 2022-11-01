@@ -1,4 +1,5 @@
 import getConfig from 'next/config';
+import { UserResponse } from '../../../types';
 const { publicRuntimeConfig } = getConfig();
 
 export const login = (username: string, password: string) => {
@@ -12,7 +13,7 @@ export const login = (username: string, password: string) => {
     .then((response) => {
       return response.json();
     })
-    .then((data) => {
+    .then((data: UserResponse) => {
       return data;
     })
     .catch((error) => {
@@ -20,7 +21,7 @@ export const login = (username: string, password: string) => {
     });
 };
 
-export const getUserInfo = (accessToken: string) => {
+export const getUserInfo = (accessToken: string): Promise<UserResponse> => {
   return fetch(publicRuntimeConfig.apiBaseUrl + '/user', {
     headers: {
       'Content-Type': 'application/json',
@@ -30,7 +31,7 @@ export const getUserInfo = (accessToken: string) => {
     .then((response) => {
       return response.json();
     })
-    .then((data) => {
+    .then((data: Promise<UserResponse>) => {
       return data;
     })
     .catch((error) => {
