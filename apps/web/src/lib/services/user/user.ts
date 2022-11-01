@@ -1,14 +1,33 @@
 import getConfig from 'next/config';
-import { UserResponse } from '../../../types';
+import { UserLoginResponse, UserResponse } from '../../../types';
 const { publicRuntimeConfig } = getConfig();
 
-export const login = (username: string, password: string) => {
+export const login = (username: string, password: string): Promise<UserLoginResponse> => {
   return fetch(publicRuntimeConfig.apiBaseUrl + '/auth/login', {
     headers: {
       'Content-Type': 'application/json'
     },
     method: 'POST',
     body: JSON.stringify({ username, password })
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data: UserLoginResponse) => {
+      return data;
+    })
+    .catch((error) => {
+      return error;
+    });
+};
+
+export const register = (email: string, password: string, passwordConfirm: string): Promise<UserResponse> => {
+  return fetch(publicRuntimeConfig.apiBaseUrl + '/auth/register', {
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    method: 'POST',
+    body: JSON.stringify({ username: email, password, email, passwordConfirm })
   })
     .then((response) => {
       return response.json();

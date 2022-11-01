@@ -77,7 +77,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout<PageP
       <SessionProvider session={pageProps.session}>
         <DefaultSeo {...nextSeoConfig} />
         {getLayout(<Component {...pageProps} />)}
-        <Toaster position="top-right" />
+        <Toaster />
       </SessionProvider>
     </>
   );

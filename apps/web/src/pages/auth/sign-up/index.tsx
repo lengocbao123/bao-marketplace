@@ -1,4 +1,5 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import { unstable_getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -7,9 +8,17 @@ import { Button } from '../../../components/atoms';
 import { Layout } from '../../../components/layouts';
 import { FormAuth, TextField } from '../../../components/molecules';
 import { useFormSignUp } from '../../../lib/hooks/form/use-form-sign-up';
+import { getErrorMessage } from '../../../lib/utils/get-error-message';
+import { redirectIfAuthenticated } from '../../../lib/utils/server';
+import { UserData } from '../../../types';
+import { authOptions } from '../../api/auth/[...nextauth]';
 import { NextPageWithLayout } from '../../_app';
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
+  const session = await unstable_getServerSession(req, res, authOptions);
+  if (session) {
+    return redirectIfAuthenticated();
+  }
   return {
     props: {}
   };
@@ -20,14 +29,19 @@ const SignUp: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSe
   const {
     register,
     onSubmit,
-    getValues,
     formState: { errors, isSubmitting }
   } = useFormSignUp({
-    onSuccess: async () => {
-      await router.push(`/auth/verify-request?email=${getValues('email')}`);
+    initialData: {
+      email: 'baole@codelight.co',
+      username: 'baole@codelight.co',
+      password: 'Bao@123',
+      confirmPassword: 'Bao@123'
+    },
+    onSuccess: async (formData, response: UserData) => {
+      await router.push(`/auth/verify-request?email=${response.email}`);
     },
     onError: (error) => {
-      toast.error(error);
+      toast.error(getErrorMessage(error));
     }
   });
   return (

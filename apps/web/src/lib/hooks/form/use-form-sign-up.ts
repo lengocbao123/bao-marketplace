@@ -2,7 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { UserForm } from '../../../types';
+import { UserForm, UserResponse } from '../../../types';
+import { register } from '../../services';
 
 export interface UseFormSignUp {
   username: string;
@@ -30,26 +31,11 @@ export const useFormSignUp = (options: { initialData?: UseFormSignUp } & UserFor
 
   const onSubmit = async (formData: UseFormSignUp) => {
     try {
-      const body = new FormData();
-      body.append('email', formData.email);
-      body.append('password', formData.password);
-      body.append('username', formData.username);
-
-      // Wait for 1 second to simulate a slow network
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      // Random result to simulate a random error
-      const result =
-        Math.random() > 0.5
-          ? { success: true, statusCode: 200 }
-          : {
-              success: false,
-              message: 'Internal server error',
-              statusCode: 500
-            };
+      const result: UserResponse = await register(formData.email, formData.password, formData.confirmPassword);
       if (result.statusCode === 200) {
-        await options?.onSuccess?.(formData, result);
+        await options?.onSuccess?.(formData, result.data);
       } else {
-        await options?.onError?.(`StatusCode: ${result.statusCode}. message: ${result.message}`);
+        await options?.onError?.(result);
       }
     } catch (error) {
       await options?.onError?.(error);
