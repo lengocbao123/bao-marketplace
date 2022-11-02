@@ -1,7 +1,9 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { unstable_getServerSession } from 'next-auth';
+import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { Button, CheckboxInput } from '../../../components/atoms';
 import { Layout } from '../../../components/layouts';
@@ -13,7 +15,7 @@ import { NextPageWithLayout } from '../../_app';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
-  if (session) {
+  if (session && session.user.status !== 'verify_email') {
     return redirectIfAuthenticated();
   }
   return {
@@ -32,6 +34,12 @@ const SignIn: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSe
       toast.error(error);
     }
   });
+
+  useEffect(() => {
+    signOut({
+      redirect: false
+    });
+  }, []);
 
   return (
     <div className={'relative flex items-center justify-center pt-[120px] pb-10'}>

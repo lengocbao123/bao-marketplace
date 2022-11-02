@@ -14,10 +14,15 @@ import { CardPaymentMethod, FileImage } from '../../../components/molecules';
 import { USER } from '../../../lib/dummy';
 import { useFormCreateProfile } from '../../../lib/hooks/form/use-form-create-profile';
 import { convertImageUrlToFile } from '../../../lib/utils/navigator';
+import { redirectIfUnverified } from '../../../lib/utils/server';
 import { authOptions } from '../../api/auth/[...nextauth]';
 import { NextPageWithLayout } from '../../_app';
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
+
+  if (session && session.user.status === 'verify_email') {
+    return redirectIfUnverified();
+  }
 
   return {
     props: {

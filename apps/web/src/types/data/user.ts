@@ -7,11 +7,12 @@ export interface UserResponse extends BaseResponse {
 export interface UserLoginResponse extends BaseResponse {
   data: {
     accessToken: string;
+    user: UserData;
   };
 }
 
 export interface UserData {
-  id: string;
+  id?: string;
   email?: string;
   username?: string;
   status?: string;

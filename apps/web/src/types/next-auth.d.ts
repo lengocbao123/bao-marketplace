@@ -2,10 +2,10 @@ import { DefaultSession } from 'next-auth';
 
 declare module 'next-auth' {
   interface User extends DefaultSession['user'] {
-    roles: any[];
-    id: string;
+    roles?: any[];
+    id?: string;
     accessToken: string;
-    status: string;
+    status?: string;
     username?: string;
     avatarUrl?: string;
   }
@@ -19,9 +19,11 @@ declare module 'next-auth' {
 declare module 'next-auth/jwt' {
   interface DefaultJWT {
     avatarUrl?: string;
-    accessToken: string;
-    roles: any[];
+    accessToken?: string;
+    roles?: any[];
+    status?: string;
     username?: string;
+    id: string;
   }
   interface JWT extends DefaultJWT {
     id: string;

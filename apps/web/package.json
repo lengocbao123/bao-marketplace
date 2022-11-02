@@ -16,7 +16,7 @@
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
     "ethers": "^5.7.1",
-    "next": "latest",
+    "next": "13.0.0",
     "next-auth": "^4.15.0",
     "next-seo": "^5.5.0",
     "react": "^18.2.0",

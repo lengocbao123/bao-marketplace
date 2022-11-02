@@ -57,3 +57,23 @@ export const getUserInfo = (accessToken: string): Promise<UserResponse> => {
       return error;
     });
 };
+
+export const resendVerifyEmail = (email: string, accessToken: string) => {
+  return fetch(publicRuntimeConfig.apiBaseUrl + '/auth/resend-verify-email', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`
+    },
+    body: JSON.stringify({ email })
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      return data;
+    })
+    .catch((error) => {
+      return error;
+    });
+};

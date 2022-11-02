@@ -1,14 +1,13 @@
-// Redirect to login page
-export const redirectIfUnauthenticated = () => ({
+export const redirectIfAuthenticated = () => ({
   redirect: {
-    destination: '/auth/sign-in',
+    destination: '/',
     permanent: false
   }
 });
 
-export const redirectIfAuthenticated = () => ({
+export const redirectIfUnverified = () => ({
   redirect: {
-    destination: '/',
+    destination: '/auth/verify-request',
     permanent: false
   }
 });

@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { login, getUserInfo } from '../../../lib/services';
+import { login } from '../../../lib/services';
 import { isSuccess } from '../../../lib/utils/response';
 
 export const authOptions: NextAuthOptions = {
@@ -16,17 +16,14 @@ export const authOptions: NextAuthOptions = {
       async authorize(credentials) {
         try {
           const { email: username, password } = credentials as { email: string; password: string };
-          const auth = await login(username, password);
-
-          if (isSuccess(auth.message)) {
-            const { data: user } = await getUserInfo(auth.data.accessToken);
-
+          const { message, data } = await login(username, password);
+          if (isSuccess(message)) {
             return {
-              ...user,
-              ...auth.data
+              accessToken: data.accessToken,
+              ...data.user
             };
           } else {
-            console.warn(auth.message);
+            console.warn(message);
           }
         } catch (error) {
           console.warn(error);
@@ -42,10 +39,9 @@ export const authOptions: NextAuthOptions = {
         token.accessToken = String(user.accessToken);
         token.id = user.id;
         token.roles = user.roles;
+        token.status = user.status;
         token.username = user.username;
         token.avatarUrl = user.avatarUrl;
-        token.name = user.name || user.username;
-        token.image = user.image || user.avatarUrl;
       }
       return token;
     },
@@ -55,10 +51,9 @@ export const authOptions: NextAuthOptions = {
       session.user.id = String(token.id || null);
       session.user.roles = token.roles || null;
       session.user.username = token.username || null;
-      session.user.avatarUrl = token.avatarUrl || null;
-      session.user.name = token.name || null;
       session.user.image = token.avatarUrl || null;
-
+      session.user.status = token.status;
+      session.user.name = token.username;
       return session;
     }
   },
