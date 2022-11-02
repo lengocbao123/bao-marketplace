@@ -12,6 +12,7 @@ export interface TextFieldProps extends InputProps {
 export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
   ({ help, title, error, className, action, disabled, ...rest }, ref) => {
     const id = React.useId();
+
     return (
       <div className={clsx('w-full', className)}>
         {(title || action) && (

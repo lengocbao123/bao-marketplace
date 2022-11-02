@@ -21,6 +21,7 @@ export const useFormRangeFilter = (
         if (max !== 0 && !max) {
           return true;
         }
+
         return value < max;
       })
       .typeError('Numeric inputs only')

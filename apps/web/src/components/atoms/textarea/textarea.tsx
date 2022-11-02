@@ -25,6 +25,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
       const countText = event.target.value;
       setCountText(countText.length);
     };
+
     return (
       <div className={clsx('w-full', className)}>
         {title && (

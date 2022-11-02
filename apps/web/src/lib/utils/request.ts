@@ -5,6 +5,7 @@ const { publicRuntimeConfig } = getConfig();
 
 export const request = async <T>(endpoint: string, options): Promise<T> => {
   const session = await getSession();
+
   return fetch(publicRuntimeConfig.apiBaseUrl + endpoint, {
     ...options,
     headers: {

@@ -29,6 +29,7 @@ export const DropdownSelect: FC<DropdownSelectProps> = ({ options, onChange }) =
       setSelectedOption(options[0]);
     }
   }, [options]);
+
   return (
     <Menu as="div" className="relative">
       <Menu.Button as={Fragment}>

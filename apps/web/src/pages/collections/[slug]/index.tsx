@@ -9,6 +9,7 @@ import { NftsFilters, NftsList } from '../../../components/organisms/nfts';
 import { useFilter } from '../../../hooks/use-filters';
 import { COLLECTIONS, NFTS } from '../../../lib/dummy';
 import { NextPageWithLayout } from '../../_app';
+
 const DEFAULT_FILTERS = { status: [], blockchain: [], price: [], collection: [] };
 
 export async function getServerSideProps({ query, resolvedUrl }) {
@@ -20,6 +21,7 @@ export async function getServerSideProps({ query, resolvedUrl }) {
       }
     };
   }
+
   return {
     props: {}
   };

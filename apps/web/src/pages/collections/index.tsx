@@ -1,3 +1,4 @@
+import { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import { Fragment } from 'react';
 import { Layout } from '../../components/layouts';
@@ -6,7 +7,6 @@ import { CollectionsFilters, CollectionsList } from '../../components/organisms'
 import { useFilter } from '../../hooks/use-filters';
 import { CATEGORIES, COLLECTIONS } from '../../lib/dummy';
 import { NextPageWithLayout } from '../_app';
-import { InferGetServerSidePropsType } from 'next';
 
 const DEFAULT_FILTERS = { blockchain: [], price: [] };
 
@@ -19,6 +19,7 @@ export async function getServerSideProps({ query, resolvedUrl }) {
       }
     };
   }
+
   return {
     props: {}
   };

@@ -10,14 +10,15 @@ import { Layout } from '../../../components/layouts';
 import { FormAuth, TextField } from '../../../components/molecules';
 import { useFormLogin } from '../../../lib/hooks/form/use-form-login';
 import { redirectIfAuthenticated } from '../../../lib/utils/server';
-import { authOptions } from '../../api/auth/[...nextauth]';
 import { NextPageWithLayout } from '../../_app';
+import { authOptions } from '../../api/auth/[...nextauth]';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
   if (session && session.user.status !== 'verify_email') {
     return redirectIfAuthenticated();
   }
+
   return {
     props: {}
   };

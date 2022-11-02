@@ -28,6 +28,7 @@ export const CheckboxFilter: FC<CheckboxFilterProps> = ({ heading, name, options
       );
     }
   };
+
   return (
     <AccordionSection heading={heading} className="py-5 pb-3" contentClassName="pb-0">
       {action && <div className="mb-6 w-full">{action}</div>}

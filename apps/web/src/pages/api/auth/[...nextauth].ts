@@ -28,6 +28,7 @@ export const authOptions: NextAuthOptions = {
         } catch (error) {
           console.warn(error);
         }
+
         return null;
       }
     })
@@ -43,6 +44,7 @@ export const authOptions: NextAuthOptions = {
         token.username = user.username;
         token.avatarUrl = user.avatarUrl;
       }
+
       return token;
     },
 
@@ -54,6 +56,7 @@ export const authOptions: NextAuthOptions = {
       session.user.image = token.avatarUrl || null;
       session.user.status = token.status;
       session.user.name = token.username;
+
       return session;
     }
   },

@@ -12,6 +12,7 @@ export interface CardPaymentProps extends FormHTMLAttributes<HTMLFormElement> {
 
 export const CardPaymentMethod: FC<CardPaymentProps> = ({ title, cardNumber, onClose, className }) => {
   const CreditCardIcon = getCreditCardIcon(title);
+
   return (
     <Fragment>
       <div className={clsx(className, 'border-neutral-10 relative flex gap-3 rounded-xl border py-3 px-4')}>

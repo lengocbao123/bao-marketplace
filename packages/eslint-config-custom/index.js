@@ -1,9 +1,8 @@
 module.exports = {
   extends: ['plugin:@typescript-eslint/recommended', 'next/core-web-vitals', 'turbo', 'prettier'],
   rules: {
-    '@next/next/no-html-link-for-pages': 'off',
-    'react/jsx-key': 'off',
     'object-shorthand': ['error', 'always'],
+    'newline-before-return': 'error',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-explicit-any': 'off',

@@ -11,14 +11,15 @@ import { useFormSignUp } from '../../../lib/hooks/form/use-form-sign-up';
 import { getErrorMessage } from '../../../lib/utils/get-error-message';
 import { redirectIfAuthenticated } from '../../../lib/utils/server';
 import { UserData } from '../../../types';
-import { authOptions } from '../../api/auth/[...nextauth]';
 import { NextPageWithLayout } from '../../_app';
+import { authOptions } from '../../api/auth/[...nextauth]';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
   if (session) {
     return redirectIfAuthenticated();
   }
+
   return {
     props: {}
   };
@@ -38,6 +39,7 @@ const SignUp: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSe
       toast.error(getErrorMessage(error));
     }
   });
+
   return (
     <div className={'relative flex items-center justify-center pt-[120px] pb-10'}>
       <FormAuth

@@ -12,8 +12,9 @@ import { resendVerifyEmail } from '../../../lib/services';
 import { isSuccess } from '../../../lib/utils/response';
 import { redirectIfAuthenticated } from '../../../lib/utils/server';
 import { ResendVerifyEmailResponse } from '../../../types';
-import { authOptions } from '../../api/auth/[...nextauth]';
 import { NextPageWithLayout } from '../../_app';
+import { authOptions } from '../../api/auth/[...nextauth]';
+
 export const getServerSideProps: GetServerSideProps = async ({ req, res, query }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
   const { email } = query as { email: string };
@@ -57,6 +58,7 @@ const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSer
       toast.error('Error occurs');
     }
   };
+
   return (
     <Fragment>
       <NextSeo title="Verification Code" />
