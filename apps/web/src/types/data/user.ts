@@ -11,6 +11,10 @@ export interface UserLoginResponse extends BaseResponse {
   };
 }
 
+export interface ResendVerifyEmailResponse extends BaseResponse {
+  data: boolean;
+}
+
 export interface UserData {
   id?: string;
   email?: string;

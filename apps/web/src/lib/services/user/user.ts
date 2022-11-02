@@ -1,19 +1,12 @@
-import getConfig from 'next/config';
-import { UserLoginResponse, UserResponse } from '../../../types';
-const { publicRuntimeConfig } = getConfig();
+import { ResendVerifyEmailResponse, UserLoginResponse, UserResponse } from '../../../types';
+import { request } from '../../utils/request';
 
 export const login = (username: string, password: string): Promise<UserLoginResponse> => {
-  return fetch(publicRuntimeConfig.apiBaseUrl + '/auth/login', {
-    headers: {
-      'Content-Type': 'application/json'
-    },
+  return request<UserLoginResponse>('/auth/login', {
     method: 'POST',
     body: JSON.stringify({ username, password })
   })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data: UserLoginResponse) => {
+    .then((data) => {
       return data;
     })
     .catch((error) => {
@@ -22,17 +15,11 @@ export const login = (username: string, password: string): Promise<UserLoginResp
 };
 
 export const register = (email: string, password: string, passwordConfirm: string): Promise<UserResponse> => {
-  return fetch(publicRuntimeConfig.apiBaseUrl + '/auth/register', {
-    headers: {
-      'Content-Type': 'application/json'
-    },
+  return request<UserResponse>('/auth/register', {
     method: 'POST',
     body: JSON.stringify({ username: email, password, email, passwordConfirm })
   })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data: UserResponse) => {
+    .then((data) => {
       return data;
     })
     .catch((error) => {
@@ -40,17 +27,9 @@ export const register = (email: string, password: string, passwordConfirm: strin
     });
 };
 
-export const getUserInfo = (accessToken: string): Promise<UserResponse> => {
-  return fetch(publicRuntimeConfig.apiBaseUrl + '/user', {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`
-    }
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data: Promise<UserResponse>) => {
+export const getUserInfo = (): Promise<UserResponse> => {
+  return request<UserResponse>('/user', {})
+    .then((data) => {
       return data;
     })
     .catch((error) => {
@@ -58,18 +37,11 @@ export const getUserInfo = (accessToken: string): Promise<UserResponse> => {
     });
 };
 
-export const resendVerifyEmail = (email: string, accessToken: string) => {
-  return fetch(publicRuntimeConfig.apiBaseUrl + '/auth/resend-verify-email', {
+export const resendVerifyEmail = (email: string) => {
+  return request<ResendVerifyEmailResponse>('/auth/resend-verify-email', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${accessToken}`
-    },
     body: JSON.stringify({ email })
   })
-    .then((response) => {
-      return response.json();
-    })
     .then((data) => {
       return data;
     })

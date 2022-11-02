@@ -11,6 +11,7 @@ import { SimpleLayout } from '../../../components/layouts';
 import { resendVerifyEmail } from '../../../lib/services';
 import { isSuccess } from '../../../lib/utils/response';
 import { redirectIfAuthenticated } from '../../../lib/utils/server';
+import { ResendVerifyEmailResponse } from '../../../types';
 import { authOptions } from '../../api/auth/[...nextauth]';
 import { NextPageWithLayout } from '../../_app';
 export const getServerSideProps: GetServerSideProps = async ({ req, res, query }) => {
@@ -44,7 +45,7 @@ const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSer
     try {
       const receivedEmail = email ? email : data.user.email;
       setLoading(true);
-      const response = await resendVerifyEmail(receivedEmail, data.accessToken);
+      const response: ResendVerifyEmailResponse = await resendVerifyEmail(receivedEmail);
       setLoading(false);
       if (isSuccess(response.message)) {
         toast.success('Verify email was sent');
