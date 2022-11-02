@@ -1,6 +1,6 @@
 import clsx from 'clsx';
+import { Pagination, PaginationInput, PaginationLimit } from 'components/molecules/pagination';
 import { FC, HTMLAttributes, ReactNode } from 'react';
-import { PaginationInput, PaginationLimit, Pagination } from '../pagination';
 
 export interface TableSectionProps extends HTMLAttributes<HTMLDivElement> {
   page?: number;

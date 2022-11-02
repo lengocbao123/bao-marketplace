@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { FC, HTMLAttributes } from 'react';
-import { ChevronRightIcon } from '../../icons/outline';
+import { ChevronRightIcon } from 'components/icons/outline';
 
 export interface ProductSectionProps extends HTMLAttributes<HTMLDivElement> {
   title?: string;

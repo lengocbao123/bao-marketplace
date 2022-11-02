@@ -1,9 +1,9 @@
-import { usePagination } from '../../../hooks/use-pagination';
+import { usePagination } from 'hooks/use-pagination';
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FC, HTMLAttributes } from 'react';
-import { AlignCenterHorizontalIcon, ChevronLeftIcon, ChevronRightIcon } from '../../icons/outline';
+import { AlignCenterHorizontalIcon, ChevronLeftIcon, ChevronRightIcon } from 'components/icons/outline';
 
 export interface PaginationProps extends HTMLAttributes<HTMLUListElement> {
   page: number;

@@ -4,15 +4,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { toast } from 'react-hot-toast';
-import { Button } from '../../../components/atoms';
-import { Layout } from '../../../components/layouts';
-import { FormAuth, TextField } from '../../../components/molecules';
-import { useFormSignUp } from '../../../lib/hooks/form/use-form-sign-up';
-import { getErrorMessage } from '../../../lib/utils/get-error-message';
-import { redirectIfAuthenticated } from '../../../lib/utils/server';
-import { UserData } from '../../../types';
-import { NextPageWithLayout } from '../../_app';
-import { authOptions } from '../../api/auth/[...nextauth]';
+import { Button } from 'components/atoms';
+import { Layout } from 'components/layouts';
+import { FormAuth, TextField } from 'components/molecules';
+import { useFormSignUp } from 'lib/hooks/form/use-form-sign-up';
+import { getErrorMessage } from 'lib/utils/get-error-message';
+import { redirectIfAuthenticated } from 'lib/utils/server';
+import { UserData } from 'types/data';
+import { NextPageWithLayout } from 'pages/_app';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);

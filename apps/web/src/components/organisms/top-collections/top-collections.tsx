@@ -1,7 +1,7 @@
 import { FC, HTMLAttributes, useState } from 'react';
-import { CATEGORIES } from '../../../lib/dummy';
-import { ButtonLink } from '../../atoms';
-import { CardCollectionRanking, ChipFilter, Section } from '../../molecules';
+import { CATEGORIES } from 'lib/dummy';
+import { ButtonLink } from 'components/atoms';
+import { CardCollectionRanking, ChipFilter, Section } from 'components/molecules';
 
 export interface TopCollectionsProps extends HTMLAttributes<HTMLDivElement> {
   collections: Array<any>;
@@ -20,7 +20,7 @@ export const TopCollections: FC<TopCollectionsProps> = ({ collections }) => {
             <CardCollectionRanking
               key={collection.id}
               order={index + 1}
-              link={{ as: '/collections/async-music-auctions-' + collection.id, href: '/collections/[slug]' }}
+              link={{ as: `/collections/async-music-auctions-${collection.id}`, href: '/collections/[slug]' }}
               logoImage={collection.logoImage}
               title={collection.name}
               floor={2300}

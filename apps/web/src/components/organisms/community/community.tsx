@@ -1,6 +1,6 @@
-import { ButtonLink } from '../../atoms';
-import { DiscordIcon } from '../../icons/brand';
-import { Section } from '../../molecules';
+import { ButtonLink } from 'components/atoms';
+import { DiscordIcon } from 'components/icons/brand';
+import { Section } from 'components/molecules';
 
 export const Community = () => {
   return (

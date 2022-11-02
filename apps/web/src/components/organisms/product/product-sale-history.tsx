@@ -6,13 +6,13 @@ import {
   TableDataHeaderCell,
   TableDataRow,
   TableDataRowEmpty
-} from '../../molecules';
+} from 'components/molecules';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 import { FC, HTMLAttributes } from 'react';
-import { formatCurrency } from '../../../lib/utils/number';
-import { Avatar } from '../../atoms';
-import { TableSection } from '../../molecules/section';
+import { formatCurrency } from 'lib/utils/number';
+import { Avatar } from 'components/atoms';
+import { TableSection } from 'components/molecules';
 
 export type ProductSaleHistoryProps = HTMLAttributes<HTMLDivElement>;
 

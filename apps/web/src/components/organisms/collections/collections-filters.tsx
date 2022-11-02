@@ -1,9 +1,9 @@
 import clsx from 'clsx';
 import { FC } from 'react';
-import { FilterType } from '../../../hooks/use-filters';
-import { InputLabel } from '../../atoms';
-import { BinanceIcon, EthereumIcon, PolygonIcon } from '../../icons/blockchain';
-import { CheckboxFilter, RangeFilter } from '../../molecules';
+import { FilterType } from 'hooks/use-filters';
+import { InputLabel } from 'components/atoms';
+import { BinanceIcon, EthereumIcon, PolygonIcon } from 'components/icons/blockchain';
+import { CheckboxFilter, RangeFilter } from 'components/molecules';
 
 export interface CollectionsFiltersProps {
   filter: FilterType;

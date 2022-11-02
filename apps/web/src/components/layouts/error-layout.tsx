@@ -1,5 +1,5 @@
 import { FC, HTMLAttributes } from 'react';
-import { Header, SimpleFooter } from '../organisms';
+import { Header, SimpleFooter } from 'components/organisms';
 
 export type ErrorLayoutProps = HTMLAttributes<HTMLElement>;
 

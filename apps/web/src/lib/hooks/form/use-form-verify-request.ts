@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { UserForm } from '../../../types/index';
+import { UserForm } from 'types/index';
 
 export interface UseFormVerifyRequest {
   otp: string;

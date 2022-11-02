@@ -1,4 +1,4 @@
-import { CardNft, ProductSection } from '../../molecules';
+import { CardNft, ProductSection } from 'components/molecules';
 import clsx from 'clsx';
 import { FC, HTMLAttributes } from 'react';
 

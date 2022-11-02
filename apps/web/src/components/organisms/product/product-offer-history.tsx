@@ -5,13 +5,13 @@ import {
   TableDataHeader,
   TableDataHeaderCell,
   TableDataRow
-} from '../../molecules';
+} from 'components/molecules';
 import clsx from 'clsx';
 import { format } from 'date-fns';
 import { FC, HTMLAttributes } from 'react';
-import { formatCurrency } from '../../../lib/utils/number';
-import { Avatar, Button } from '../../atoms';
-import { TableSection } from '../../molecules/section';
+import { formatCurrency } from 'lib/utils/number';
+import { Avatar, Button } from 'components/atoms';
+import { TableSection } from 'components/molecules';
 
 export type ProductOfferHistoryProps = HTMLAttributes<HTMLDivElement>;
 

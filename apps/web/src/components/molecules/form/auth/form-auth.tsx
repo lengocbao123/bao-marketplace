@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { FC, HTMLAttributes, ReactNode } from 'react';
-import { ButtonIcon } from '../../../atoms';
-import { FacebookIcon, GithubIcon, GoogleIcon, TwitterIcon } from '../../../icons/brand';
+import { ButtonIcon } from 'components/atoms';
+import { FacebookIcon, GithubIcon, GoogleIcon, TwitterIcon } from 'components/icons/brand';
 
 export interface FormAuthProps extends HTMLAttributes<HTMLElement> {
   title: string;

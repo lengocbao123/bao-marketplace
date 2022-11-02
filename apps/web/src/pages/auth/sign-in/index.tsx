@@ -3,15 +3,15 @@ import { unstable_getServerSession } from 'next-auth';
 import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { useEffect } from 'react';
 import { toast } from 'react-hot-toast';
-import { Button, CheckboxInput } from '../../../components/atoms';
-import { Layout } from '../../../components/layouts';
-import { FormAuth, TextField } from '../../../components/molecules';
-import { useFormLogin } from '../../../lib/hooks/form/use-form-login';
-import { redirectIfAuthenticated } from '../../../lib/utils/server';
-import { NextPageWithLayout } from '../../_app';
-import { authOptions } from '../../api/auth/[...nextauth]';
+import { Button, CheckboxInput } from 'components/atoms';
+import { Layout } from 'components/layouts';
+import { FormAuth, TextField } from 'components/molecules';
+import { useFormLogin } from 'lib/hooks/form/use-form-login';
+import { redirectIfAuthenticated } from 'lib/utils/server';
+import { NextPageWithLayout } from 'pages/_app';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);

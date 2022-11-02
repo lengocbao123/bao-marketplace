@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import React from 'react';
-import { SpinIcon } from '../../icons/animate';
+import { SpinIcon } from 'components/icons/animate';
 import { ButtonProps } from './button';
 
 export const ButtonText = React.forwardRef<HTMLButtonElement, ButtonProps>(

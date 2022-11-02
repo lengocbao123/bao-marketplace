@@ -1,7 +1,7 @@
-import { useTextTruncate } from '../../../hooks/use-text-truncate';
+import { useTextTruncate } from 'hooks/use-text-truncate';
 import clsx from 'clsx';
 import { FC, HTMLAttributes } from 'react';
-import { ChevronDownIcon } from '../../icons/outline';
+import { ChevronDownIcon } from 'components/icons/outline';
 
 export interface TextTruncateProps extends HTMLAttributes<HTMLDivElement> {
   text: string;

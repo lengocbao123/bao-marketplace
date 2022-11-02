@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { FC, HTMLAttributes } from 'react';
-import { PikassoColorIcon } from '../../icons/brand';
+import { PikassoColorIcon } from 'components/icons/brand';
 
 /* ---------------------------------------------------------------------------------------------------------------------
  * SimpleHeader

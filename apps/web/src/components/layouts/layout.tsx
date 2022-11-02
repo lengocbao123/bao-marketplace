@@ -1,5 +1,5 @@
 import { FC, Fragment, HTMLAttributes } from 'react';
-import { Footer, Header } from '../organisms';
+import { Footer, Header } from 'components/organisms';
 
 export type LayoutProps = HTMLAttributes<HTMLElement>;
 

@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import { createRef, forwardRef, InputHTMLAttributes, ReactElement, RefObject, useId, useState } from 'react';
-import { ButtonIcon } from '../../../components/atoms/button';
-import { SVG } from '../../../types/index';
-import { AlertIcon, EyeClosedIcon, EyeIcon } from '../../icons/outline';
+import { ButtonIcon } from 'components/atoms/button';
+import { SVG } from 'types/index';
+import { AlertIcon, EyeClosedIcon, EyeIcon } from 'components/icons/outline';
 
 export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;

@@ -1,6 +1,6 @@
 import { FC, HtmlHTMLAttributes } from 'react';
-import { Button } from '../../atoms';
-import { ArrowLeftIcon, FilterIcon } from '../../icons/outline';
+import { Button } from 'components/atoms';
+import { ArrowLeftIcon, FilterIcon } from 'components/icons/outline';
 
 export interface ExploreFilterToggleProps extends HtmlHTMLAttributes<HTMLDivElement> {
   numOfFilters: number;

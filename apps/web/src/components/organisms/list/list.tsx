@@ -1,7 +1,7 @@
-import { pluralize } from '../../../lib/utils/plural-count';
+import { pluralize } from 'lib/utils/plural-count';
 import clsx from 'clsx';
 import React, { FC, Fragment, HTMLAttributes } from 'react';
-import { Pagination } from '../../molecules';
+import { Pagination } from 'components/molecules';
 
 export interface ListProps extends HTMLAttributes<HTMLDivElement> {
   label?: string;

@@ -1,5 +1,8 @@
 import ProgressBar from '@badrap/bar-of-progress';
+import { GTM_ID, pageView } from 'lib/gtm';
 import { NextPage } from 'next';
+import { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 import { DefaultSeo } from 'next-seo';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -7,11 +10,8 @@ import { Router, useRouter } from 'next/router';
 import Script from 'next/script';
 import { ReactElement, ReactNode, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
+import 'styles/globals.css';
 import nextSeoConfig from '../../next-seo.config';
-import { GTM_ID, pageView } from '../lib/gtm';
-import '../styles/globals.css';
-import { SessionProvider } from 'next-auth/react';
-import { Session } from 'next-auth';
 
 const progress = new ProgressBar({
   size: 2,

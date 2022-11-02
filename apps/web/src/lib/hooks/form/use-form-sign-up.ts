@@ -2,8 +2,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { UserForm, UserResponse } from '../../../types';
-import { register } from '../../services';
+import { UserForm, UserResponse } from 'types/index';
+import { register } from 'lib/services';
 
 export interface UseFormSignUp {
   username: string;

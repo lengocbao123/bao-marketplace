@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { Button, ButtonIcon } from '../../atoms';
-import { ChevronLeftIcon, ChevronRightIcon } from '../../icons/outline';
+import { Button, ButtonIcon } from 'components/atoms';
+import { ChevronLeftIcon, ChevronRightIcon } from 'components/icons/outline';
 
 type ChipOption = {
   id: string;

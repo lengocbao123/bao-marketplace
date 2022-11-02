@@ -1,7 +1,7 @@
 import { LinkProps } from 'next/link';
 import { FC, HTMLAttributes } from 'react';
-import { ButtonLink } from '../../atoms';
-import { ChevronRightIcon } from '../../icons/outline';
+import { ButtonLink } from 'components/atoms';
+import { ChevronRightIcon } from 'components/icons/outline';
 
 export type CardPopularProps = HTMLAttributes<HTMLElement> & {
   image: string;

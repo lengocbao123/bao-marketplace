@@ -2,7 +2,7 @@ import clsx from 'clsx';
 import { LinkProps } from 'next/dist/client/link';
 import Link from 'next/link';
 import React, { AnchorHTMLAttributes } from 'react';
-import { SpinIcon } from '../../icons/animate';
+import { SpinIcon } from 'components/icons/animate';
 import { ButtonIconOrientation, ButtonSize, ButtonVariant, IconButton } from './button';
 
 export type ButtonLinkProps = Omit<AnchorHTMLAttributes<HTMLAnchorElement>, keyof LinkProps> &

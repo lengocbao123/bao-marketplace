@@ -1,9 +1,9 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC, HTMLAttributes } from 'react';
-import { DiscordIcon, MediumIcon, TwitterIcon } from '../../icons/brand';
-import { LinkIcon } from '../../icons/outline';
-import { FormSubscribe } from '../../molecules/form';
+import { DiscordIcon, MediumIcon, TwitterIcon } from 'components/icons/brand';
+import { LinkIcon } from 'components/icons/outline';
+import { FormSubscribe } from 'components/molecules/form';
 
 export type FooterProps = HTMLAttributes<HTMLElement>;
 

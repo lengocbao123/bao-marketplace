@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { FC, HTMLAttributes, Key } from 'react';
-import { CardProperty } from '../../molecules/card/card-property';
-import { AccordionSection } from '../../molecules/section';
+import { CardProperty } from 'components/molecules';
+import { AccordionSection } from 'components/molecules';
 
 export type Property = { name: Key | null | undefined; type: string; value: string };
 

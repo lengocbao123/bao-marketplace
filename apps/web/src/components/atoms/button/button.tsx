@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import React from 'react';
-import { SpinIcon } from '../../icons/animate';
+import { SpinIcon } from 'components/icons/animate';
 
 export type IconButton = React.FC<React.SVGProps<SVGSVGElement>>;
 export type ButtonSize = 'sm' | 'md' | 'lg';

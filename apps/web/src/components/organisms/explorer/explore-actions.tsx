@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { HTMLAttributes, FC } from 'react';
-import { ButtonText } from '../../atoms';
-import { DropdownSelect } from '../../molecules';
+import { ButtonText } from 'components/atoms';
+import { DropdownSelect } from 'components/molecules';
 import { ExploreFilterToggle } from './explore-filter-toggle';
 
 export interface ExploreActionsProps extends HTMLAttributes<HTMLDivElement> {

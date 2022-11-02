@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import React, { FC, HTMLAttributes } from 'react';
-import { Avatar } from '../../atoms';
+import { Avatar } from 'components/atoms';
 
 export interface ProductInfoProps extends HTMLAttributes<HTMLDivElement> {
   nft: any;

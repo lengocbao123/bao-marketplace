@@ -1,6 +1,6 @@
-import { DiscordIcon, TwitterIcon } from '../../icons/brand';
+import { DiscordIcon, TwitterIcon } from 'components/icons/brand';
 import Link from 'next/link';
-import { GlobeIcon } from '../../icons/outline';
+import { GlobeIcon } from 'components/icons/outline';
 import { HTMLAttributes, FC } from 'react';
 import clsx from 'clsx';
 

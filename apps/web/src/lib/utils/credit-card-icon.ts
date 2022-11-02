@@ -1,11 +1,11 @@
 // Get credit card icon based on card type
-import { CardIcon } from '../../components/icons/outline';
+import { CardIcon } from 'components/icons/outline';
 import {
   AmericanExpressColorIcon,
   DiscoverColorIcon,
   MastercardColorIcon,
   VisaColorIcon
-} from '../../components/icons/payment';
+} from 'components/icons/payment';
 
 export const getCreditCardIcon = (cardType: string) => {
   switch (cardType) {

@@ -1,5 +1,5 @@
 import { FC, HTMLAttributes } from 'react';
-import { Input } from '../../../atoms';
+import { Input } from 'components/atoms';
 
 export type SubscribeProps = HTMLAttributes<HTMLElement>;
 

@@ -1,11 +1,11 @@
 import { useRouter } from 'next/router';
-import { Layout } from '../../../../components/layouts';
-import { ExploreSection, generateTabLinkData } from '../../../../components/molecules';
-import { CollectionsFilters, CollectionsList, ProfileInventory } from '../../../../components/organisms';
-import { useFilter } from '../../../../hooks/use-filters';
-import { USER_INVENTORY_TABS } from '../../../../lib/constants';
-import { COLLECTIONS } from '../../../../lib/dummy';
-import { NextPageWithLayout } from '../../../_app';
+import { Layout } from 'components/layouts';
+import { ExploreSection, generateTabLinkData } from 'components/molecules';
+import { CollectionsFilters, CollectionsList, ProfileInventory } from 'components/organisms';
+import { useFilter } from 'hooks/use-filters';
+import { USER_INVENTORY_TABS } from 'lib/constants';
+import { COLLECTIONS } from 'lib/dummy';
+import { NextPageWithLayout } from 'pages/_app';
 
 const DEFAULT_FILTERS = { status: [], blockchain: [], price: [], collection: [] };
 const Home: NextPageWithLayout = () => {
@@ -33,7 +33,7 @@ const Home: NextPageWithLayout = () => {
       <div className="container">
         <ExploreSection
           filtersComponent={<CollectionsFilters filter={filter} onChange={onFiltersChange} />}
-          tabs={generateTabLinkData(USER_INVENTORY_TABS, '/users/' + query.userId)}
+          tabs={generateTabLinkData(USER_INVENTORY_TABS, `/users/${query.userId}`)}
           filter={filter}
           tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border-b"
         >

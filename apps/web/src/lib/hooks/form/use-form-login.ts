@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
 import * as yup from 'yup';
-import { UserForm } from '../../../types';
+import { UserForm } from 'types/index';
 import { useRouter } from 'next/router';
 
 export interface UseFormLogin {

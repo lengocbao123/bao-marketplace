@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
-import { MaintenanceSystemGraphic } from '../../../components/icons/graphic';
-import { ErrorLayout } from '../../../components/layouts';
-import { Error } from '../../../components/organisms';
-import { NextPageWithLayout } from '../../_app';
+import { MaintenanceSystemGraphic } from 'components/icons/graphic';
+import { ErrorLayout } from 'components/layouts';
+import { Error } from 'components/organisms';
+import { NextPageWithLayout } from 'pages/_app';
 
 const ErrorMaintenancePage: NextPageWithLayout = () => {
   return (

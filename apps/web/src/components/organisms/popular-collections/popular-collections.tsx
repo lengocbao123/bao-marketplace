@@ -1,7 +1,7 @@
 import { FC, HTMLAttributes } from 'react';
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { CardPopular, Section } from '../../molecules';
+import { CardPopular, Section } from 'components/molecules';
 
 export type PopularCollectionsProps = HTMLAttributes<HTMLElement>;
 

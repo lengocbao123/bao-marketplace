@@ -1,5 +1,5 @@
-import { CollectionGraphic, GalleryGraphic, SaleGraphic } from '../../icons/graphic';
-import { Section } from '../../molecules';
+import { CollectionGraphic, GalleryGraphic, SaleGraphic } from 'components/icons/graphic';
+import { Section } from 'components/molecules';
 
 export const Instruction = () => {
   const steps = [

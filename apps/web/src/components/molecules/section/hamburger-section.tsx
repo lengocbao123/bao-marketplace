@@ -2,8 +2,8 @@ import { Dialog, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import { FC, Fragment, HTMLAttributes, ReactNode, useEffect, useState } from 'react';
-import { Button, IconButton } from '../../atoms';
-import { CrossIcon, MenuIcon } from '../../icons/outline';
+import { Button, IconButton } from 'components/atoms';
+import { CrossIcon, MenuIcon } from 'components/icons/outline';
 
 export interface HamburgerSectionProps extends HTMLAttributes<HTMLDivElement> {
   openButtonIcon?: IconButton;

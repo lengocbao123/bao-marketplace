@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { FC, HTMLAttributes } from 'react';
-import { getShortAddress } from '../../../lib/utils/string';
-import { AccordionSection, TableInfoRow } from '../../molecules';
+import { getShortAddress } from 'lib/utils/string';
+import { AccordionSection, TableInfoRow } from 'components/molecules';
 
 export type ProductDetailsProps = HTMLAttributes<HTMLDivElement>;
 

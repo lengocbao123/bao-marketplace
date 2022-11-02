@@ -1,6 +1,6 @@
+import { CheckboxInput } from 'components/atoms';
+import { AccordionSection } from 'components/molecules/section';
 import { ChangeEvent, FC, ReactNode } from 'react';
-import { CheckboxInput } from '../../atoms';
-import { AccordionSection } from '../section';
 
 type CheckboxOption = {
   label: ReactNode;

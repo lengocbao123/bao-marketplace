@@ -3,6 +3,7 @@ module.exports = {
   rules: {
     'object-shorthand': ['error', 'always'],
     'newline-before-return': 'error',
+    'prefer-template': 'error',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-explicit-any': 'off',

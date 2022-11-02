@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import React, { FC, FormHTMLAttributes, Fragment } from 'react';
-import { getCreditCardIcon } from '../../../lib/utils/credit-card-icon';
-import { getShortCardNumber } from '../../../lib/utils/string';
-import { CrossIcon } from '../../icons/outline';
+import { getCreditCardIcon } from 'lib/utils/credit-card-icon';
+import { getShortCardNumber } from 'lib/utils/string';
+import { CrossIcon } from 'components/icons/outline';
 
 export interface CardPaymentProps extends FormHTMLAttributes<HTMLFormElement> {
   title: string;

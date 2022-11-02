@@ -1,6 +1,6 @@
 import { FC, HTMLAttributes } from 'react';
-import { SVG } from '../../../types/index';
-import { Button, ButtonLink } from '../../atoms';
+import { SVG } from 'types/index';
+import { Button, ButtonLink } from 'components/atoms';
 
 export interface ErrorProps extends HTMLAttributes<HTMLDivElement> {
   title: string;

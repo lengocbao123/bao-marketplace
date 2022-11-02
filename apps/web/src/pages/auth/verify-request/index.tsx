@@ -5,15 +5,15 @@ import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { Fragment, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { Button } from '../../../components/atoms';
-import { CheckMailGraphic } from '../../../components/icons/graphic';
-import { SimpleLayout } from '../../../components/layouts';
-import { resendVerifyEmail } from '../../../lib/services';
-import { isSuccess } from '../../../lib/utils/response';
-import { redirectIfAuthenticated } from '../../../lib/utils/server';
-import { ResendVerifyEmailResponse } from '../../../types';
-import { NextPageWithLayout } from '../../_app';
-import { authOptions } from '../../api/auth/[...nextauth]';
+import { Button } from 'components/atoms';
+import { CheckMailGraphic } from 'components/icons/graphic';
+import { SimpleLayout } from 'components/layouts';
+import { resendVerifyEmail } from 'lib/services';
+import { isSuccess } from 'lib/utils/response';
+import { redirectIfAuthenticated } from 'lib/utils/server';
+import { ResendVerifyEmailResponse } from 'types/data';
+import { NextPageWithLayout } from 'pages/_app';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res, query }) => {
   const session = await unstable_getServerSession(req, res, authOptions);

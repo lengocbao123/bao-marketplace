@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { FC, HTMLAttributes } from 'react';
-import { formatCurrency } from '../../../lib/utils/number';
-import { Button } from '../../atoms';
+import { formatCurrency } from 'lib/utils/number';
+import { Button } from 'components/atoms';
 
 export interface ProductExchangeProps extends HTMLAttributes<HTMLDivElement> {
   order: any;

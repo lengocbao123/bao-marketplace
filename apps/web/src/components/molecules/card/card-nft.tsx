@@ -1,10 +1,10 @@
 import clsx from 'clsx';
+import { Avatar } from 'components/atoms';
+import { formatCurrency } from 'lib/utils/number';
+import { getUsernameFromEmail } from 'lib/utils/string';
 import Image from 'next/image';
 import Link, { LinkProps } from 'next/link';
 import React, { FC, HTMLAttributes } from 'react';
-import { formatCurrency } from '../../../lib/utils/number';
-import { getUsernameFromEmail } from '../../../lib/utils/string';
-import { Avatar } from '../../atoms';
 
 export interface CardNftProps extends HTMLAttributes<HTMLDivElement> {
   link: LinkProps;
@@ -58,7 +58,7 @@ export const CardNft: FC<CardNftProps> = ({ className, user, link, image, title,
               </div>
 
               <div className={'justify-self-end sm:justify-self-start'}>
-                <Link as={`/users/${user.id}/nfts?filter=on-sale`} href={'/users/[userId]/nfts?filter=on-sale'}>
+                <Link href={`/users/${user.id}/nfts?filter=on-sale`}>
                   <Avatar
                     name={user.username ?? getUsernameFromEmail(user.email)}
                     size="sm"
@@ -67,7 +67,7 @@ export const CardNft: FC<CardNftProps> = ({ className, user, link, image, title,
                     className={'sm:hidden'}
                   />
                 </Link>
-                <Link as={`/users/${user.id}/nfts?filter=on-sale`} href={'/users/[userId]/nfts?filter=on-sale'}>
+                <Link href={`/users/${user.id}/nfts?filter=on-sale`}>
                   <Avatar
                     name={user.username ?? getUsernameFromEmail(user.email)}
                     size="sm"

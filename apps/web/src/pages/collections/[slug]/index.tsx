@@ -2,13 +2,13 @@ import { InferGetServerSidePropsType } from 'next';
 import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
-import { Layout } from '../../../components/layouts';
-import { Breadcrumb, ExploreSection, generateTabLinkData } from '../../../components/molecules';
-import { CollectionProfile } from '../../../components/organisms';
-import { NftsFilters, NftsList } from '../../../components/organisms/nfts';
-import { useFilter } from '../../../hooks/use-filters';
-import { COLLECTIONS, NFTS } from '../../../lib/dummy';
-import { NextPageWithLayout } from '../../_app';
+import { Layout } from 'components/layouts';
+import { Breadcrumb, ExploreSection, generateTabLinkData } from 'components/molecules';
+import { CollectionProfile } from 'components/organisms';
+import { NftsFilters, NftsList } from 'components/organisms/nfts';
+import { useFilter } from 'hooks/use-filters';
+import { COLLECTIONS, NFTS } from 'lib/dummy';
+import { NextPageWithLayout } from 'pages/_app';
 
 const DEFAULT_FILTERS = { status: [], blockchain: [], price: [], collection: [] };
 
@@ -16,7 +16,7 @@ export async function getServerSideProps({ query, resolvedUrl }) {
   if (!query.filter) {
     return {
       redirect: {
-        destination: resolvedUrl + '?filter=on-sale',
+        destination: `${resolvedUrl}?filter=on-sale`,
         permanent: false
       }
     };
@@ -63,7 +63,7 @@ const Home: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getServ
       <div className="container">
         <ExploreSection
           filtersComponent={<NftsFilters collections={COLLECTIONS} filter={filter} onChange={onFiltersChange} />}
-          tabs={generateTabLinkData(tabs, '/collections/' + query.slug)}
+          tabs={generateTabLinkData(tabs, `/collections/${query.slug}`)}
           filter={filter}
           tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border-b"
         >

@@ -1,8 +1,8 @@
 import clsx from 'clsx';
+import { Button, Input } from 'components/atoms';
+import { AccordionSection } from 'components/molecules/section';
+import { UseFormRangeFilter, useFormRangeFilter } from 'lib/hooks/form/use-form-range-filter';
 import { FC, HTMLAttributes } from 'react';
-import { UseFormRangeFilter, useFormRangeFilter } from '../../../lib/hooks/form/use-form-range-filter';
-import { Button, Input } from '../../atoms';
-import { AccordionSection } from '../section';
 
 const NAME = 'RangeFilter';
 

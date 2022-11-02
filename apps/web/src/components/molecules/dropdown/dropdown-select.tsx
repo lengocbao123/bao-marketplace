@@ -1,8 +1,8 @@
 import { Menu, Transition } from '@headlessui/react';
 import clsx from 'clsx';
 import { FC, Fragment, useEffect, useState } from 'react';
-import { Button } from '../../atoms';
-import { ChevronDownIcon } from '../../icons/outline';
+import { Button } from 'components/atoms';
+import { ChevronDownIcon } from 'components/icons/outline';
 
 export type SelectOption = {
   value: string;

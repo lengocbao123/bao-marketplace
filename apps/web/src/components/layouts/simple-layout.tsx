@@ -1,6 +1,6 @@
 import { FC, Fragment, HTMLAttributes } from 'react';
-import { SimpleFooter } from '../organisms/footer/simple-footer';
-import { SimpleHeader } from '../organisms/header/simple-header';
+import { SimpleFooter } from 'components/organisms';
+import { SimpleHeader } from 'components/organisms';
 
 export type SimpleLayoutProps = HTMLAttributes<HTMLElement>;
 

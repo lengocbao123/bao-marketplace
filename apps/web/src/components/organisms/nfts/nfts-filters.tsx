@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import { FC } from 'react';
-import { FilterType } from '../../../hooks/use-filters';
-import { Input, InputLabel } from '../../atoms';
-import { BinanceIcon, EthereumIcon, PolygonIcon } from '../../icons/blockchain';
-import { SearchIcon } from '../../icons/outline';
-import { CheckboxFilter, RangeFilter } from '../../molecules';
+import { FilterType } from 'hooks/use-filters';
+import { Input, InputLabel } from 'components/atoms';
+import { BinanceIcon, EthereumIcon, PolygonIcon } from 'components/icons/blockchain';
+import { SearchIcon } from 'components/icons/outline';
+import { CheckboxFilter, RangeFilter } from 'components/molecules';
 
 export interface NftsFiltersProps {
   collections: any[];

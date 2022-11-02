@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import React, { Fragment, useEffect, useState } from 'react';
 import Dropzone, { Accept, DropzoneOptions, DropzoneRef, FileRejection } from 'react-dropzone';
-import { CrossIcon, ImageIcon } from '../../../components/icons/outline';
-import { DEFAULT_ALLOW_IMAGE_EXTENSIONS, DEFAULT_MAX_IMAGE_SIZE } from '../../../lib/constants';
-import { SVG } from '../../../types/index';
-import { Button } from '../../atoms';
+import { CrossIcon, ImageIcon } from 'components/icons/outline';
+import { DEFAULT_ALLOW_IMAGE_EXTENSIONS, DEFAULT_MAX_IMAGE_SIZE } from 'lib/constants';
+import { SVG } from 'types/index';
+import { Button } from 'components/atoms';
 
 const NAME = 'FileImage';
 

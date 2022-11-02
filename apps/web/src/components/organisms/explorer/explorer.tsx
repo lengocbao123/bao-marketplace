@@ -1,7 +1,7 @@
 import { FC, HTMLAttributes, useState } from 'react';
-import { CATEGORIES, NFTS } from '../../../lib/dummy';
-import { ButtonLink, ListItem } from '../../atoms';
-import { CardNft, ChipFilter, Section } from '../../molecules';
+import { CATEGORIES, NFTS } from 'lib/dummy';
+import { ButtonLink, ListItem } from 'components/atoms';
+import { CardNft, ChipFilter, Section } from 'components/molecules';
 
 export type ExplorerProps = HTMLAttributes<HTMLElement>;
 
@@ -23,7 +23,7 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
           {nfts.map((nft) => (
             <CardNft
               key={nft.id}
-              link={{ as: '/nfts/async-music-auctions' + nft.id, href: '/nfts/[slug]' }}
+              link={{ as: `/nfts/async-music-auctions-${nft.id}`, href: '/nfts/[slug]' }}
               image={nft.image}
               title={nft.name}
               subtitle="Game NFTs"

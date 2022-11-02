@@ -4,11 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FC, HTMLAttributes, ReactNode } from 'react';
 import toast from 'react-hot-toast';
-import { copyToClipboard } from '../../../lib/utils/navigator';
-import { getShortAddress } from '../../../lib/utils/string';
-import { Avatar, TextTruncate } from '../../atoms';
-import { DiscordIcon, TwitterIcon } from '../../icons/brand';
-import { CopyIcon, GlobeIcon } from '../../icons/outline';
+import { copyToClipboard } from 'lib/utils/navigator';
+import { getShortAddress } from 'lib/utils/string';
+import { Avatar, TextTruncate } from 'components/atoms';
+import { DiscordIcon, TwitterIcon } from 'components/icons/brand';
+import { CopyIcon, GlobeIcon } from 'components/icons/outline';
 
 export type SocialLink = 'twitter' | 'discord' | 'website';
 

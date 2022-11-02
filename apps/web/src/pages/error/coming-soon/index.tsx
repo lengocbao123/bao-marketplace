@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
-import { ComingSoonGraphic } from '../../../components/icons/graphic';
-import { ErrorLayout } from '../../../components/layouts';
-import { Error } from '../../../components/organisms';
-import { NextPageWithLayout } from '../../_app';
+import { ComingSoonGraphic } from 'components/icons/graphic';
+import { ErrorLayout } from 'components/layouts';
+import { Error } from 'components/organisms';
+import { NextPageWithLayout } from 'pages/_app';
 
 const ComingSoonPage: NextPageWithLayout = () => {
   return (

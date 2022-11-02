@@ -1,8 +1,8 @@
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { unstable_getServerSession } from 'next-auth';
-import { Layout } from '../components/layouts';
-import { Community, Explorer, Hero, Instruction, PopularCollections, TopCollections } from '../components/organisms';
-import { COLLECTIONS } from '../lib/dummy';
+import { Layout } from 'components/layouts';
+import { Community, Explorer, Hero, Instruction, PopularCollections, TopCollections } from 'components/organisms';
+import { COLLECTIONS } from 'lib/dummy';
 import { authOptions } from './api/auth/[...nextauth]';
 import { NextPageWithLayout } from './_app';
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {

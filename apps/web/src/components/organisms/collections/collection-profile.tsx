@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import React, { FC, HTMLAttributes } from 'react';
-import { getAvatarLetter } from '../../../lib/utils/string';
-import { TextTruncate } from '../../molecules';
+import { getAvatarLetter } from 'lib/utils/string';
+import { TextTruncate } from 'components/molecules';
 import { CollectionInfo } from './collection-info';
 import { CollectionSocials } from './collection-socials';
 

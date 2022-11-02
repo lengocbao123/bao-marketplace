@@ -1,5 +1,5 @@
-import { ResendVerifyEmailResponse, UserLoginResponse, UserResponse } from '../../../types';
-import { request } from '../../utils/request';
+import { ResendVerifyEmailResponse, UserLoginResponse, UserResponse } from 'types/data';
+import { request } from 'lib/utils/request';
 
 export const login = (username: string, password: string): Promise<UserLoginResponse> => {
   return request<UserLoginResponse>('/auth/login', {

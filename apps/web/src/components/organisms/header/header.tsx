@@ -3,11 +3,11 @@ import clsx from 'clsx';
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { FC, Fragment, HTMLAttributes } from 'react';
-import { UserData } from '../../../types';
-import { Avatar, Button, ButtonIcon, ButtonLink, Input } from '../../atoms';
-import { PikassoColorIcon } from '../../icons/brand';
-import { EditIcon, MenuIcon, PersonIcon, SearchIcon, WalletIcon } from '../../icons/outline';
-import { CaretDownIcon } from '../../icons/solid';
+import { UserData } from 'types/data';
+import { Avatar, Button, ButtonIcon, ButtonLink, Input } from 'components/atoms';
+import { PikassoColorIcon } from 'components/icons/brand';
+import { EditIcon, MenuIcon, PersonIcon, SearchIcon, WalletIcon } from 'components/icons/outline';
+import { CaretDownIcon } from 'components/icons/solid';
 
 /* ---------------------------------------------------------------------------------------------------------------------
  * User Menu

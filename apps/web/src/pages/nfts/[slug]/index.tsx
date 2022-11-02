@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo';
 import { Fragment, ReactElement } from 'react';
-import { Layout } from '../../../components/layouts';
-import { Breadcrumb } from '../../../components/molecules';
+import { Layout } from 'components/layouts';
+import { Breadcrumb } from 'components/molecules';
 import {
   ProductInfo,
   ProductImage,
@@ -11,9 +11,9 @@ import {
   ProductSaleHistory,
   ProductSimilar,
   ProductOfferHistory
-} from '../../../components/organisms';
-import { NFTS } from '../../../lib/dummy';
-import { NextPageWithLayout } from '../../_app';
+} from 'components/organisms';
+import { NFTS } from 'lib/dummy';
+import { NextPageWithLayout } from 'pages/_app';
 
 const Index: NextPageWithLayout = () => {
   const nft = NFTS[0];

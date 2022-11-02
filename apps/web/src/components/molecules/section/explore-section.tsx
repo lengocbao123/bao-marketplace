@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import { FC, Fragment, HTMLAttributes, ReactNode, useEffect, useState } from 'react';
 import { HamburgerSection, TabLinkData, TabsLink } from '..';
-import { FilterType } from '../../../hooks/use-filters';
-import { Button } from '../../atoms';
-import { FilterIcon } from '../../icons/outline';
-import { ExploreActions, ExploreFilterToggle } from '../../organisms';
+import { FilterType } from 'hooks/use-filters';
+import { Button } from 'components/atoms';
+import { FilterIcon } from 'components/icons/outline';
+import { ExploreActions, ExploreFilterToggle } from 'components/organisms';
 
 export interface ExploreSectionProps extends HTMLAttributes<HTMLDivElement> {
   filtersComponent: ReactNode;

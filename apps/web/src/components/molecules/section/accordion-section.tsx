@@ -1,6 +1,6 @@
 import { FC, Fragment, HTMLAttributes, ReactNode } from 'react';
 import { Disclosure } from '@headlessui/react';
-import { CaretDownIcon } from '../../icons/solid';
+import { CaretDownIcon } from 'components/icons/solid';
 import clsx from 'clsx';
 
 export interface AccordionSectionProps extends HTMLAttributes<HTMLDivElement> {

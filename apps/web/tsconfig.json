@@ -1,5 +1,13 @@
 {
   "extends": "tsconfig/nextjs.json",
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/api/auth/[...nextauth].js"],
+  "compilerOptions": {
+    "baseUrl": "src",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }

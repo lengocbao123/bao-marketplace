@@ -1,8 +1,8 @@
 import { ReactElement } from 'react';
-import { Error500Graphic } from '../../../components/icons/graphic';
-import { ErrorLayout } from '../../../components/layouts';
-import { Error } from '../../../components/organisms';
-import { NextPageWithLayout } from '../../_app';
+import { Error500Graphic } from 'components/icons/graphic';
+import { ErrorLayout } from 'components/layouts';
+import { Error } from 'components/organisms';
+import { NextPageWithLayout } from 'pages/_app';
 
 const Error500Page: NextPageWithLayout = () => {
   return (
