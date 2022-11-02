@@ -31,12 +31,6 @@ const SignUp: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSe
     onSubmit,
     formState: { errors, isSubmitting }
   } = useFormSignUp({
-    initialData: {
-      email: 'baole@codelight.co',
-      username: 'baole@codelight.co',
-      password: 'Bao@123',
-      confirmPassword: 'Bao@123'
-    },
     onSuccess: async (formData, response: UserData) => {
       await router.push(`/auth/verify-request?email=${response.email}`);
     },
