@@ -11,6 +11,7 @@ import Script from 'next/script';
 import { ReactElement, ReactNode, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import 'styles/globals.css';
+import { SWRConfig } from 'swr';
 import nextSeoConfig from '../../next-seo.config';
 
 const progress = new ProgressBar({
@@ -41,6 +42,7 @@ type AppPropsWithLayout<P = {}, IP = P> = AppProps<P> & {
 
 type PageProps = {
   session?: Session;
+  fallback: any;
 };
 
 export default function MyApp({ Component, pageProps }: AppPropsWithLayout<PageProps>) {
@@ -57,7 +59,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout<PageP
   }, [router.events]);
 
   return (
-    <>
+    <SWRConfig value={{ fallback: pageProps.fallback }}>
       <Head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -79,6 +81,6 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout<PageP
         {getLayout(<Component {...pageProps} />)}
         <Toaster />
       </SessionProvider>
-    </>
+    </SWRConfig>
   );
 }

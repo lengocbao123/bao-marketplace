@@ -17,3 +17,8 @@ export const request = async <T>(endpoint: string, options): Promise<T> => {
     return response.json() as T;
   });
 };
+
+export const fetcher = <T>(endpoint) =>
+  request<T>(endpoint, {}).then((data) => {
+    return { status: true, statusCode: 200, message: 'success', data };
+  });

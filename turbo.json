@@ -4,7 +4,7 @@
     "build": {
       "dependsOn": ["^build"],
       "outputs": ["dist/**", ".next/**"],
-      "env": ["NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID", "OPENAPI_BASE_URL", "ENCRYPTION_SECRET"]
+      "env": ["NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID", "OPENAPI_BASE_URL", "ENCRYPTION_SECRET", "NEXTAUTH_SECRET"]
     },
     "start": {
       "dependsOn": ["build"],

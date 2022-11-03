@@ -39,7 +39,7 @@ export const CardNft: FC<CardNftProps> = ({ className, user, link, image, title,
           )}
         </Link>
 
-        <div className="">
+        <div className="overflow-hidden">
           <div className="space-y-1">
             <p className="text-secondary text-xs font-medium">{subtitle}</p>
 
