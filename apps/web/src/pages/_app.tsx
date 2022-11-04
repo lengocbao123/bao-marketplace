@@ -1,5 +1,6 @@
 import ProgressBar from '@badrap/bar-of-progress';
 import { GTM_ID, pageView } from 'lib/gtm';
+import { fetcher } from 'lib/utils/fetcher';
 import { NextPage } from 'next';
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
@@ -8,7 +9,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { Router, useRouter } from 'next/router';
 import Script from 'next/script';
-import { ReactElement, ReactNode, useEffect } from 'react';
+import { Fragment, ReactElement, ReactNode, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import 'styles/globals.css';
 import { SWRConfig } from 'swr';
@@ -18,7 +19,7 @@ const progress = new ProgressBar({
   size: 2,
   color: '#6e43d4',
   className: 'bar-of-progress',
-  delay: 100
+  delay: 100,
 });
 
 Router.events.on('routeChangeStart', progress.start);
@@ -59,7 +60,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout<PageP
   }, [router.events]);
 
   return (
-    <SWRConfig value={{ fallback: pageProps.fallback }}>
+    <Fragment>
       <Head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -69,18 +70,24 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout<PageP
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <Script
         id="gtag-base"
         strategy="afterInteractive"
         dangerouslySetInnerHTML={{
-          __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer', '${GTM_ID}');`
+          __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer', '${GTM_ID}');`,
         }}
       />
-      <SessionProvider session={pageProps.session}>
-        <DefaultSeo {...nextSeoConfig} />
-        {getLayout(<Component {...pageProps} />)}
-        <Toaster />
-      </SessionProvider>
-    </SWRConfig>
+
+      <SWRConfig value={{ fetcher, fallback: pageProps.fallback, revalidateOnFocus: false }}>
+        <SessionProvider session={pageProps.session}>
+          <DefaultSeo {...nextSeoConfig} />
+
+          {getLayout(<Component {...pageProps} />)}
+
+          <Toaster />
+        </SessionProvider>
+      </SWRConfig>
+    </Fragment>
   );
 }

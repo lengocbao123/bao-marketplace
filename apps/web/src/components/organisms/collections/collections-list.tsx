@@ -17,7 +17,7 @@ export const CollectionsList: FC<CollectionsListProps> = ({ collections, meta, c
       page={meta.page}
       className={className}
     >
-      {collections.map((collection) => (
+      {collections?.map((collection) => (
         <CardCollection
           key={collection.id}
           link={{ as: `/collections/async-music-auctions-${collection.id}`, href: '/collections/[slug]' }}

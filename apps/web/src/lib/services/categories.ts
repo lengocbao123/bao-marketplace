@@ -1,4 +1,4 @@
-import { fetcher } from 'lib/utils/request';
+import { fetcher } from 'lib/utils/fetcher';
 import { CategoriesResponse } from 'types/data/categories';
 
 export const getCategories = () => {

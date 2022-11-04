@@ -1,7 +1,8 @@
 import { ENDPOINT_GET_COLLECTIONS_RANKING, ENDPOINT_GET_POPULAR_COLLECTIONS } from 'lib/constants/endpoint';
-import { fetcher } from 'lib/utils/request';
+import { fetcher } from 'lib/utils/fetcher';
 import useSWR from 'swr';
 import { CollectionsResponse } from 'types';
+
 export const useGetPopularCollections = () => {
   const { data, error, mutate } = useSWR<CollectionsResponse, any>(ENDPOINT_GET_POPULAR_COLLECTIONS, fetcher);
 

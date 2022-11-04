@@ -1,7 +1,7 @@
-import { fetcher } from 'lib/utils/request';
+import { fetcher } from 'lib/utils/fetcher';
+import queryString from 'query-string';
 import useSWR from 'swr';
 import { NftsResponse } from 'types';
-import queryString from 'query-string';
 
 export const useGetNfts = (params) => {
   const query = queryString.stringify(params);
