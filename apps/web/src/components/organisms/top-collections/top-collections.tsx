@@ -5,9 +5,7 @@ import { CardCollectionRanking, ChipFilter, Section } from 'components/molecules
 import { useGetCollectionsRanking } from 'lib/hooks/database';
 import { getCollectionsRanking } from 'lib/services';
 
-export interface TopCollectionsProps extends HTMLAttributes<HTMLDivElement> {
-  collections: Array<any>;
-}
+export type TopCollectionsProps = HTMLAttributes<HTMLDivElement>;
 
 export const TopCollections: FC<TopCollectionsProps> = ({}) => {
   const [timeRange, setTimeRage] = useState('24h');
