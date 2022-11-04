@@ -5,19 +5,24 @@ import { Community, Explorer, Hero, Instruction, PopularCollections, TopCollecti
 import { COLLECTIONS } from 'lib/dummy';
 import { authOptions } from './api/auth/[...nextauth]';
 import { NextPageWithLayout } from './_app';
-import { getCategories, getNfts } from 'lib/services';
+import { getCategories, getNfts, getPopularCollections, getCollectionsRanking } from 'lib/services';
+import { ENDPOINT_GET_COLLECTIONS_RANKING, ENDPOINT_GET_POPULAR_COLLECTIONS } from 'lib/constants/endpoint';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
   const categories = await getCategories();
   const nfts = await getNfts({ _limit: 8 });
+  const popularCollections = await getPopularCollections();
+  const collectionsRanking = await getCollectionsRanking('24h');
 
   return {
     props: {
       session,
       fallback: {
         '/categories': categories,
-        '/nfts?_limit=8': nfts
+        '/nfts?_limit=8': nfts,
+        [ENDPOINT_GET_POPULAR_COLLECTIONS]: popularCollections,
+        [`${ENDPOINT_GET_COLLECTIONS_RANKING}-24h`]: collectionsRanking
       }
     }
   };

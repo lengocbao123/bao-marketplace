@@ -20,5 +20,5 @@ export const request = async <T>(endpoint: string, options): Promise<T> => {
 
 export const fetcher = <T>(endpoint) =>
   request<T>(endpoint, {}).then((data) => {
-    return { status: true, statusCode: 200, message: 'success', data };
+    return { status: true, statusCode: 200, message: 'success', data } as T;
   });
