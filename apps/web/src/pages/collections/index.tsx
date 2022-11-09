@@ -14,10 +14,10 @@ export async function getServerSideProps({ query, resolvedUrl }) {
   const collectionQuery = queryString.stringify({
     ...query,
     page: query.page ? query.page : 1,
-    period: query.period ? query.period : '24_hours',
+    filter: query.filter ? query.filter : '24_hours',
   });
 
-  if (!query.period) {
+  if (!query.filter) {
     return {
       redirect: {
         destination: `${resolvedUrl}?${collectionQuery}`,
@@ -54,7 +54,7 @@ const ExploreCollectionPage: NextPageWithLayout = ({
   };
 
   const resetFilter = () => {
-    const newQuery = { page: 1, category: query.category };
+    const newQuery = { page: 1, filter: query.filter };
     router.push({
       pathname: router.pathname,
       query: queryString.stringify(newQuery, { arrayFormat: 'bracket' }),

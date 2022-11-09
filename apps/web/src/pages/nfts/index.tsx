@@ -14,7 +14,7 @@ export async function getServerSideProps({ query, resolvedUrl }) {
   const nftsQuery = queryString.stringify({
     ...query,
     page: query.page ? query.page : 1,
-    category: query.category ? query.category : 'all',
+    filter: query.filter ? query.filter : 'all',
   });
   const [categories, nfts, collections] = await Promise.all([
     fetcher('/categories'),
@@ -22,7 +22,7 @@ export async function getServerSideProps({ query, resolvedUrl }) {
     fetcher('/collections'),
   ]);
 
-  if (!query.page || !query.category) {
+  if (!query.page || !query.filter) {
     return {
       redirect: {
         destination: `${resolvedUrl}?${nftsQuery}`,
@@ -67,11 +67,11 @@ const ExplorePage: NextPageWithLayout = ({ nftsQuery }: InferGetServerSidePropsT
   ].map((item) => ({
     label: item.name,
     value: item.id,
-    active: item.id === query.category,
+    active: item.id === query.filter,
   }));
 
   const resetFilter = () => {
-    const newQuery = { page: 1, category: query.category };
+    const newQuery = { page: 1, filter: query.filter };
     router.push({
       pathname: router.pathname,
       query: queryString.stringify(newQuery, { arrayFormat: 'bracket' }),

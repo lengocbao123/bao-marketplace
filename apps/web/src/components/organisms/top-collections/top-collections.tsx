@@ -1,6 +1,7 @@
 import { ButtonLink } from 'components/atoms';
 import { CardCollectionRanking, ChipFilter, ChipOption, Section } from 'components/molecules';
 import { fetcher } from 'lib/utils/fetcher';
+import { convertToSlug } from 'lib/utils/string';
 import { FC, HTMLAttributes } from 'react';
 import useSWR, { mutate } from 'swr';
 
@@ -38,7 +39,7 @@ export const TopCollections: FC<TopCollectionsProps> = ({}) => {
             <CardCollectionRanking
               key={collection.id}
               order={index + 1}
-              link={{ href: `/collections/${collection.id}` }}
+              link={{ href: `/collections/${collection.id}/${convertToSlug(collection.name)}` }}
               logoImage={collection.logoImage}
               title={collection.name}
               floor={2300}

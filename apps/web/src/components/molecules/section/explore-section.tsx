@@ -5,7 +5,6 @@ import { FilterType } from 'hooks/use-filters';
 import { Button } from 'components/atoms';
 import { FilterIcon } from 'components/icons/outline';
 import { ExploreActions, ExploreFilterToggle } from 'components/organisms';
-import { useRouter } from 'next/router';
 
 export interface ExploreSectionProps extends HTMLAttributes<HTMLDivElement> {
   filtersComponent: ReactNode;
@@ -28,7 +27,6 @@ export const ExploreSection: FC<ExploreSectionProps> = ({
 }) => {
   const [isDisplayingFilter, setIsDisplayingFilter] = useState(true);
   const [numberOfFilters, setNumberOfFilters] = useState<number>(0);
-  const router = useRouter();
   const handleSelectSort = async (sort) => {
     await onChangeFilter('sort', JSON.stringify(sort.value));
   };
@@ -53,13 +51,9 @@ export const ExploreSection: FC<ExploreSectionProps> = ({
   return (
     <Fragment>
       <Tabs
-        data={tabs.map((item) => ({
-          ...item,
-        }))}
+        data={tabs}
         onChange={(value) => {
-          const { pathname } = router;
-          const key = pathname === '/collections' ? 'period' : 'category';
-          onChangeFilter(key, value);
+          onChangeFilter('filter', value);
         }}
         className={clsx(tabsClassName)}
       />

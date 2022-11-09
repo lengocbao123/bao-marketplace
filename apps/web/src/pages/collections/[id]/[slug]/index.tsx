@@ -62,10 +62,14 @@ const Home: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getServ
       <CollectionProfile className="m-0" collection={COLLECTIONS[0]} />
       <div className="container">
         <ExploreSection
-          filtersComponent={<NftsFilters collections={COLLECTIONS} filter={filter} onChange={onFiltersChange} />}
+          filtersComponent={<NftsFilters filter={filter} onChange={onFiltersChange} />}
           tabs={generateTabLinkData(tabs, `/collections/${query.slug}`)}
           filter={filter}
           tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border-b"
+          onResetFilter={() => {
+            console.log('');
+          }}
+          onChangeFilter={onFiltersChange}
         >
           <NftsList
             nfts={NFTS}
