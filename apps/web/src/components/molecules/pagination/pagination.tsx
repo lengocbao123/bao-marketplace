@@ -29,12 +29,12 @@ export const Pagination: FC<PaginationProps> = ({
   const { items } = usePagination({
     page,
     count: totalPages,
-    disabled: totalPages === 1
+    disabled: totalPages === 1,
   });
 
   const Icons = {
     previous: <ChevronLeftIcon className="inline" />,
-    next: <ChevronRightIcon className="inline" />
+    next: <ChevronRightIcon className="inline" />,
   };
 
   return (
@@ -55,14 +55,14 @@ export const Pagination: FC<PaginationProps> = ({
                 item.disabled ? 'pointer-events-none select-none opacity-50' : '',
                 item.selected
                   ? 'text-neutral-0 bg-secondary border-secondary border'
-                  : 'hover:bg-secondary/20 hover:border-secondary/50 hover:text-neutral text-neutral-50'
+                  : 'hover:bg-secondary/20 hover:border-secondary/50 hover:text-neutral text-neutral-50',
               )}
               href={{
                 pathname: router.pathname,
                 query: {
                   ...router.query,
-                  page: item.page
-                }
+                  page: item.page,
+                },
               }}
               onClick={async (e) => {
                 item.onClick(e);

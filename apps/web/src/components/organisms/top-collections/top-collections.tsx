@@ -7,14 +7,8 @@ import useSWR, { mutate } from 'swr';
 export type TopCollectionsProps = HTMLAttributes<HTMLDivElement>;
 
 export const TopCollections: FC<TopCollectionsProps> = ({}) => {
-  // const [timeRange, setTimeRage] = useState('24h');
-  // const { data: collections, error } = useGetCollectionsRanking('24h');
-  // const [displayedCollections, setDisplayedCollections] = useState(collections.data || []);
-
   const { data: periods, error: errorPeriods } = useSWR(`/periods`);
   const { data: collections, error: errorCollections } = useSWR(`/top-collections`);
-
-  console.log('collections', collections);
 
   if (errorPeriods || errorCollections) {
     return <div>failed to load</div>;

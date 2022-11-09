@@ -10,7 +10,7 @@ import {
   ProductProperties,
   ProductSaleHistory,
   ProductSimilar,
-  ProductOfferHistory
+  ProductOfferHistory,
 } from 'components/organisms';
 import { NFTS } from 'lib/dummy';
 import { NextPageWithLayout } from 'pages/_app';
@@ -29,9 +29,9 @@ const Index: NextPageWithLayout = () => {
           {
             label: 'Monkey collection 69',
             as: '/collections/monkey-collection-69',
-            href: '/collections/[slug]'
+            href: '/collections/[slug]',
           },
-          { label: nft.name, href: '/', as: '/' }
+          { label: nft.name, href: '/', as: '/' },
         ]}
       />
       <div className="gap-y-7.5 container grid grid-cols-5 gap-x-6">

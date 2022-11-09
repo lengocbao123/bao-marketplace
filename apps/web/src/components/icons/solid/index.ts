@@ -19,5 +19,5 @@ export {
   copy as CopyIcon,
   diamond as DiamondIcon,
   selectMinor as SelectMinorIcon,
-  trash as TrashIcon
+  trash as TrashIcon,
 };

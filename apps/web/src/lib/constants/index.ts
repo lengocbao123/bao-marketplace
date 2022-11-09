@@ -5,21 +5,21 @@ export const USER_INVENTORY_TABS = [
   {
     id: 'nfts-on-sale',
     label: 'On Sale',
-    url: 'nfts?filter=on-sale'
+    url: 'nfts?filter=on-sale',
   },
   {
     id: 'nfts-created',
     label: 'Created',
-    url: 'nfts?filter=created'
+    url: 'nfts?filter=created',
   },
   {
     id: 'nfts-owned',
     label: 'Owned',
-    url: 'nfts?filter=owned'
+    url: 'nfts?filter=owned',
   },
   {
     id: 'collections',
     label: 'Collections',
-    url: 'collections'
-  }
+    url: 'collections',
+  },
 ];

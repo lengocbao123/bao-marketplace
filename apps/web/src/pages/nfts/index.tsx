@@ -1,32 +1,91 @@
 import { Layout } from 'components/layouts';
 import { ExploreSection } from 'components/molecules';
 import { NftsFilters, NftsList } from 'components/organisms/nfts';
-import { useFilter } from 'hooks/use-filters';
-import { CATEGORIES, COLLECTIONS, NFTS } from 'lib/dummy';
+import { fetcher } from 'lib/utils/fetcher';
 import { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import { NextPageWithLayout } from 'pages/_app';
 import { Fragment } from 'react';
+import useSWR from 'swr';
+import queryString from 'query-string';
+import { useRouter } from 'next/router';
 
-const DEFAULT_FILTERS = { status: [], blockchain: [], price: [], collection: [] };
+export async function getServerSideProps({ query }) {
+  const nftsQuery = queryString.stringify({
+    ...query,
+    page: query.page ? query.page : 1,
+    category: query.category ? query.category : 'all',
+  });
+  const [categories, nfts, collections] = await Promise.all([
+    fetcher('/categories'),
+    fetcher(`/nfts?${nftsQuery}`),
+    fetcher('/collections'),
+  ]);
 
-export async function getServerSideProps({ query, resolvedUrl }) {
-  if (!query.category) {
+  if (!query.page || !query.category) {
     return {
       redirect: {
-        destination: `${resolvedUrl}?category=${CATEGORIES.nfts[0].value}`,
-        permanent: false
-      }
+        destination: `/nfts?${nftsQuery}`,
+        permanent: false,
+      },
     };
   }
 
   return {
-    props: {}
+    props: {
+      nftsQuery,
+      fallback: {
+        '/categories': categories,
+        [`/nfts?${nftsQuery}`]: nfts,
+        '/collections?q=': collections,
+      },
+    },
   };
 }
 
-const ExplorePage: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { filter, onFiltersChange } = useFilter(DEFAULT_FILTERS);
+const ExplorePage: NextPageWithLayout = ({ nftsQuery }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const query = queryString.parse(nftsQuery, { arrayFormat: 'bracket', parseNumbers: true, parseBooleans: true });
+  const router = useRouter();
+  const { data: categories, error: errorCategories } = useSWR('/categories');
+  const { data: nfts, error: errorNfts } = useSWR(`/nfts?${nftsQuery}`);
+
+  if (errorCategories || errorNfts) {
+    return <div>failed to load</div>;
+  }
+
+  if (!categories || !nfts) {
+    return <div>loading...</div>;
+  }
+
+  const categoryTabs = [
+    {
+      id: 'all',
+      name: 'All',
+      code: 'all',
+    },
+    ...categories,
+  ].map((item) => ({
+    label: item.name,
+    value: item.id,
+  }));
+
+  const resetFilter = () => {
+    const newQuery = { page: 1, category: query.category };
+    // if (query.sort) {
+    //   newQuery['sort'] = query.sort;
+    // }
+    router.push({
+      pathname: router.pathname,
+      query: queryString.stringify(newQuery, { arrayFormat: 'bracket' }),
+    });
+  };
+
+  const handlerFilterChange = (key: string, value: any) => {
+    router.push({
+      pathname: router.pathname,
+      query: queryString.stringify({ ...query, [key]: value }, { arrayFormat: 'bracket' }),
+    });
+  };
 
   return (
     <Fragment>
@@ -38,13 +97,18 @@ const ExplorePage: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof 
         className={'bg-neutral-10 aspect-[1440/144] w-full object-cover object-center'}
       />
       <ExploreSection
-        filtersComponent={<NftsFilters collections={COLLECTIONS} filter={filter} onChange={onFiltersChange} />}
-        tabs={CATEGORIES.nfts.map((item) => ({ ...item, url: `?category=${item.value}` }))}
+        filtersComponent={<NftsFilters filter={query} onChange={handlerFilterChange} />}
+        tabs={categoryTabs}
         tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border sm:justify-center"
         bodyClassName="container"
-        filter={filter}
+        filter={query}
+        onChangeFilter={handlerFilterChange}
+        onResetFilter={resetFilter}
       >
-        <NftsList nfts={NFTS} meta={{ totalItems: 8, itemCount: 8, itemsPerPage: 10, totalPages: 1, currentPage: 1 }} />
+        <NftsList
+          nfts={nfts}
+          meta={{ totalItems: 8, itemCount: 8, itemsPerPage: 10, totalPages: 3, currentPage: query.page }}
+        />
       </ExploreSection>
     </Fragment>
   );

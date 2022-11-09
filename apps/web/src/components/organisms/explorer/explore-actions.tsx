@@ -3,10 +3,28 @@ import { HTMLAttributes, FC } from 'react';
 import { ButtonText } from 'components/atoms';
 import { DropdownSelect } from 'components/molecules';
 import { ExploreFilterToggle } from './explore-filter-toggle';
-
+const SORT_OPTIONS = [
+  {
+    value: { sortBy: 'listedAt', sortAscending: false },
+    label: 'Recently Listed',
+  },
+  {
+    value: { sortBy: 'price', sortAscending: true },
+    label: 'Price: Low to High',
+  },
+  {
+    value: { sortBy: 'price', sortAscending: false },
+    label: 'Price: High to Low',
+  },
+  {
+    value: { sortBy: 'lastSaleDate', sortAscending: false },
+    label: 'Highest Last Sale',
+  },
+];
 export interface ExploreActionsProps extends HTMLAttributes<HTMLDivElement> {
   isDisplayingFilter: boolean;
   numOfFilters: number;
+  selectedSortOption?: any;
   onClearFilter?: () => void;
   toggleFilter?: () => void;
   onSelectSort?: (sort: any) => void;
@@ -16,9 +34,10 @@ export const ExploreActions: FC<ExploreActionsProps> = ({
   numOfFilters,
   className,
   isDisplayingFilter,
+  selectedSortOption,
   toggleFilter,
   onClearFilter,
-  onSelectSort
+  onSelectSort,
 }) => {
   return (
     <div className={clsx('flex w-fit sm:w-full sm:justify-between', className)}>
@@ -35,25 +54,17 @@ export const ExploreActions: FC<ExploreActionsProps> = ({
       <div className="flex items-center gap-3">
         <span className="hidden sm:block">Sort by</span>
         <DropdownSelect
-          options={[
-            {
-              value: 'listedAt:desc',
-              label: 'Recently Listed'
-            },
-            {
-              value: 'price:asc',
-              label: 'Price: Low to High'
-            },
-            {
-              value: 'price:desc',
-              label: 'Price: High to Low'
-            },
-            {
-              value: 'sale:desc',
-              label: 'Highest Last Sale'
-            }
-          ]}
+          options={SORT_OPTIONS}
           onChange={onSelectSort}
+          activeIndex={
+            selectedSortOption
+              ? SORT_OPTIONS.findIndex(
+                  (option) =>
+                    option.value.sortAscending === selectedSortOption.sortAscending &&
+                    option.value.sortBy === selectedSortOption.sortBy,
+                )
+              : null
+          }
         />
       </div>
     </div>

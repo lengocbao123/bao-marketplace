@@ -20,7 +20,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   }
 
   return {
-    props: {}
+    props: {},
   };
 };
 
@@ -28,17 +28,17 @@ const SignIn: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSe
   const {
     register,
     onSubmit,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting },
   } = useFormLogin({
     initialData: { email: '', password: '' },
     onError: (error) => {
       toast.error(error);
-    }
+    },
   });
 
   useEffect(() => {
     signOut({
-      redirect: false
+      redirect: false,
     });
   }, []);
 

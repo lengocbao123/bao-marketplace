@@ -22,7 +22,7 @@ export const Tabs: FC<TabsProps> = ({ className, data, onChange }) => {
             'flex items-center border-b py-4',
             active
               ? 'text-secondary border-secondary font-bold'
-              : 'hover:text-secondary/80 focus:text-secondary/80 border-transparent font-medium text-neutral-50'
+              : 'hover:text-secondary/80 focus:text-secondary/80 border-transparent font-medium text-neutral-50',
           )}
         >
           <button type={'button'} onClick={() => onChange(value)}>

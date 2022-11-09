@@ -33,5 +33,5 @@ export {
   success as SuccessGraphic,
   collection as CollectionGraphic,
   gallery as GalleryGraphic,
-  sale as SaleGraphic
+  sale as SaleGraphic,
 };

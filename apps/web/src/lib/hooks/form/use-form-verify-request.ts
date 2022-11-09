@@ -12,13 +12,13 @@ export interface UseFormVerifyRequest {
 export const useFormVerifyRequest = (
   options?: UserForm<UseFormVerifyRequest, any> & {
     onResendSuccess?: () => void;
-  }
+  },
 ) => {
   const router = useRouter();
   // const { callbackUrl } = router.query as { callbackUrl: string };
 
   const schema = yup.object().shape({
-    otp: yup.string().required('Please enter an OTP.').length(6, 'OTP must be 6 characters.')
+    otp: yup.string().required('Please enter an OTP.').length(6, 'OTP must be 6 characters.'),
   });
 
   const defaultValues = useMemo<UseFormVerifyRequest>(() => ({ otp: '' }), []);
@@ -26,7 +26,7 @@ export const useFormVerifyRequest = (
   const methods = useForm<UseFormVerifyRequest>({
     resolver: yupResolver(schema),
     mode: 'onChange',
-    defaultValues
+    defaultValues,
   });
 
   const onSubmit = async (data: UseFormVerifyRequest) => {
@@ -40,7 +40,7 @@ export const useFormVerifyRequest = (
           : {
               success: false,
               message: 'Internal server error',
-              statusCode: 500
+              statusCode: 500,
             };
       if (result.statusCode === 200) {
         await router.replace('/') /* .then(router.reload) */;
@@ -61,7 +61,7 @@ export const useFormVerifyRequest = (
           : {
               success: false,
               message: 'Internal server error',
-              statusCode: 500
+              statusCode: 500,
             };
       if (result.statusCode === 200) {
         await options?.onResendSuccess?.();
@@ -77,6 +77,6 @@ export const useFormVerifyRequest = (
   return {
     ...methods,
     onSubmit: methods.handleSubmit(onSubmit),
-    onResend
+    onResend,
   };
 };

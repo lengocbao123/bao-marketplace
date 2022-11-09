@@ -22,7 +22,7 @@ const socialLinkIconClasses = 'text-xl text-neutral-70';
 const SocialLinkIcons: Record<SocialLink, ReactNode> = {
   twitter: <TwitterIcon className={socialLinkIconClasses} />,
   discord: <DiscordIcon className={socialLinkIconClasses} />,
-  website: <GlobeIcon className={socialLinkIconClasses} />
+  website: <GlobeIcon className={socialLinkIconClasses} />,
 };
 
 export interface ProfileInventoryProps extends HTMLAttributes<HTMLDivElement> {
@@ -45,7 +45,7 @@ export const ProfileInventory: FC<ProfileInventoryProps> = (props) => {
       },
       () => {
         toast.error('Something went wrong!');
-      }
+      },
     );
   };
 

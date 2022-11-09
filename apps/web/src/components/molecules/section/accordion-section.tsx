@@ -18,7 +18,7 @@ export const AccordionSection: FC<AccordionSectionProps> = ({
   className,
   headingClassName = '',
   contentClassName = '',
-  defaultOpen = true
+  defaultOpen = true,
 }) => {
   return (
     <div className={clsx('w-full', className)}>
@@ -30,7 +30,7 @@ export const AccordionSection: FC<AccordionSectionProps> = ({
               {hasArrowIcon && (
                 <CaretDownIcon
                   className={clsx({
-                    'rotate-180 transform': open
+                    'rotate-180 transform': open,
                   })}
                 />
               )}

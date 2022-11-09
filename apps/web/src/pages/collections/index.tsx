@@ -15,13 +15,13 @@ export async function getServerSideProps({ query, resolvedUrl }) {
     return {
       redirect: {
         destination: `${resolvedUrl}?category=${CATEGORIES.collections[0].value}`,
-        permanent: false
-      }
+        permanent: false,
+      },
     };
   }
 
   return {
-    props: {}
+    props: {},
   };
 }
 

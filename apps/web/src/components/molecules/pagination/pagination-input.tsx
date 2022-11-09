@@ -31,8 +31,8 @@ export const PaginationInput: FC<PaginationInputProps> = ({
         pathname: router.pathname,
         query: {
           ...router.query,
-          page
-        }
+          page,
+        },
       });
     }
   };

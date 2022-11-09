@@ -12,7 +12,7 @@ const sizes: Record<Size, number> = {
   md: 40,
   lg: 60,
   xl: 100,
-  '2xl': 160
+  '2xl': 160,
 } as const;
 
 /**
@@ -23,7 +23,7 @@ const onlyNameSizeClasses: Record<Size, string> = {
   md: 'text-base w-10 h-10',
   lg: 'text-2xl w-15 h-15',
   xl: 'text-3xl w-25 h-25',
-  '2xl': 'text-4xl w-40 h-40'
+  '2xl': 'text-4xl w-40 h-40',
 } as const;
 
 /**
@@ -73,7 +73,7 @@ export const Avatar: FC<AvatarProps> = (props) => {
           <span
             className={clsx(
               'bg-primary inline-flex aspect-square items-center justify-center rounded-full font-medium uppercase',
-              onlyNameSizeClasses[size]
+              onlyNameSizeClasses[size],
             )}
             data-component={'placeholder'}
           >

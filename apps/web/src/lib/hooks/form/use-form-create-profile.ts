@@ -20,7 +20,7 @@ export interface UseFormCreateProfile {
 }
 
 export const useFormCreateProfile = (
-  options: { initialData: UseFormCreateProfile } & UserForm<UseFormCreateProfile, any>
+  options: { initialData: UseFormCreateProfile } & UserForm<UseFormCreateProfile, any>,
 ) => {
   const schema = yup.object().shape({
     username: yup.string().required('Please enter your display name.'),
@@ -30,7 +30,7 @@ export const useFormCreateProfile = (
     facebook: yup.string().nullable().url(),
     twitter: yup.string().nullable().url(),
     instagram: yup.string().nullable().url(),
-    medium: yup.string().nullable().url()
+    medium: yup.string().nullable().url(),
   });
 
   const defaultValues = useMemo(() => options.initialData, [options.initialData]);
@@ -38,7 +38,7 @@ export const useFormCreateProfile = (
   const methods = useForm<UseFormCreateProfile>({
     resolver: yupResolver(schema),
     mode: 'onChange',
-    defaultValues
+    defaultValues,
   });
 
   const onSubmit = async (formData: UseFormCreateProfile) => {
@@ -69,7 +69,7 @@ export const useFormCreateProfile = (
           : {
               success: false,
               message: 'Internal server error',
-              statusCode: 500
+              statusCode: 500,
             };
       if (result.statusCode === 200) {
         await options?.onSuccess?.(formData, result);
@@ -83,6 +83,6 @@ export const useFormCreateProfile = (
 
   return {
     ...methods,
-    onSubmit: methods.handleSubmit(onSubmit)
+    onSubmit: methods.handleSubmit(onSubmit),
   };
 };

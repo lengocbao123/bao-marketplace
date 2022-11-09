@@ -16,14 +16,14 @@ export const ButtonIcon = React.forwardRef<HTMLButtonElement, ButtonProps>(
       onClick,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const Icon = loading ? SpinIcon : icon;
 
     const buttonSize = {
       'h-8 w-8': size === 'sm',
       'h-10 w-10': size === 'md',
-      'h-12 w-12': size === 'lg'
+      'h-12 w-12': size === 'lg',
     };
 
     const buttonVariant = {
@@ -32,17 +32,17 @@ export const ButtonIcon = React.forwardRef<HTMLButtonElement, ButtonProps>(
       'bg-primary text-neutral hover:bg-primary-30 active:bg-primary-50 disabled:bg-primary/50 disabled:text-neutral/50':
         variant === 'primary',
       'bg-neutral-0 border-neutral-10 hover:border-primary-30 hover:bg-primary-5 active:border-primary-50 active:bg-primary-20 disabled:border-neutral-30 disabled:text-neutral-30 border':
-        variant === 'tertiary'
+        variant === 'tertiary',
     };
 
     const buttonClasses = clsx(
       'text-neutral whitespace-nowrap flex items-center justify-center gap-2 rounded-full font-semibold disabled:pointer-events-none',
       {
-        'pointer-events-none': loading
+        'pointer-events-none': loading,
       },
       buttonVariant,
       buttonSize,
-      className
+      className,
     );
 
     return (
@@ -50,7 +50,7 @@ export const ButtonIcon = React.forwardRef<HTMLButtonElement, ButtonProps>(
         <Icon className={'text-xl'} />
       </button>
     );
-  }
+  },
 );
 
 ButtonIcon.displayName = 'ButtonIcon';

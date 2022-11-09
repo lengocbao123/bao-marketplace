@@ -8,10 +8,9 @@ import { authOptions } from './api/auth/[...nextauth]';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
-
   const [categories, nfts, collections, topCollections, periods] = await Promise.all([
     fetcher('/categories'),
-    fetcher('/nfts'),
+    fetcher('/nfts?_limit=8&category=b1527454-385d-4c9e-b91d-f84c6a1b6e12'),
     fetcher('/collections'),
     fetcher('/top-collections'),
     fetcher('/periods'),
@@ -22,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       session,
       fallback: {
         '/categories': categories,
-        '/nfts': nfts,
+        '/nfts?_limit=8&category=b1527454-385d-4c9e-b91d-f84c6a1b6e12': nfts,
         '/collections': collections,
         '/top-collections': topCollections,
         '/periods': periods,

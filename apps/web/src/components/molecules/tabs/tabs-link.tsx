@@ -15,7 +15,7 @@ export const generateTabLinkData = (items: Array<TabLinkData>, prefixUrl?: strin
   return prefixUrl
     ? items.map((item) => ({
         ...item,
-        url: prefixUrl + item.url
+        url: prefixUrl + item.url,
       }))
     : items;
 };
@@ -32,7 +32,7 @@ export const TabsLink: FC<TabLinkProps> = ({ className, data }) => {
             'flex items-center border-b py-4',
             router.asPath.includes(url)
               ? 'text-secondary border-secondary font-bold'
-              : 'hover:text-secondary/80 focus:text-secondary/80 border-transparent font-medium text-neutral-50'
+              : 'hover:text-secondary/80 focus:text-secondary/80 border-transparent font-medium text-neutral-50',
           )}
         >
           <Link href={url}>{label}</Link>

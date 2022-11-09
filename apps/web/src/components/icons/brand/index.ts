@@ -21,5 +21,5 @@ export {
   pikassoColor as PikassoColorIcon,
   telegram as TelegramIcon,
   twitter as TwitterIcon,
-  twitterColor as TwitterColorIcon
+  twitterColor as TwitterColorIcon,
 };

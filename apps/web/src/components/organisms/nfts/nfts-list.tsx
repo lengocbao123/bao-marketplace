@@ -24,7 +24,7 @@ export const NftsList: FC<NftsListProps> = ({ nfts, meta, className }) => {
           title={nft.name}
           subtitle={'Monkey collection'}
           price={100}
-          user={nft.user}
+          user={nft.owner}
         />
       ))}
     </List>

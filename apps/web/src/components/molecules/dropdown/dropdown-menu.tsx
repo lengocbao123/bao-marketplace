@@ -32,7 +32,7 @@ export const DropdownMenu: FC<DropdownMenuProps> = ({ button, items, activeItemC
                   <div
                     className={clsx(
                       'rounded-lg px-2 py-3',
-                      active && !inactiveItems.includes(index) ? activeItemClassName : ''
+                      active && !inactiveItems.includes(index) ? activeItemClassName : '',
                     )}
                   >
                     {item}

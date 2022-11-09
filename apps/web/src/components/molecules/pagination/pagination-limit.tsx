@@ -22,8 +22,8 @@ export const PaginationLimit: FC<ItemsPerPageProps> = ({ className, label, onLim
         pathname: router.pathname,
         query: {
           ...router.query,
-          limit: event.target.value
-        }
+          limit: event.target.value,
+        },
       });
     }
   };

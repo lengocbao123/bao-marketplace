@@ -19,7 +19,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
       'w-full p-2 mt-0 text-sm border border-neutral-10 rounded-xl focus-within:!border-primary hover:border-primary-30',
       error &&
         'border-accent-error bg-accent-error/20 hover:border-accent-error focus:border-accent-error focus-within:!border-accent-error',
-      className
+      className,
     );
     const handleChange = (event: any) => {
       const countText = event.target.value;
@@ -46,7 +46,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
             maxLength={maxLength}
             id={id}
             className={clsx(
-              'disabled:bg-neutral-10 h-full w-full border-none bg-transparent p-2 outline-none ring-0 hover:border-none focus:border-none focus:ring-0 disabled:cursor-not-allowed'
+              'disabled:bg-neutral-10 h-full w-full border-none bg-transparent p-2 outline-none ring-0 hover:border-none focus:border-none focus:ring-0 disabled:cursor-not-allowed',
             )}
             onChange={handleChange}
             {...rest}
@@ -63,7 +63,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
         }
       </div>
     );
-  }
+  },
 );
 
 Textarea.displayName = 'Textarea';

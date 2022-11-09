@@ -7,7 +7,7 @@ export const fetcher = <T>(endpoint: RequestInfo | URL, options?: RequestInit): 
     ...options,
     headers: {
       ...options?.headers,
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   }).then((response) => response.json() as T);
 };

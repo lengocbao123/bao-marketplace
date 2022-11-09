@@ -20,7 +20,7 @@ export const List: FC<ListProps> = ({
   totalPages = 0,
   page,
   hasData,
-  gridClassName
+  gridClassName,
 }) => {
   const hasPagination = totalItems > 1;
 
@@ -47,7 +47,7 @@ export const List: FC<ListProps> = ({
             <div
               className={clsx(
                 'grid grid-cols-2 gap-x-5 gap-y-6 pb-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5',
-                gridClassName
+                gridClassName,
               )}
             >
               {children}

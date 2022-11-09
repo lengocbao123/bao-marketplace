@@ -21,16 +21,16 @@ export const CollectionsFilters: FC<CollectionsFiltersProps> = ({ className = ''
           {
             label: <InputLabel icon={BinanceIcon} text="Binance" />,
             value: 'binance',
-            disabled: true
+            disabled: true,
           },
           {
             label: <InputLabel icon={EthereumIcon} text="Ethereum" />,
-            value: 'Ethereum'
+            value: 'Ethereum',
           },
           {
             label: <InputLabel icon={PolygonIcon} text="Polygon" iconOrientation="right" />,
-            value: 'Polygon'
-          }
+            value: 'Polygon',
+          },
         ]}
         onChange={onChange}
         values={filter.blockchain}

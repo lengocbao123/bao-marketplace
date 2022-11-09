@@ -1,13 +1,13 @@
 export const redirectIfAuthenticated = () => ({
   redirect: {
     destination: '/',
-    permanent: false
-  }
+    permanent: false,
+  },
 });
 
 export const redirectIfUnverified = () => ({
   redirect: {
     destination: '/auth/verify-request',
-    permanent: false
-  }
+    permanent: false,
+  },
 });

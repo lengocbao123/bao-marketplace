@@ -32,7 +32,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
       block = false,
       ...rest
     },
-    ref
+    ref,
   ) => {
     const Icon = loading ? SpinIcon : icon;
 
@@ -48,12 +48,12 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
 
     const textSize = {
       'text-sm': size === 'sm' || size === 'md',
-      'text-lg leading-6': size === 'lg'
+      'text-lg leading-6': size === 'lg',
     };
 
     const iconTextSize = {
       'text-base': size === 'sm',
-      'text-lg': size === 'md' || size === 'lg'
+      'text-lg': size === 'md' || size === 'lg',
     };
 
     const buttonVariant = {
@@ -62,7 +62,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
       'bg-primary text-neutral hover:bg-primary-30 active:bg-primary-50 disabled:bg-primary/50 disabled:text-neutral/50':
         variant === 'primary',
       'bg-neutral-0 border-neutral-10 hover:border-primary-30 hover:bg-primary-5 active:border-primary-50 active:bg-primary-20 disabled:border-neutral-30 disabled:text-neutral-30 border':
-        variant === 'tertiary'
+        variant === 'tertiary',
     };
 
     const buttonClasses = clsx(
@@ -70,26 +70,26 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
       block ? 'flex' : 'inline-flex',
       {
         'pointer-events-none': loading,
-        'flex-row-reverse': iconOrientation === 'right'
+        'flex-row-reverse': iconOrientation === 'right',
       },
       buttonVariant,
       textSize,
       label ? buttonSize : iconSize,
-      className
+      className,
     );
 
     const iconClasses = clsx(
       iconTextSize,
       {
-        'animate-spin': loading
+        'animate-spin': loading,
       },
       label && !loading
         ? {
             '-my-0.5': size === 'sm' || size === 'md',
             '-ml-2': iconOrientation === 'left',
-            '-mr-2': iconOrientation === 'right'
+            '-mr-2': iconOrientation === 'right',
           }
-        : { 'my-0.5': size === 'sm', '-my-0.5': size === 'md' }
+        : { 'my-0.5': size === 'sm', '-my-0.5': size === 'md' },
     );
 
     return (
@@ -98,7 +98,7 @@ export const ButtonLink = React.forwardRef<HTMLAnchorElement, ButtonLinkProps>(
         {label && !loading && <span>{label}</span>}
       </Link>
     );
-  }
+  },
 );
 
 ButtonLink.displayName = 'ButtonLink';

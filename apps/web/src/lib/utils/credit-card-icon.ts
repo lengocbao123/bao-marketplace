@@ -4,7 +4,7 @@ import {
   AmericanExpressColorIcon,
   DiscoverColorIcon,
   MastercardColorIcon,
-  VisaColorIcon
+  VisaColorIcon,
 } from 'components/icons/payment';
 
 export const getCreditCardIcon = (cardType: string) => {

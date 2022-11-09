@@ -17,7 +17,7 @@ export const CheckboxInput: FC<CheckboxInputProps> = ({ label, disabled, classNa
       />
       <div
         className={clsx('select-none', {
-          'text-neutral-30': disabled
+          'text-neutral-30': disabled,
         })}
         data-component={'label'}
       >

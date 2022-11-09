@@ -90,6 +90,6 @@ export const useModal = <T extends string>(options?: UseModalOptions<T>) => {
     prevStep,
     goToStep,
     close,
-    open
+    open,
   };
 };

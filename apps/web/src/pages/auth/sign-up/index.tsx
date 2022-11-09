@@ -21,7 +21,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   }
 
   return {
-    props: {}
+    props: {},
   };
 };
 
@@ -30,14 +30,14 @@ const SignUp: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSe
   const {
     register,
     onSubmit,
-    formState: { errors, isSubmitting }
+    formState: { errors, isSubmitting },
   } = useFormSignUp({
     onSuccess: async (formData, response: UserData) => {
       await router.push(`/auth/verify-request?email=${response.email}`);
     },
     onError: (error) => {
       toast.error(getErrorMessage(error));
-    }
+    },
   });
 
   return (

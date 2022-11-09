@@ -14,12 +14,12 @@ const nextSeoConfig = {
     type: 'website',
     title,
     description,
-    locale: 'en_US'
+    locale: 'en_US',
   },
   twitter: {
     site: '@pikassonft',
-    cardType: 'summary_large_image'
-  }
+    cardType: 'summary_large_image',
+  },
 };
 
 export default nextSeoConfig;

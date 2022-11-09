@@ -8,7 +8,7 @@ export const TableDataBody: FC<TableBodyDataProps> = ({ className, children, ...
     <tbody
       className={clsx(
         'border-neutral-10/80 divide-neutral-10 divide-y border-b text-sm font-medium md:text-base',
-        className
+        className,
       )}
       {...rest}
     >

@@ -7,7 +7,7 @@ export const formatCurrency = (number?: number | null, maximumFractionDigits = 6
     style: 'currency',
     currency: 'USD',
     maximumFractionDigits,
-    minimumFractionDigits: 0
+    minimumFractionDigits: 0,
   });
 };
 
@@ -35,7 +35,7 @@ export const formatAbbreviationNumber = (number?: number | null, locale?: string
   const formatter = Intl.NumberFormat(locale, {
     notation: 'compact',
     minimumFractionDigits: 0,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 2,
   });
 
   return formatter.format(number);

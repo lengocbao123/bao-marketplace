@@ -17,13 +17,13 @@ export async function getServerSideProps({ query, resolvedUrl }) {
     return {
       redirect: {
         destination: `${resolvedUrl}?filter=on-sale`,
-        permanent: false
-      }
+        permanent: false,
+      },
     };
   }
 
   return {
-    props: {}
+    props: {},
   };
 }
 
@@ -35,18 +35,18 @@ const Home: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getServ
     {
       id: 'on-sale-18d8b4f2-4cf9-11ed-bdc3-0242ac120002',
       label: 'On Sale (1k)',
-      url: '?filter=on-sale'
+      url: '?filter=on-sale',
     },
     {
       id: 'live-auction-18d8b4f2-4cf9-11ed-bdc3-0242ac120002',
       label: 'Live Auction (978)',
-      url: '?filter=live-auction'
+      url: '?filter=live-auction',
     },
     {
       id: 'unlisted-18d8b4f2-4cf9-11ed-bdc3-0242ac120002',
       label: 'Unlisted (100)',
-      url: '?filter=unlisted'
-    }
+      url: '?filter=unlisted',
+    },
   ];
 
   return (
@@ -56,7 +56,7 @@ const Home: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getServ
         className="bg-neutral-10 mb-0 py-2.5"
         links={[
           { label: 'Collections', href: '/collections', as: '/collections' },
-          { label: COLLECTIONS[0].name, href: '/', as: '/' }
+          { label: COLLECTIONS[0].name, href: '/', as: '/' },
         ]}
       />
       <CollectionProfile className="m-0" collection={COLLECTIONS[0]} />

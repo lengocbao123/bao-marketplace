@@ -1,14 +1,14 @@
 import { ButtonLink, ListItem } from 'components/atoms';
 import { CardNft, ChipFilter, ChipOption, Section } from 'components/molecules';
-import { fetcher } from 'lib/utils/fetcher';
-import { FC, HTMLAttributes } from 'react';
-import useSWR, { mutate } from 'swr';
+import { FC, HTMLAttributes, useState } from 'react';
+import useSWR from 'swr';
 
 export type ExplorerProps = HTMLAttributes<HTMLElement>;
 
 export const Explorer: FC<ExplorerProps> = ({}) => {
   const { data: categories, error: errorCategories } = useSWR(`/categories`);
-  const { data: nfts, error: errorNfts } = useSWR(`/nfts`);
+  const [category, setCategory] = useState('b1527454-385d-4c9e-b91d-f84c6a1b6e12');
+  const { data: nfts, error: errorNfts } = useSWR(`/nfts?_limit=8&category=${category}`);
 
   if (errorCategories || errorNfts) {
     return <div>failed to load</div>;
@@ -18,8 +18,8 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
     return <div>loading...</div>;
   }
 
-  const onChangeFilter = async (value: string) => {
-    await mutate(`/nfts`, fetcher(`/nfts?category=${value}`), { revalidate: false });
+  const onChangeCategory = (value: string) => {
+    setCategory(value);
   };
 
   const options: ChipOption[] =
@@ -31,7 +31,7 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
   return (
     <Section heading="Explore The Marketplace" lead="Discover NFTs">
       <div className="sm:space-y-7.5 space-y-5">
-        <ChipFilter options={options} onChange={(value) => onChangeFilter(value)} />
+        <ChipFilter value={category} options={options} onChange={onChangeCategory} />
 
         <ListItem>
           {nfts.map((nft) => (

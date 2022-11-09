@@ -9,5 +9,5 @@ export {
   ethereum as EthereumIcon,
   harmony as HarmonyIcon,
   polygon as PolygonIcon,
-  solana as SolanaIcon
+  solana as SolanaIcon,
 };

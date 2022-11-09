@@ -67,9 +67,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, forwardedR
             error && '!border-accent-error !bg-accent-error/10',
             {
               'pl-4': leadingVisual,
-              'pr-4': trailingVisual || trailingAction
+              'pr-4': trailingVisual || trailingAction,
             },
-            className
+            className,
           )}
         >
           {leadingVisual && (

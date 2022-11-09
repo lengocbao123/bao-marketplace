@@ -26,8 +26,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
 
   return {
     props: {
-      session
-    }
+      session,
+    },
   };
 };
 const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
@@ -41,7 +41,7 @@ const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSer
     onSubmit,
     register,
     setValue,
-    formState: { errors, isValid, isSubmitting, isDirty }
+    formState: { errors, isValid, isSubmitting, isDirty },
   } = useFormCreateProfile({
     initialData: USER,
 
@@ -51,7 +51,7 @@ const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSer
     },
     onError: (error) => {
       toast.error(error);
-    }
+    },
   });
 
   useEffect(() => {
@@ -76,7 +76,7 @@ const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSer
     setWallets(wallets.filter((item) => item.walletAddress !== walletId));
     setValue(
       'wallets',
-      wallets.filter((item) => item.walletAddress !== walletId)
+      wallets.filter((item) => item.walletAddress !== walletId),
     );
   };
 

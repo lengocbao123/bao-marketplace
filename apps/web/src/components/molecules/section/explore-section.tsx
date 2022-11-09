@@ -1,17 +1,20 @@
 import clsx from 'clsx';
 import { FC, Fragment, HTMLAttributes, ReactNode, useEffect, useState } from 'react';
-import { HamburgerSection, TabLinkData, TabsLink } from '..';
+import { HamburgerSection, Tabs } from '..';
 import { FilterType } from 'hooks/use-filters';
 import { Button } from 'components/atoms';
 import { FilterIcon } from 'components/icons/outline';
 import { ExploreActions, ExploreFilterToggle } from 'components/organisms';
+import { useRouter } from 'next/router';
 
 export interface ExploreSectionProps extends HTMLAttributes<HTMLDivElement> {
   filtersComponent: ReactNode;
-  tabs?: Array<TabLinkData>;
+  tabs?: Array<any>;
   tabsClassName?: string;
   bodyClassName?: string;
   filter: FilterType;
+  onChangeFilter: (key: string, value: any) => void;
+  onResetFilter: () => void;
 }
 export const ExploreSection: FC<ExploreSectionProps> = ({
   filtersComponent,
@@ -19,34 +22,55 @@ export const ExploreSection: FC<ExploreSectionProps> = ({
   tabs,
   tabsClassName,
   bodyClassName,
-  filter
+  filter,
+  onChangeFilter,
+  onResetFilter,
 }) => {
+  const router = useRouter();
   const [isDisplayingFilter, setIsDisplayingFilter] = useState(true);
-  const [numOfFilters, setNumOfFilters] = useState(0);
+  const { category = '' } = router.query;
+  const [numberOfFilters, setNumberOfFilters] = useState<number>(0);
+  const handleSelectSort = async (sort) => {
+    await onChangeFilter('sort', JSON.stringify(sort.value));
+  };
 
   useEffect(() => {
     let count = 0;
-    Object.values(filter).forEach((filterValue) => {
-      count += filterValue.length;
-    });
-    setNumOfFilters(count);
+    if (filter.status) {
+      count = count + filter.status.length;
+    }
+    if (filter.blockchain) {
+      count = count + filter.blockchain.length;
+    }
+    if (filter.price) {
+      count = count + 1;
+    }
+    if (filter.collection) {
+      count = count + filter.collection.length;
+    }
+    setNumberOfFilters(count);
   }, [filter]);
 
   return (
     <Fragment>
-      <TabsLink
+      <Tabs
         data={tabs.map((item) => ({
-          ...item
+          ...item,
+          active: item.value === category,
         }))}
+        onChange={(value) => {
+          onChangeFilter('category', value);
+        }}
         className={clsx(tabsClassName)}
       />
+
       <div className={clsx(bodyClassName)}>
         <div className="flex justify-between">
           <HamburgerSection
             className="block sm:hidden"
             openButton={
               <ExploreFilterToggle
-                numOfFilters={numOfFilters}
+                numOfFilters={numberOfFilters}
                 onToggle={() => setIsDisplayingFilter(!isDisplayingFilter)}
               />
             }
@@ -61,12 +85,12 @@ export const ExploreSection: FC<ExploreSectionProps> = ({
           </HamburgerSection>
           <ExploreActions
             isDisplayingFilter={isDisplayingFilter}
-            numOfFilters={numOfFilters}
+            numOfFilters={numberOfFilters}
             className="mb-5"
             toggleFilter={() => setIsDisplayingFilter(!isDisplayingFilter)}
-            onClearFilter={() => {
-              console.log('onClearFilter');
-            }}
+            selectedSortOption={filter.sort ? JSON.parse(filter.sort) : null}
+            onClearFilter={onResetFilter}
+            onSelectSort={handleSelectSort}
           />
         </div>
 

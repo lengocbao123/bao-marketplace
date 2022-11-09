@@ -19,13 +19,13 @@ export const ProductSimilar: FC<ProductSimilarProps> = ({ className, ...rest }) 
             }
             link={{
               href: `/`,
-              as: `/`
+              as: `/`,
             }}
             user={{
               id: '',
               avatarUrl: null,
               username: 'John Doe',
-              email: ''
+              email: '',
             }}
           />
         ))}

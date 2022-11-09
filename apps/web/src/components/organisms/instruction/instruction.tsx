@@ -6,20 +6,20 @@ export const Instruction = () => {
     {
       title: 'Create your collection',
       image: CollectionGraphic,
-      description: 'Add social links, a description, profile & banner images, and set a secondary sales fee.'
+      description: 'Add social links, a description, profile & banner images, and set a secondary sales fee.',
     },
     {
       title: 'Add your NFTs',
       image: GalleryGraphic,
       description:
-        'Upload your work, add a title and description, and customize your NFTs with properties, stats, and unlockable content.'
+        'Upload your work, add a title and description, and customize your NFTs with properties, stats, and unlockable content.',
     },
     {
       title: 'List them for sale',
       image: SaleGraphic,
       description:
-        'Choose between auctions, fixed-price listings, and declining-price listings, and we help you sell them!'
-    }
+        'Choose between auctions, fixed-price listings, and declining-price listings, and we help you sell them!',
+    },
   ];
 
   return (

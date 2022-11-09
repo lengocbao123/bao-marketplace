@@ -11,9 +11,9 @@ module.exports = {
       'error',
       {
         types: {
-          '{}': false
-        }
-      }
-    ]
-  }
+          '{}': false,
+        },
+      },
+    ],
+  },
 };

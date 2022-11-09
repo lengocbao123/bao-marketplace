@@ -17,7 +17,7 @@ export const useFormSignUp = (options: { initialData?: UseFormSignUp } & UserFor
     username: yup.string().required('Username is required'),
     email: yup.string().email('Email is invalid').required('Email is required'),
     password: yup.string().required('Password is required'),
-    confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match')
+    confirmPassword: yup.string().oneOf([yup.ref('password'), null], 'Passwords must match'),
   });
 
   const defaultValues = useMemo(() => options.initialData, [options.initialData]);
@@ -26,7 +26,7 @@ export const useFormSignUp = (options: { initialData?: UseFormSignUp } & UserFor
     resolver: yupResolver(schema),
     mode: 'onSubmit',
     reValidateMode: 'onChange',
-    defaultValues
+    defaultValues,
   });
 
   const onSubmit = async (formData: UseFormSignUp) => {
@@ -44,6 +44,6 @@ export const useFormSignUp = (options: { initialData?: UseFormSignUp } & UserFor
 
   return {
     ...methods,
-    onSubmit: methods.handleSubmit(onSubmit)
+    onSubmit: methods.handleSubmit(onSubmit),
   };
 };

@@ -10,7 +10,7 @@ export interface UseFormRangeFilter {
 }
 
 export const useFormRangeFilter = (
-  options?: { initialData?: UseFormRangeFilter } & UserForm<UseFormRangeFilter, any>
+  options?: { initialData?: UseFormRangeFilter } & UserForm<UseFormRangeFilter, any>,
 ) => {
   const schema = yup.object().shape({
     min: yup
@@ -27,7 +27,7 @@ export const useFormRangeFilter = (
       .typeError('Numeric inputs only')
       .nullable()
       .defined(),
-    max: yup.number().min(0, 'Min at least 0').nullable().defined().typeError('Numeric inputs only')
+    max: yup.number().min(0, 'Min at least 0').nullable().defined().typeError('Numeric inputs only'),
   });
 
   const defaultValues = useMemo(() => {
@@ -37,7 +37,7 @@ export const useFormRangeFilter = (
   const methods = useForm<UseFormRangeFilter>({
     resolver: yupResolver(schema),
     mode: 'onChange',
-    defaultValues
+    defaultValues,
   });
 
   const onSubmit = async (formData: UseFormRangeFilter) => {
@@ -50,6 +50,6 @@ export const useFormRangeFilter = (
 
   return {
     ...methods,
-    onSubmit: methods.handleSubmit(onSubmit)
+    onSubmit: methods.handleSubmit(onSubmit),
   };
 };

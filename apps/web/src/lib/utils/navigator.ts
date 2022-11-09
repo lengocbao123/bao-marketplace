@@ -3,7 +3,7 @@ export const copyToClipboard = (data: any, onSuccess?: () => void, onError?: () 
     () => onSuccess?.(),
     () => {
       onError?.();
-    }
+    },
   );
 };
 
@@ -20,7 +20,7 @@ export const convertImageUrlToFile = (urlImage: string) => {
       const blob = await response.blob();
 
       return new File([blob], `${fileName}.${imgExt}`, {
-        type: blob.type
+        type: blob.type,
       });
     });
   } catch (error) {

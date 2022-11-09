@@ -8,26 +8,26 @@ module.exports = {
     extend: {
       container: {
         center: true,
-        padding: '1rem'
+        padding: '1rem',
       },
       colors: {
         brand: {
           blue: colors.blue[500],
-          red: colors.red[500]
+          red: colors.red[500],
         },
         primary: {
           DEFAULT: '#c1e64c',
           50: '#9bc919',
           30: '#d0f066',
           20: '#f2fbcc',
-          5: '#fafee7'
+          5: '#fafee7',
         },
         secondary: {
           DEFAULT: '#6e43d4',
           70: '#5a2fbf',
           40: '#9a8bee',
           30: '#b1acf5',
-          10: '#e4e3fc'
+          10: '#e4e3fc',
         },
         neutral: {
           DEFAULT: '#1f1f23',
@@ -35,22 +35,22 @@ module.exports = {
           50: '#7c7d89',
           30: '#cbcbd5',
           10: '#eeeff0',
-          0: '#fff'
+          0: '#fff',
         },
         accent: {
           success: '#6dbc00',
           warning: '#ffc42d',
           error: '#eb5849',
-          info: '#4663e2'
+          info: '#4663e2',
         },
         bg: {
           warning: '#fff4c6',
           error: '#fee4e2',
-          info: '#d9ebff'
-        }
+          info: '#d9ebff',
+        },
       },
       fontFamily: {
-        sans: ['Work Sans', ...themes.fontFamily.sans]
+        sans: ['Work Sans', ...themes.fontFamily.sans],
       },
       spacing: {
         0.75: '0.1875rem' /* 3px */,
@@ -76,15 +76,15 @@ module.exports = {
         50: '12.5rem' /* 200px */,
         56: '14rem' /* 224px */,
         60: '15rem' /* 240px */,
-        67: '16.75rem' /* 268px */
+        67: '16.75rem' /* 268px */,
       },
       borderWidth: {
-        3: '3px'
+        3: '3px',
       },
       backgroundImage: {
         'gradient-1': 'linear-gradient(61.1deg, #f6f6f6 -18.33%, #916ff2 20.35%, #4a20b0 60.96%, #2f107c 105.78%)',
         'gradient-2': 'linear-gradient(65.39deg, #da22ff -2.14%, #6e43d4 100.21%)',
-        'hero-overlay': 'linear-gradient(180deg, #ffffff 14.51%, rgba(255, 255, 255, 0) 100%)'
+        'hero-overlay': 'linear-gradient(180deg, #ffffff 14.51%, rgba(255, 255, 255, 0) 100%)',
       },
       boxShadow: {
         dropdown: ['0px 0px 2px rgba(0, 0, 0, 0.2)', '0px 2px 10px rgba(10, 6, 34, 0.1)'],
@@ -93,22 +93,22 @@ module.exports = {
         'line-right': '1px 0px 0px rgba(10, 6, 34, 0.05)',
         'box-hover': '0px 4px 14px rgba(10, 6, 34, 0.12)',
         'box-pressed': ['0px 1px 10px rgba(0, 0, 0, 0.1)', '0px 2px 4px rgba(10, 6, 34, 0.08)'],
-        'box-inner': ['inset 0 -2px 4px 0 rgba(0, 0, 0, 0.05)', 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)']
+        'box-inner': ['inset 0 -2px 4px 0 rgba(0, 0, 0, 0.05)', 'inset 0 2px 4px 0 rgba(0, 0, 0, 0.05)'],
       },
       animation: {
         'hero-small': 'hero-small 140s linear infinite',
-        'hero-large': 'hero-large 150s linear infinite'
+        'hero-large': 'hero-large 150s linear infinite',
       },
       keyframes: {
         'hero-small': {
           '0%': { transform: `translateY(-${((2642 - 874) / 2642) * 100}%)` },
-          '100%': { transform: 'translateY(0)' }
+          '100%': { transform: 'translateY(0)' },
         },
         'hero-large': {
-          '100%': { transform: `translateY(-${((2834 - 938) / 2834) * 100}%)` }
-        }
-      }
-    }
+          '100%': { transform: `translateY(-${((2834 - 938) / 2834) * 100}%)` },
+        },
+      },
+    },
   },
-  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/line-clamp'), require('@tailwindcss/forms')]
+  plugins: [require('@tailwindcss/typography'), require('@tailwindcss/line-clamp'), require('@tailwindcss/forms')],
 };

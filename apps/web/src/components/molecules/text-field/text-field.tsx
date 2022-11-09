@@ -26,7 +26,7 @@ export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         <Input id={id} ref={ref} {...rest} error={error} disabled={disabled} data-component={'input'} help={help} />
       </div>
     );
-  }
+  },
 );
 
 TextField.displayName = NAME;

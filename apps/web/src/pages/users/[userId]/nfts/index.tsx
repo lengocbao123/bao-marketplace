@@ -28,7 +28,7 @@ const Home: NextPageWithLayout = () => {
         socialLinks={[
           { link: '/', type: 'twitter' },
           { link: '/', type: 'discord' },
-          { link: '/', type: 'website' }
+          { link: '/', type: 'website' },
         ]}
       />
       <div className="container">

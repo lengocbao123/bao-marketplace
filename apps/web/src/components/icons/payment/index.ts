@@ -15,5 +15,5 @@ export {
   mastercard as MastercardIcon,
   mastercardColor as MastercardColorIcon,
   visa as VisaIcon,
-  visaColor as VisaColorIcon
+  visaColor as VisaColorIcon,
 };

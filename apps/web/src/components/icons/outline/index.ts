@@ -157,5 +157,5 @@ export {
   users as UsersIcon,
   wallet as WalletIcon,
   widgets as WidgetsIcon,
-  xCircle as XCircleIcon
+  xCircle as XCircleIcon,
 };

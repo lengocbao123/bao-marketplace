@@ -18,7 +18,7 @@ export type FileImageType = 'circle' | 'rectangle';
 export const FileImageSizes: Record<FileImageSize, string> = {
   sm: 'sm:h-35 sm:w-35 w-24.5 h-24.5',
   md: 'w-full h-60 max-w-md',
-  lg: 'w-full h-60 max-w-2xl'
+  lg: 'w-full h-60 max-w-2xl',
 } as const;
 
 /**
@@ -27,7 +27,7 @@ export const FileImageSizes: Record<FileImageSize, string> = {
  */
 export const FileImageTypes: Record<FileImageType, string> = {
   circle: 'flex overflow-hidden rounded-full',
-  rectangle: 'flex rounded-xl'
+  rectangle: 'flex rounded-xl',
 } as const;
 
 export interface FileImageProps extends DropzoneOptions {
@@ -58,9 +58,9 @@ export const FileImage = React.forwardRef<DropzoneRef, FileImageProps>(
       className,
       innerClass,
       value = null,
-      onSubmit
+      onSubmit,
     },
-    ref
+    ref,
   ) => {
     const [file, setFile] = useState<File | null>(value);
     const [errorMessage, setErrorMessage] = useState<string>('');
@@ -97,13 +97,13 @@ export const FileImage = React.forwardRef<DropzoneRef, FileImageProps>(
     const rootClasses = clsx(
       size === 'md' && 'h-60 w-full max-w-md',
       size === 'lg' && 'h-60 w-full max-w-2xl',
-      'relative'
+      'relative',
     );
 
     const imageClasses = clsx(
       'object-center object-cover',
       imageType === 'circle' ? 'rounded-full' : 'rounded-xl',
-      innerClass ? innerClass : 'h-full w-full'
+      innerClass ? innerClass : 'h-full w-full',
     );
 
     const renderImage = () => {
@@ -160,7 +160,7 @@ export const FileImage = React.forwardRef<DropzoneRef, FileImageProps>(
             error
               ? 'border-accent-error bg-accent-error/20 hover:border-accent-error focus:border-accent-error'
               : 'border-neutral-darker',
-            className
+            className,
           );
 
           return (
@@ -189,7 +189,7 @@ export const FileImage = React.forwardRef<DropzoneRef, FileImageProps>(
         }}
       </Dropzone>
     );
-  }
+  },
 );
 
 FileImage.displayName = NAME;

@@ -4,7 +4,7 @@ import {
   TableDataCell,
   TableDataHeader,
   TableDataHeaderCell,
-  TableDataRow
+  TableDataRow,
 } from 'components/molecules';
 import clsx from 'clsx';
 import { format } from 'date-fns';

@@ -71,12 +71,12 @@ export const usePagination = (options?: UsePaginationOptions) => {
     page: pageProp,
     showFirstButton = false,
     showLastButton = false,
-    siblingCount = 1
+    siblingCount = 1,
   } = options || {};
 
   const [page, setPageState] = useControlled({
     controlled: pageProp,
-    default: defaultPage
+    default: defaultPage,
   });
 
   const handleClick = (event: any, value: number) => {
@@ -102,10 +102,10 @@ export const usePagination = (options?: UsePaginationOptions) => {
       // Natural start
       page - siblingCount,
       // Lower boundary when page is high
-      count - boundaryCount - siblingCount * 2 - 1
+      count - boundaryCount - siblingCount * 2 - 1,
     ),
     // Greater than startPages
-    boundaryCount + 2
+    boundaryCount + 2,
   );
 
   const siblingsEnd = Math.min(
@@ -113,10 +113,10 @@ export const usePagination = (options?: UsePaginationOptions) => {
       // Natural end
       page + siblingCount,
       // Upper boundary when page is low
-      boundaryCount + siblingCount * 2 + 2
+      boundaryCount + siblingCount * 2 + 2,
     ),
     // Less than endPages
-    endPages.length > 0 ? endPages[0] - 2 : count - 1
+    endPages.length > 0 ? endPages[0] - 2 : count - 1,
   );
 
   /**
@@ -150,7 +150,7 @@ export const usePagination = (options?: UsePaginationOptions) => {
 
     ...endPages,
     ...(hideNextButton ? [] : ['next']),
-    ...(showLastButton ? ['last'] : [])
+    ...(showLastButton ? ['last'] : []),
   ];
 
   /**
@@ -187,7 +187,7 @@ export const usePagination = (options?: UsePaginationOptions) => {
           page: item,
           selected: item === page,
           disabled,
-          'aria-current': item === page ? 'true' : undefined
+          'aria-current': item === page ? 'true' : undefined,
         }
       : {
           onClick: (event: any) => {
@@ -199,7 +199,7 @@ export const usePagination = (options?: UsePaginationOptions) => {
           selected: false,
           disabled:
             disabled ||
-            (item.indexOf('ellipsis') === -1 && (item === 'next' || item === 'last' ? page >= count : page <= 1))
+            (item.indexOf('ellipsis') === -1 && (item === 'next' || item === 'last' ? page >= count : page <= 1)),
         };
   });
 

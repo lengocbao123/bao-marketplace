@@ -9,15 +9,16 @@ const NAME = 'RangeFilter';
 export interface RangeFilterProps extends HTMLAttributes<HTMLDivElement> {
   onApply?: (formData: UseFormRangeFilter) => void;
   heading?: string;
+  defaultRange?: UseFormRangeFilter;
 }
 
-export const RangeFilter: FC<RangeFilterProps> = ({ className, children, heading, onApply }) => {
+export const RangeFilter: FC<RangeFilterProps> = ({ className, children, heading, onApply, defaultRange }) => {
   const {
     onSubmit,
     register,
-    formState: { isValid, errors, isSubmitting }
+    formState: { isValid, errors, isSubmitting },
   } = useFormRangeFilter({
-    onSuccess: onApply
+    onSuccess: onApply,
   });
 
   return (
@@ -28,16 +29,18 @@ export const RangeFilter: FC<RangeFilterProps> = ({ className, children, heading
           <Input
             className="w-full"
             placeholder={'Min'}
+            defaultValue={defaultRange ? defaultRange.min : ''}
             {...register('min', {
-              deps: ['max']
+              deps: ['max'],
             })}
           />
           <span className="mx-3 text-sm text-neutral-50">to</span>
           <Input
             className="w-full"
             placeholder={'Max'}
+            defaultValue={defaultRange ? defaultRange.max : ''}
             {...register('max', {
-              deps: ['min']
+              deps: ['min'],
             })}
           />
         </div>
@@ -48,6 +51,7 @@ export const RangeFilter: FC<RangeFilterProps> = ({ className, children, heading
           className="mt-4 w-full"
           label={'Apply'}
           variant={'secondary'}
+          type="submit"
           disabled={!isValid}
           loading={isSubmitting}
         />

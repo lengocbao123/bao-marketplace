@@ -12,7 +12,7 @@ export const CardProperty: FC<CardPropertyProps> = ({ className, type, value, ra
     <div
       className={clsx(
         'border-secondary bg-secondary/10 inline-block flex items-center justify-center space-y-1 rounded-xl border p-5 text-center',
-        className
+        className,
       )}
       {...rest}
     >

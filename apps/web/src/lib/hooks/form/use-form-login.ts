@@ -16,7 +16,7 @@ export const useFormLogin = (options: { initialData?: UseFormLogin } & UserForm<
   const { callbackUrl } = router.query as { callbackUrl: string };
   const schema = yup.object().shape({
     email: yup.string().email('Email is invalid').required('Email is required'),
-    password: yup.string().required('Password is required')
+    password: yup.string().required('Password is required'),
   });
 
   const defaultValues = useMemo(() => options.initialData, [options.initialData]);
@@ -25,7 +25,7 @@ export const useFormLogin = (options: { initialData?: UseFormLogin } & UserForm<
     resolver: yupResolver(schema),
     mode: 'onSubmit',
     reValidateMode: 'onChange',
-    defaultValues
+    defaultValues,
   });
 
   const onSubmit = async (formData: UseFormLogin) => {
@@ -38,7 +38,7 @@ export const useFormLogin = (options: { initialData?: UseFormLogin } & UserForm<
         email: formData.email,
         password: formData.password,
         redirect: false,
-        callbackUrl: callbackUrl || '/'
+        callbackUrl: callbackUrl || '/',
       });
       if (result.ok) {
         await router.replace(result?.url || '/') /* .then(router.reload) */;
@@ -52,6 +52,6 @@ export const useFormLogin = (options: { initialData?: UseFormLogin } & UserForm<
 
   return {
     ...methods,
-    onSubmit: methods.handleSubmit(onSubmit)
+    onSubmit: methods.handleSubmit(onSubmit),
   };
 };

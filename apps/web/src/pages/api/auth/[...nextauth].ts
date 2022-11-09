@@ -10,7 +10,7 @@ export const authOptions: NextAuthOptions = {
       name: 'Credentials',
       credentials: {
         email: { label: 'Username', type: 'text', placeholder: 'jsmith' },
-        password: { label: 'Password', type: 'password' }
+        password: { label: 'Password', type: 'password' },
       },
 
       async authorize(credentials) {
@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
           if (isSuccess(message)) {
             return {
               accessToken: data.accessToken,
-              ...data.user
+              ...data.user,
             };
           } else {
             console.warn(message);
@@ -30,8 +30,8 @@ export const authOptions: NextAuthOptions = {
         }
 
         return null;
-      }
-    })
+      },
+    }),
   ],
 
   callbacks: {
@@ -58,27 +58,27 @@ export const authOptions: NextAuthOptions = {
       session.user.name = token.username;
 
       return session;
-    }
+    },
   },
 
   pages: {
-    signIn: '/auth/sign-in'
+    signIn: '/auth/sign-in',
   },
 
   jwt: {
-    maxAge: 60 * 60 * 12 // 12 hours
+    maxAge: 60 * 60 * 12, // 12 hours
   },
 
   session: {
-    maxAge: 60 * 60 * 12 // 12 hours
-  }
+    maxAge: 60 * 60 * 12, // 12 hours
+  },
 };
 
 export default async function auth(req: NextApiRequest, res: NextApiResponse) {
   return await NextAuth(req, res, {
     ...authOptions,
     callbacks: {
-      ...authOptions.callbacks
-    }
+      ...authOptions.callbacks,
+    },
   });
 }

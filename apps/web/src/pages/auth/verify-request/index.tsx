@@ -27,13 +27,13 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res, query }
     return {
       redirect: {
         destination: '/auth/sign-in',
-        permanent: false
-      }
+        permanent: false,
+      },
     };
   }
 
   return {
-    props: {}
+    props: {},
   };
 };
 const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {

@@ -1,40 +1,35 @@
 import { Menu, Transition } from '@headlessui/react';
 import clsx from 'clsx';
-import { FC, Fragment, useEffect, useState } from 'react';
+import { FC, Fragment, useState } from 'react';
 import { Button } from 'components/atoms';
 import { ChevronDownIcon } from 'components/icons/outline';
 
 export type SelectOption = {
-  value: string;
+  value: any;
   label: string;
 };
 
 export interface DropdownSelectProps {
   options: SelectOption[];
-  defaultValue?: SelectOption;
+  activeIndex?: number;
   onChange?: (option: SelectOption) => void;
 }
 
-export const DropdownSelect: FC<DropdownSelectProps> = ({ options, onChange }) => {
-  const [selectedOption, setSelectedOption] = useState<SelectOption>(null);
-  const handleClick = (option: SelectOption) => {
+export const DropdownSelect: FC<DropdownSelectProps> = ({ options, onChange, activeIndex = 0 }) => {
+  const [selectedIndex, setSelectedIndex] = useState(activeIndex || 0);
+
+  const handleClick = (option: SelectOption, index: number) => {
     if (onChange) {
       onChange(option);
     }
-    setSelectedOption(option);
+    setSelectedIndex(index);
   };
-
-  useEffect(() => {
-    if (options.length > 0) {
-      setSelectedOption(options[0]);
-    }
-  }, [options]);
 
   return (
     <Menu as="div" className="relative">
       <Menu.Button as={Fragment}>
         <Button
-          label={selectedOption ? selectedOption.label : 'Select option'}
+          label={options.length > 0 ? options[selectedIndex].label : 'Select option'}
           variant="tertiary"
           icon={ChevronDownIcon}
           iconOrientation="right"
@@ -56,9 +51,9 @@ export const DropdownSelect: FC<DropdownSelectProps> = ({ options, onChange }) =
                 return (
                   <div
                     className={clsx(' cursor-pointer rounded-lg px-2 py-3', {
-                      'bg-neutral-10': active || option.value === selectedOption.value
+                      'bg-neutral-10': active || index === selectedIndex,
                     })}
-                    onClick={() => handleClick(option)}
+                    onClick={() => handleClick(option, index)}
                   >
                     {option.label}
                   </div>

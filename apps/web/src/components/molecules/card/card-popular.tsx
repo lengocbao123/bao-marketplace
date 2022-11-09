@@ -19,7 +19,7 @@ export const CardPopular: FC<CardPopularProps> = (props) => {
       style={{
         background: `linear-gradient(105.38deg, #020202 0.11%, rgba(231, 231, 231, 0) 99.63%), url(${image})`,
         backgroundSize: 'cover',
-        backgroundPosition: 'center'
+        backgroundPosition: 'center',
       }}
       {...cardPopularProps}
     >
