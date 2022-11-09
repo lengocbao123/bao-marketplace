@@ -38,7 +38,15 @@ export const CollectionsFilters: FC<CollectionsFiltersProps> = ({ className = ''
       <RangeFilter
         className="py-5"
         heading="Price"
-        onApply={(formData) => onChange('price', Object.values(formData))}
+        defaultRange={
+          filter.price
+            ? {
+                min: filter.price[0],
+                max: filter.price[1],
+              }
+            : null
+        }
+        onApply={(formData) => onChange('price', [formData.min, formData.max])}
       />
     </div>
   );

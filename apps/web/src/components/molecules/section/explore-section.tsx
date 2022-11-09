@@ -26,10 +26,9 @@ export const ExploreSection: FC<ExploreSectionProps> = ({
   onChangeFilter,
   onResetFilter,
 }) => {
-  const router = useRouter();
   const [isDisplayingFilter, setIsDisplayingFilter] = useState(true);
-  const { category = '' } = router.query;
   const [numberOfFilters, setNumberOfFilters] = useState<number>(0);
+  const router = useRouter();
   const handleSelectSort = async (sort) => {
     await onChangeFilter('sort', JSON.stringify(sort.value));
   };
@@ -56,10 +55,11 @@ export const ExploreSection: FC<ExploreSectionProps> = ({
       <Tabs
         data={tabs.map((item) => ({
           ...item,
-          active: item.value === category,
         }))}
         onChange={(value) => {
-          onChangeFilter('category', value);
+          const { pathname } = router;
+          const key = pathname === '/collections' ? 'period' : 'category';
+          onChangeFilter(key, value);
         }}
         className={clsx(tabsClassName)}
       />

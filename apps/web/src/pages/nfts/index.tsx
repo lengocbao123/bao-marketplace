@@ -10,7 +10,7 @@ import useSWR from 'swr';
 import queryString from 'query-string';
 import { useRouter } from 'next/router';
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps({ query, resolvedUrl }) {
   const nftsQuery = queryString.stringify({
     ...query,
     page: query.page ? query.page : 1,
@@ -25,7 +25,7 @@ export async function getServerSideProps({ query }) {
   if (!query.page || !query.category) {
     return {
       redirect: {
-        destination: `/nfts?${nftsQuery}`,
+        destination: `${resolvedUrl}?${nftsQuery}`,
         permanent: false,
       },
     };
@@ -67,13 +67,11 @@ const ExplorePage: NextPageWithLayout = ({ nftsQuery }: InferGetServerSidePropsT
   ].map((item) => ({
     label: item.name,
     value: item.id,
+    active: item.id === query.category,
   }));
 
   const resetFilter = () => {
     const newQuery = { page: 1, category: query.category };
-    // if (query.sort) {
-    //   newQuery['sort'] = query.sort;
-    // }
     router.push({
       pathname: router.pathname,
       query: queryString.stringify(newQuery, { arrayFormat: 'bracket' }),
