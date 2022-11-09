@@ -14,10 +14,12 @@ import { formatCurrency } from 'lib/utils/number';
 import { Avatar } from 'components/atoms';
 import { TableSection } from 'components/molecules';
 
-export type ProductSaleHistoryProps = HTMLAttributes<HTMLDivElement>;
+export interface ProductSaleHistoryProps extends HTMLAttributes<HTMLDivElement> {
+  sales: any[];
+}
 
-export const ProductSaleHistory: FC<ProductSaleHistoryProps> = ({ className }) => {
-  const isEmpty = false;
+export const ProductSaleHistory: FC<ProductSaleHistoryProps> = ({ sales = [], className }) => {
+  const isEmpty = sales.length === 0;
 
   return (
     <TableSection title={'Sale History'} className={clsx(className)}>
@@ -32,15 +34,17 @@ export const ProductSaleHistory: FC<ProductSaleHistoryProps> = ({ className }) =
 
         <TableDataBody>
           {!isEmpty ? (
-            <TableDataRow>
-              <TableDataCell>Bought</TableDataCell>
-              <TableDataCell>{formatCurrency(26.555)}</TableDataCell>
-              <TableDataCell>
-                <Avatar name={'Estel Gutmann'} />
-              </TableDataCell>
-              <TableDataCell>{format(new Date(), 'MM/dd/yyyy')}</TableDataCell>
-              <TableDataCell>{format(new Date(), 'MM/dd/yyyy')}</TableDataCell>
-            </TableDataRow>
+            sales.map((sale) => (
+              <TableDataRow key={sale.id}>
+                <TableDataCell className="capitalize">{sale.type}</TableDataCell>
+                <TableDataCell>{formatCurrency(sale.price)}</TableDataCell>
+                <TableDataCell>
+                  <Avatar name={sale.owner.email} />
+                </TableDataCell>
+                <TableDataCell>N/A</TableDataCell>
+                <TableDataCell>{format(new Date(sale.createdAt), 'MM/dd/yyyy')}</TableDataCell>
+              </TableDataRow>
+            ))
           ) : (
             <TableDataRowEmpty colSpan={5} message={'No sale history'} />
           )}

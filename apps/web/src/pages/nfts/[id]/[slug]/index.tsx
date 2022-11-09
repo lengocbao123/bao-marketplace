@@ -12,12 +12,40 @@ import {
   ProductSimilar,
   ProductOfferHistory,
 } from 'components/organisms';
-import { NFTS } from 'lib/dummy';
 import { NextPageWithLayout } from 'pages/_app';
+import { InferGetServerSidePropsType } from 'next';
+import { fetcher } from 'lib/utils/fetcher';
+import useSWR from 'swr';
+import { convertToSlug } from 'lib/utils/string';
 
-const Index: NextPageWithLayout = () => {
-  const nft = NFTS[0];
-  const hasOrder = nft.order || nft.order?.id != null;
+export async function getServerSideProps({ query }) {
+  const { id } = query;
+
+  const [nft, relativeNfts] = await Promise.all([fetcher(`/nfts/${id}`), fetcher(`/nfts?_limit=4`)]);
+
+  return {
+    props: {
+      id,
+      fallback: {
+        [`/nfts/${id}`]: nft,
+        '/nfts?_limit=4': relativeNfts,
+      },
+    },
+  };
+}
+
+const Index: NextPageWithLayout = ({ id }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const { data: nft, error: errorNfts } = useSWR(`/nfts/${id}`);
+  const { data: relativeNfts, error: errorRelativeNfts } = useSWR(`/nfts?_limit=4`);
+
+  const hasOrder = nft.order;
+  if (errorNfts || errorRelativeNfts) {
+    return <div>failed to load</div>;
+  }
+
+  if (!nft) {
+    return <div>loading...</div>;
+  }
 
   return (
     <Fragment>
@@ -27,9 +55,9 @@ const Index: NextPageWithLayout = () => {
         links={[
           { label: 'Collections', href: '/collections', as: '/collections' },
           {
-            label: 'Monkey collection 69',
-            as: '/collections/monkey-collection-69',
-            href: '/collections/[slug]',
+            label: nft.collection.name,
+            as: `/collections/${nft.collection.id}/${convertToSlug(nft.collection.name)}`,
+            href: '/collections/[id]/[slug]',
           },
           { label: nft.name, href: '/', as: '/' },
         ]}
@@ -57,8 +85,8 @@ const Index: NextPageWithLayout = () => {
         </div>
         {/* End Mobile Screen*/}
         <ProductOfferHistory className="mt-7.5 col-span-5" />
-        <ProductSaleHistory className="mt-7.5 col-span-5" />
-        <ProductSimilar className="mt-7.5 col-span-5" />
+        <ProductSaleHistory className="mt-7.5 col-span-5" sales={nft.order.prices} />
+        <ProductSimilar className="mt-7.5 col-span-5" products={relativeNfts} />
       </div>
     </Fragment>
   );

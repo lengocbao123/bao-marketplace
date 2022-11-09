@@ -27,14 +27,14 @@ export const ProductInfo: FC<ProductInfoProps> = ({ className, nft, ...rest }) =
           label={'Creator'}
           name={nft.createdBy?.username || nft.createdBy?.email || 'Unknown'}
           src={nft.createdBy?.avatarUrl}
-          className='hidden text-sm sm:block [&_[data-component="label"]]:mr-2'
+          className='flex hidden items-center text-sm sm:flex [&_[data-component="label"]]:mr-2'
         />
 
         <Avatar
           label={'Owner'}
           name={nft.owner?.username || nft.owner?.email || 'Unknown'}
           src={nft.owner?.avatarUrl}
-          className='text-sm [&_[data-component="label"]]:mr-2'
+          className='flex items-center text-sm [&_[data-component="label"]]:mr-2'
         />
       </div>
 

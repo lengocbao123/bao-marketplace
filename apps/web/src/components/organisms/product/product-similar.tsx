@@ -1,34 +1,29 @@
 import { CardNft, ProductSection } from 'components/molecules';
 import clsx from 'clsx';
 import { FC, HTMLAttributes } from 'react';
+import { NftData } from 'types';
+import { convertToSlug } from 'lib/utils/string';
 
-export type ProductSimilarProps = HTMLAttributes<HTMLDivElement>;
+export interface ProductSimilarProps extends HTMLAttributes<HTMLDivElement> {
+  products?: NftData[];
+}
 
-export const ProductSimilar: FC<ProductSimilarProps> = ({ className, ...rest }) => {
+export const ProductSimilar: FC<ProductSimilarProps> = ({ products, className, ...rest }) => {
   return (
     <ProductSection title={'More from this collection'} className={clsx(className)} {...rest}>
       <div className="grid grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-4">
-        {Array.from({ length: 4 }).map((_, index) => (
-          <CardNft
-            key={index}
-            title={'Monkey 66'}
-            subtitle={'Monkey collection 69'}
-            price={2500}
-            image={
-              'https://images.unsplash.com/photo-1608178398319-48f814d0750c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1479&q=80'
-            }
-            link={{
-              href: `/`,
-              as: `/`,
-            }}
-            user={{
-              id: '',
-              avatarUrl: null,
-              username: 'John Doe',
-              email: '',
-            }}
-          />
-        ))}
+        {products &&
+          products.map((product, index) => (
+            <CardNft
+              key={index}
+              title={product.name}
+              subtitle={product.collection.name}
+              price={2500}
+              image={product.image}
+              link={{ as: `/nfts/${product.id}/${convertToSlug(product.name)}`, href: '/nfts/[id]/[slug]' }}
+              user={product.owner}
+            />
+          ))}
       </div>
     </ProductSection>
   );
