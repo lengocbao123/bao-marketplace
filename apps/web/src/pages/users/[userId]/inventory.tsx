@@ -8,7 +8,7 @@ import { InferGetServerSidePropsType } from 'next';
 import useSWR from 'swr';
 import { convertQueryParamsToArray } from 'lib/utils/query';
 import { USER_INVENTORY_TABS } from 'lib/constants';
-import { NftsFilters, NftsList } from '../../../../components/organisms/nfts';
+import { NftsFilters, NftsList } from 'components/organisms/nfts';
 
 export async function getServerSideProps({ query, resolvedUrl }) {
   const queryParams = {};
