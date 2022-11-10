@@ -8,7 +8,8 @@ import { NextPageWithLayout } from 'pages/_app';
 import { Fragment } from 'react';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
-import { convertQueryParamsToArray } from '../../lib/utils/query';
+import { convertQueryParamsToArray } from 'lib/utils/query';
+import { CategoryData, NftData } from 'types/data';
 
 export async function getServerSideProps({ query, resolvedUrl }) {
   const nftsQueryString = new URLSearchParams({
@@ -48,8 +49,8 @@ const ExplorePage: NextPageWithLayout = ({
   nftsQueryString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
-  const { data: categories, error: errorCategories } = useSWR('/categories');
-  const { data: nfts, error: errorNfts } = useSWR(`/nfts?${nftsQueryString}`);
+  const { data: categories, error: errorCategories } = useSWR<CategoryData[]>('/categories');
+  const { data: nfts, error: errorNfts } = useSWR<NftData[]>(`/nfts?${nftsQueryString}`);
   const { query } = router;
   if (errorCategories || errorNfts) {
     return <div>failed to load</div>;
@@ -73,10 +74,14 @@ const ExplorePage: NextPageWithLayout = ({
   }));
 
   const resetFilter = () => {
+    const resetQuery = { page: 1, filter: query.filter };
+    if (query.sort) {
+      resetQuery['sort'] = query.sort;
+    }
     router.push(
       {
         pathname: router.pathname,
-        query: { page: 1, filter: query.filter },
+        query: resetQuery,
       },
       undefined,
       {

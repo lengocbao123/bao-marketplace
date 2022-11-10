@@ -2,9 +2,10 @@ import { CardNft } from 'components/molecules';
 import { List } from 'components/organisms/list';
 import { convertToSlug } from 'lib/utils/string';
 import { FC, HTMLAttributes } from 'react';
+import { NftData } from 'types/data';
 
 export interface NftsListProps extends HTMLAttributes<HTMLDivElement> {
-  nfts: any[];
+  nfts: NftData[];
   meta?: any;
   links?: any;
 }

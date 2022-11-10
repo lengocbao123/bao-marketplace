@@ -9,7 +9,8 @@ import queryString from 'query-string';
 import { fetcher } from 'lib/utils/fetcher';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
-import { convertQueryParamsToArray } from '../../lib/utils/query';
+import { convertQueryParamsToArray } from 'lib/utils/query';
+import { CollectionData } from 'types/data';
 
 export async function getServerSideProps({ query, resolvedUrl }) {
   const collectionQueryString = new URLSearchParams({
@@ -46,7 +47,9 @@ const ExploreCollectionPage: NextPageWithLayout = ({
   collectionQueryString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: periods, error: errorPeriods } = useSWR(`/periods`);
-  const { data: collections, error: errorCollections } = useSWR(`/collections?${collectionQueryString}`);
+  const { data: collections, error: errorCollections } = useSWR<CollectionData[]>(
+    `/collections?${collectionQueryString}`,
+  );
   const router = useRouter();
   const { query } = router;
 
@@ -64,10 +67,14 @@ const ExploreCollectionPage: NextPageWithLayout = ({
   };
 
   const resetFilter = () => {
+    const resetQuery = { page: 1, filter: query.filter };
+    if (query.sort) {
+      resetQuery['sort'] = query.sort;
+    }
     router.push(
       {
         pathname: router.pathname,
-        query: { page: 1, filter: query.filter },
+        query: resetQuery,
       },
       undefined,
       {

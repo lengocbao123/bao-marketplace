@@ -3,12 +3,13 @@ import { FC, HTMLAttributes } from 'react';
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import useSWR from 'swr';
+import { CollectionData } from 'types/data';
 
 export type PopularCollectionsProps = HTMLAttributes<HTMLElement>;
 
 export const PopularCollections: FC<PopularCollectionsProps> = (props) => {
   const { ...popularCollectionsProps } = props;
-  const { data: collections, error } = useSWR(`/collections`);
+  const { data: collections, error } = useSWR<CollectionData[]>(`/collections`);
 
   if (error) {
     return <div>Error</div>;

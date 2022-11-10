@@ -7700,7 +7700,6 @@
         "avatarUrl": "https://cdn.pikasso.xyz/gobSIo1XhgV11667441497530.jpg"
       }
     },
-
     {
       "id": "f76eb0b4-c2fe-48d0-a347-c8ae36b76015",
       "name": "Guadalupe Mohr",
@@ -7771,10 +7770,12 @@
   "users": [
     {
       "id": "b661a402-de01-4909-8be4-df7e771fd15e",
-      "bio": "",
+      "bio": "I really like this one. I was playing around with some Illustrator tutorials when I decided I wanted to make a pixel styled wallpaper. It started with the idea if having well known pixel game characters and the text I <3 Pixel",
       "email": "baole@codelight.co",
       "username": "baole@codelight.co",
-      "avatarUrl": "https://cdn.pikasso.xyz/gobSIo1XhgV11667441497530.jpg"
+      "avatarUrl": "https://cdn.pikasso.xyz/gobSIo1XhgV11667441497530.jpg",
+      "createdAt": "2022-11-03T04:51:54.077Z",
+      "banner": "https://ik.imagekit.io/gsozk5bngn/Rectangle_287_DpMLXUW9H.png"
     }
   ]
 }

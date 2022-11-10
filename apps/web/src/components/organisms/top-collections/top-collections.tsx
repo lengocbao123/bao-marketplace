@@ -4,12 +4,13 @@ import { fetcher } from 'lib/utils/fetcher';
 import { convertToSlug } from 'lib/utils/string';
 import { FC, HTMLAttributes } from 'react';
 import useSWR, { mutate } from 'swr';
+import { CollectionData } from 'types/data';
 
 export type TopCollectionsProps = HTMLAttributes<HTMLDivElement>;
 
 export const TopCollections: FC<TopCollectionsProps> = ({}) => {
   const { data: periods, error: errorPeriods } = useSWR(`/periods`);
-  const { data: collections, error: errorCollections } = useSWR(`/top-collections`);
+  const { data: collections, error: errorCollections } = useSWR<CollectionData[]>(`/top-collections`);
 
   if (errorPeriods || errorCollections) {
     return <div>failed to load</div>;

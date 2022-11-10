@@ -88,6 +88,9 @@ const Home: NextPageWithLayout = ({ id, nftsQueryString }: InferGetServerSidePro
 
   const resetFilter = () => {
     const newQuery = { page: 1, filter: query.filter };
+    if (query.sort) {
+      newQuery['sort'] = query.sort;
+    }
     router.push(
       {
         ...router,

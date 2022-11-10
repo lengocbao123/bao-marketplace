@@ -9,7 +9,8 @@ import useSWR from 'swr';
 import { convertQueryParamsToArray } from 'lib/utils/query';
 import { USER_INVENTORY_TABS } from 'lib/constants';
 import { NftsFilters, NftsList } from 'components/organisms/nfts';
-import { useEffect } from 'react';
+import { CollectionData, NftData } from 'types/data';
+import { format } from 'date-fns';
 
 export async function getServerSideProps({ query, resolvedUrl }) {
   const nftsQueryParams = {};
@@ -22,6 +23,7 @@ export async function getServerSideProps({ query, resolvedUrl }) {
       collectionsQueryParams[key] = query[key];
     }
   });
+
   const nftsQueryString = new URLSearchParams({
     ...nftsQueryParams,
     page: query.page ? query.page : 1,
@@ -42,9 +44,10 @@ export async function getServerSideProps({ query, resolvedUrl }) {
       },
     };
   }
-  const [nfts, collections] = await Promise.all([
-    fetcher(`/nfts?user.id=${query.userId}&${nftsQueryString}`),
-    fetcher(`/collections?user.id=${query.userId}&${collectionsQueryString}`),
+  const [nfts, collections, user] = await Promise.all([
+    fetcher<NftData[]>(`/nfts?user.id=${query.userId}&${nftsQueryString}`),
+    fetcher<CollectionData[]>(`/collections?user.id=${query.userId}&${collectionsQueryString}`),
+    fetcher(`/users/${query.userId}`),
   ]);
 
   return {
@@ -54,21 +57,23 @@ export async function getServerSideProps({ query, resolvedUrl }) {
       fallback: {
         [`/nfts?user.id=${query.userId}&${nftsQueryString}`]: nfts,
         [`/collections?user.id=${query.userId}&${collectionsQueryString}`]: collections,
+        [`/users/${query.userId}`]: user,
       },
     },
   };
 }
 
-const UserCollectionsPage: NextPageWithLayout = ({
+const UserInventoryPage: NextPageWithLayout = ({
   nftsQueryString,
   collectionsQueryString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const { query } = router;
-  const { data: collections, error: errorCollections } = useSWR(
+  const { data: collections, error: errorCollections } = useSWR<CollectionData[]>(
     `/collections?user.id=${query.userId}&${collectionsQueryString}`,
   );
-  const { data: nfts, error: errorNfts } = useSWR(`/nfts?user.id=${query.userId}&${nftsQueryString}`);
+  const { data: nfts, error: errorNfts } = useSWR<NftData[]>(`/nfts?user.id=${query.userId}&${nftsQueryString}`);
+  const { data: user, error: errorUser } = useSWR(`/users/${query.userId}`);
 
   const handlerFilterChange = (key: string, value: any) => {
     if (key === 'filter') {
@@ -135,13 +140,11 @@ const UserCollectionsPage: NextPageWithLayout = ({
   return (
     <div className={'space-y-10 sm:space-y-20'}>
       <ProfileInventory
-        banner="https://ik.imagekit.io/gsozk5bngn/Rectangle_287_DpMLXUW9H.png"
-        avatar={'https://ik.imagekit.io/gsozk5bngn/product/image-3_suhW2eBcF.jpg'}
-        name={'Shushio'}
-        bio={
-          'I really like this one. I was playing around with some Illustrator tutorials when I decided I wanted to make a pixel styled wallpaper. It started with the idea if having well known pixel game characters and the text I <3 Pixel'
-        }
-        joined={'July 2022'}
+        banner={user.banner}
+        avatar={user.avatarUrl}
+        name={user.name}
+        bio={user.bio}
+        joined={format(new Date(user.createdAt), 'MM/dd/yyyy')}
         address={'0xbf....0cee'}
         socialLinks={[
           { link: '/', type: 'twitter' },
@@ -170,6 +173,6 @@ const UserCollectionsPage: NextPageWithLayout = ({
   );
 };
 
-UserCollectionsPage.getLayout = (page) => <Layout>{page}</Layout>;
+UserInventoryPage.getLayout = (page) => <Layout>{page}</Layout>;
 
-export default UserCollectionsPage;
+export default UserInventoryPage;

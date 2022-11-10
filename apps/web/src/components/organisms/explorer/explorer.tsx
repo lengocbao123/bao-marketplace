@@ -2,13 +2,14 @@ import { ButtonLink, ListItem } from 'components/atoms';
 import { CardNft, ChipFilter, ChipOption, Section } from 'components/molecules';
 import { FC, HTMLAttributes, useState } from 'react';
 import useSWR from 'swr';
+import { CategoryData, NftData } from 'types/data';
 
 export type ExplorerProps = HTMLAttributes<HTMLElement>;
 
 export const Explorer: FC<ExplorerProps> = ({}) => {
-  const { data: categories, error: errorCategories } = useSWR(`/categories`);
+  const { data: categories, error: errorCategories } = useSWR<CategoryData[]>(`/categories`);
   const [category, setCategory] = useState('b1527454-385d-4c9e-b91d-f84c6a1b6e12');
-  const { data: nfts, error: errorNfts } = useSWR(`/nfts?_limit=8&category=${category}`);
+  const { data: nfts, error: errorNfts } = useSWR<NftData[]>(`/nfts?_limit=8&category=${category}`);
 
   if (errorCategories || errorNfts) {
     return <div>failed to load</div>;
@@ -41,7 +42,7 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
               image={nft.image}
               title={nft.name}
               subtitle="Game NFTs"
-              price={nft.price}
+              price={20}
               user={nft.owner}
             />
           ))}

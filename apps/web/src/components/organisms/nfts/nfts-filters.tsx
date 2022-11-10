@@ -7,6 +7,7 @@ import { CheckboxFilter, RangeFilter } from 'components/molecules';
 import { useDebounce } from 'usehooks-ts';
 
 import useSWR from 'swr';
+import { CollectionData } from 'types/data';
 
 export interface NftsFiltersProps {
   filter: any;
@@ -17,7 +18,9 @@ export interface NftsFiltersProps {
 export const NftsFilters: FC<NftsFiltersProps> = ({ className = '', filter, onChange }) => {
   const [collectionSearchText, setCollectionSearchText] = useState('');
   const debounceSearchText = useDebounce<string>(collectionSearchText, 1000);
-  const { data: collections, error: errorCollections } = useSWR(`/collections?q=${debounceSearchText}`);
+  const { data: collections, error: errorCollections } = useSWR<CollectionData[]>(
+    `/collections?q=${debounceSearchText}`,
+  );
 
   if (errorCollections) {
     return <div>failed to load</div>;
