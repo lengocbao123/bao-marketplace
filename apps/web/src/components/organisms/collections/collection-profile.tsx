@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import Image from 'next/image';
 import React, { FC, HTMLAttributes } from 'react';
-import { getAvatarLetter } from 'lib/utils/string';
 import { TextTruncate } from 'components/molecules';
 import { CollectionInfo } from './collection-info';
 import { CollectionSocials } from './collection-socials';
+import { Avatar } from 'components/atoms';
 
 export interface CollectionProfileProps extends HTMLAttributes<HTMLDivElement> {
   collection: any;
@@ -54,23 +54,14 @@ export const CollectionProfile: FC<CollectionProfileProps> = ({ className, colle
               <h1 className={'mb-4 text-2xl font-bold lg:text-3xl'}>{collection.name}</h1>
 
               <div className="mb-4 flex gap-2">
-                <span className="text-sm text-neutral-50">Creator:</span>
-                {collection.owner && collection.owner.avatarUrl ? (
-                  <Image
-                    className="border-neutral-10 aspect-square w-16 rounded-full border object-cover object-center"
-                    width={24}
-                    height={24}
-                    src={collection.owner.avatarUrl}
-                    alt={collection.name}
+                {collection.user && collection.user.avatarUrl && (
+                  <Avatar
+                    label={'Creator'}
+                    name={collection.user.username || collection.user.email || 'Unknown'}
+                    src={collection.user.avatarUrl}
+                    className='flex items-center text-sm [&_[data-component="label"]]:mr-2'
                   />
-                ) : (
-                  <span className="bg-primary flex h-6 w-6 items-center justify-center rounded-full text-xs uppercase">
-                    {getAvatarLetter(collection.owner.email)}
-                  </span>
                 )}
-                <p className="text-neutral text-sm font-medium">
-                  {collection.owner.username || collection.owner.email}
-                </p>
               </div>
 
               {collection.description && (

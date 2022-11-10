@@ -3,77 +3,129 @@ import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 import { Layout } from 'components/layouts';
-import { Breadcrumb, ExploreSection, generateTabLinkData } from 'components/molecules';
+import { Breadcrumb, ExploreSection } from 'components/molecules';
 import { CollectionProfile } from 'components/organisms';
 import { NftsFilters, NftsList } from 'components/organisms/nfts';
-import { useFilter } from 'hooks/use-filters';
-import { COLLECTIONS, NFTS } from 'lib/dummy';
 import { NextPageWithLayout } from 'pages/_app';
-
-const DEFAULT_FILTERS = { status: [], blockchain: [], price: [], collection: [] };
+import { fetcher } from 'lib/utils/fetcher';
+import useSWR from 'swr';
+import { CollectionData, NftData } from 'types';
+import { convertQueryParamsToArray } from 'lib/utils/query';
 
 export async function getServerSideProps({ query, resolvedUrl }) {
-  if (!query.filter) {
+  const { filter, id, page } = query;
+  const queryParams = {};
+  Object.keys(query).forEach((key) => {
+    if (key !== 'slug' && key !== 'id') {
+      queryParams[key] = query[key];
+    }
+  });
+
+  const nftsQueryString = new URLSearchParams({
+    ...queryParams,
+    page: page ? page : 1,
+    filter: filter ? filter : 'on-sale',
+  }).toString();
+
+  const [collection, nftsByCollection] = await Promise.all([
+    fetcher<CollectionData>(`/collections/${id}`),
+    fetcher<NftData[]>(`/nfts?collection.id=${id}&${nftsQueryString}`),
+  ]);
+  if (!filter || !page) {
     return {
       redirect: {
-        destination: `${resolvedUrl}?filter=on-sale`,
+        destination: `${resolvedUrl}?${nftsQueryString}`,
         permanent: false,
       },
     };
   }
 
   return {
-    props: {},
+    props: {
+      id,
+      nftsQueryString,
+      fallback: {
+        [`/collections/${id}`]: collection,
+        [`/nfts?collection.id=${id}`]: nftsByCollection,
+      },
+    },
   };
 }
 
-const Home: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { filter, onFiltersChange } = useFilter(DEFAULT_FILTERS);
+const Home: NextPageWithLayout = ({ id, nftsQueryString }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const { data: collection, error: errorCollection } = useSWR<CollectionData>(`/collections/${id}`);
+  const { data: nftsByCollection, error: errorNftsByCollection } = useSWR<NftData[]>(
+    `/nfts?collection.id=${id}&${nftsQueryString}`,
+  );
+
   const router = useRouter();
   const { query } = router;
   const tabs = [
     {
-      id: 'on-sale-18d8b4f2-4cf9-11ed-bdc3-0242ac120002',
-      label: 'On Sale (1k)',
-      url: '?filter=on-sale',
+      value: 'on-sale',
+      label: 'On Sale',
+      active: query.filter === 'on-sale',
     },
     {
-      id: 'live-auction-18d8b4f2-4cf9-11ed-bdc3-0242ac120002',
-      label: 'Live Auction (978)',
-      url: '?filter=live-auction',
+      value: 'live-auction',
+      label: 'Live Auction',
+      active: query.filter === 'live-auction',
     },
     {
-      id: 'unlisted-18d8b4f2-4cf9-11ed-bdc3-0242ac120002',
-      label: 'Unlisted (100)',
-      url: '?filter=unlisted',
+      value: 'unlisted',
+      label: 'Unlisted',
+      active: query.filter === 'unlisted',
     },
   ];
 
+  if (errorCollection || errorNftsByCollection) {
+    return <div>failed to load</div>;
+  }
+
+  if (!collection || !nftsByCollection) {
+    return <div>loading...</div>;
+  }
+
+  const resetFilter = () => {
+    const newQuery = { page: 1, filter: query.filter };
+    router.push({
+      ...router,
+      query: { id: query.id, slug: query.slug, ...newQuery },
+    });
+  };
+
+  const handlerFilterChange = (key: string, value: any) => {
+    router.push({
+      pathname: router.pathname,
+      query: { ...query, [key]: value },
+    });
+  };
+
+  const convertedQuery = convertQueryParamsToArray(query);
+
   return (
     <Fragment>
-      <NextSeo title={COLLECTIONS[0].name} />
+      <NextSeo title={collection.name} />
       <Breadcrumb
         className="bg-neutral-10 mb-0 py-2.5"
         links={[
           { label: 'Collections', href: '/collections', as: '/collections' },
-          { label: COLLECTIONS[0].name, href: '/', as: '/' },
+          { label: collection.name, href: '/', as: '/' },
         ]}
       />
-      <CollectionProfile className="m-0" collection={COLLECTIONS[0]} />
+      <CollectionProfile className="m-0" collection={collection} />
       <div className="container">
         <ExploreSection
-          filtersComponent={<NftsFilters filter={filter} onChange={onFiltersChange} />}
-          tabs={generateTabLinkData(tabs, `/collections/${query.slug}`)}
-          filter={filter}
+          filtersComponent={<NftsFilters filter={convertedQuery} onChange={handlerFilterChange} />}
+          tabs={tabs}
+          filter={convertedQuery}
           tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border-b"
-          onResetFilter={() => {
-            console.log('');
-          }}
-          onChangeFilter={onFiltersChange}
+          onResetFilter={resetFilter}
+          onChangeFilter={handlerFilterChange}
         >
           <NftsList
-            nfts={NFTS}
-            meta={{ totalItems: 8, itemCount: 8, itemsPerPage: 10, totalPages: 1, currentPage: 1 }}
+            nfts={nftsByCollection}
+            meta={{ totalItems: 8, itemCount: 8, itemsPerPage: 10, totalPages: 1, currentPage: query.page }}
           />
         </ExploreSection>
       </div>

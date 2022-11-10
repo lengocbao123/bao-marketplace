@@ -11,14 +11,6 @@ export type TabLinkData = {
 export interface TabLinkProps extends HTMLAttributes<HTMLDivElement> {
   data: TabLinkData[];
 }
-export const generateTabLinkData = (items: Array<TabLinkData>, prefixUrl?: string) => {
-  return prefixUrl
-    ? items.map((item) => ({
-        ...item,
-        url: prefixUrl + item.url,
-      }))
-    : items;
-};
 
 export const TabsLink: FC<TabLinkProps> = ({ className, data }) => {
   const router = useRouter();

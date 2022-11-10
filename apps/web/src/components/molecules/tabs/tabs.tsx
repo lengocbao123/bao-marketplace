@@ -8,25 +8,25 @@ export type TabData = {
 };
 
 export interface TabsProps extends HTMLAttributes<HTMLDivElement> {
-  data: any[];
-  onChange: (value: any) => void;
+  data: TabData[];
+  onChangeTab: (value: string) => void;
 }
 
-export const Tabs: FC<TabsProps> = ({ className, data, onChange }) => {
+export const Tabs: FC<TabsProps> = ({ className, data, onChangeTab }) => {
   return (
     <ul className={clsx('scrollbar-hide gap-5 overflow-x-auto', className)}>
-      {data.map(({ value, label, active }) => (
+      {data.map((item) => (
         <li
-          key={value}
+          key={`tab-${item.value}`}
           className={clsx(
             'flex items-center border-b py-4',
-            active
+            item.active
               ? 'text-secondary border-secondary font-bold'
               : 'hover:text-secondary/80 focus:text-secondary/80 border-transparent font-medium text-neutral-50',
           )}
         >
-          <button type={'button'} onClick={() => onChange(value)}>
-            {label}
+          <button type={'button'} onClick={() => onChangeTab(item.value)}>
+            {item.label}
           </button>
         </li>
       ))}

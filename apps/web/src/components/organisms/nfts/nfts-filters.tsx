@@ -14,6 +14,7 @@ export interface NftsFiltersProps {
   onChange: (key: string, value: any) => void;
   className?: string;
 }
+
 export const NftsFilters: FC<NftsFiltersProps> = ({ className = '', filter, onChange }) => {
   const [collectionSearchText, setCollectionSearchText] = useState('');
   const debounceSearchText = useDebounce<string>(collectionSearchText, 1000);
@@ -46,11 +47,11 @@ export const NftsFilters: FC<NftsFiltersProps> = ({ className = '', filter, onCh
           },
           {
             label: <InputLabel icon={EthereumIcon} text="Ethereum" />,
-            value: 'Ethereum',
+            value: 'ethereum',
           },
           {
             label: <InputLabel icon={PolygonIcon} text="Polygon" iconOrientation="right" />,
-            value: 'Polygon',
+            value: 'polygon',
           },
         ]}
         onChange={onChange}

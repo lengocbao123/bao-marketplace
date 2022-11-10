@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { FC, Fragment, HTMLAttributes, ReactNode, useEffect, useState } from 'react';
-import { HamburgerSection, Tabs } from '..';
+import { HamburgerSection, TabData, Tabs } from '..';
 import { FilterType } from 'hooks/use-filters';
 import { Button } from 'components/atoms';
 import { FilterIcon } from 'components/icons/outline';
@@ -8,13 +8,14 @@ import { ExploreActions, ExploreFilterToggle } from 'components/organisms';
 
 export interface ExploreSectionProps extends HTMLAttributes<HTMLDivElement> {
   filtersComponent: ReactNode;
-  tabs?: Array<any>;
+  tabs?: Array<TabData>;
   tabsClassName?: string;
   bodyClassName?: string;
   filter: FilterType;
   onChangeFilter: (key: string, value: any) => void;
   onResetFilter: () => void;
 }
+
 export const ExploreSection: FC<ExploreSectionProps> = ({
   filtersComponent,
   children,
@@ -52,7 +53,7 @@ export const ExploreSection: FC<ExploreSectionProps> = ({
     <Fragment>
       <Tabs
         data={tabs}
-        onChange={(value) => {
+        onChangeTab={(value) => {
           onChangeFilter('filter', value);
         }}
         className={clsx(tabsClassName)}
