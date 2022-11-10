@@ -1,5 +1,5 @@
 import { Layout } from 'components/layouts';
-import { ExploreSection } from 'components/molecules';
+import { ExploreSection, TabData } from 'components/molecules';
 import { NftsFilters, NftsList } from 'components/organisms/nfts';
 import { fetcher } from 'lib/utils/fetcher';
 import { InferGetServerSidePropsType } from 'next';
@@ -7,25 +7,26 @@ import Image from 'next/image';
 import { NextPageWithLayout } from 'pages/_app';
 import { Fragment } from 'react';
 import useSWR from 'swr';
-import queryString from 'query-string';
 import { useRouter } from 'next/router';
+import { convertQueryParamsToArray } from '../../lib/utils/query';
 
 export async function getServerSideProps({ query, resolvedUrl }) {
-  const nftsQuery = queryString.stringify({
+  const nftsQueryString = new URLSearchParams({
     ...query,
     page: query.page ? query.page : 1,
     filter: query.filter ? query.filter : 'all',
-  });
+  }).toString();
+
   const [categories, nfts, collections] = await Promise.all([
     fetcher('/categories'),
-    fetcher(`/nfts?${nftsQuery}`),
+    fetcher(`/nfts?${nftsQueryString}`),
     fetcher('/collections'),
   ]);
 
   if (!query.page || !query.filter) {
     return {
       redirect: {
-        destination: `${resolvedUrl}?${nftsQuery}`,
+        destination: `${resolvedUrl}?${nftsQueryString}`,
         permanent: false,
       },
     };
@@ -33,22 +34,23 @@ export async function getServerSideProps({ query, resolvedUrl }) {
 
   return {
     props: {
-      nftsQuery,
+      nftsQueryString,
       fallback: {
         '/categories': categories,
-        [`/nfts?${nftsQuery}`]: nfts,
+        [`/nfts?${nftsQueryString}`]: nfts,
         '/collections?q=': collections,
       },
     },
   };
 }
 
-const ExplorePage: NextPageWithLayout = ({ nftsQuery }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const query = queryString.parse(nftsQuery, { arrayFormat: 'bracket', parseNumbers: true, parseBooleans: true });
+const ExplorePage: NextPageWithLayout = ({
+  nftsQueryString,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const { data: categories, error: errorCategories } = useSWR('/categories');
-  const { data: nfts, error: errorNfts } = useSWR(`/nfts?${nftsQuery}`);
-
+  const { data: nfts, error: errorNfts } = useSWR(`/nfts?${nftsQueryString}`);
+  const { query } = router;
   if (errorCategories || errorNfts) {
     return <div>failed to load</div>;
   }
@@ -57,7 +59,7 @@ const ExplorePage: NextPageWithLayout = ({ nftsQuery }: InferGetServerSidePropsT
     return <div>loading...</div>;
   }
 
-  const categoryTabs = [
+  const categoryTabs: TabData[] = [
     {
       id: 'all',
       name: 'All',
@@ -71,19 +73,20 @@ const ExplorePage: NextPageWithLayout = ({ nftsQuery }: InferGetServerSidePropsT
   }));
 
   const resetFilter = () => {
-    const newQuery = { page: 1, filter: query.filter };
     router.push({
       pathname: router.pathname,
-      query: queryString.stringify(newQuery, { arrayFormat: 'bracket' }),
+      query: { page: 1, filter: query.filter },
     });
   };
 
   const handlerFilterChange = (key: string, value: any) => {
     router.push({
       pathname: router.pathname,
-      query: queryString.stringify({ ...query, [key]: value }, { arrayFormat: 'bracket' }),
+      query: { ...query, [key]: value },
     });
   };
+
+  const convertedQuery = convertQueryParamsToArray(query);
 
   return (
     <Fragment>
@@ -95,11 +98,11 @@ const ExplorePage: NextPageWithLayout = ({ nftsQuery }: InferGetServerSidePropsT
         className={'bg-neutral-10 aspect-[1440/144] w-full object-cover object-center'}
       />
       <ExploreSection
-        filtersComponent={<NftsFilters filter={query} onChange={handlerFilterChange} />}
+        filtersComponent={<NftsFilters filter={convertedQuery} onChange={handlerFilterChange} />}
         tabs={categoryTabs}
         tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border sm:justify-center"
         bodyClassName="container"
-        filter={query}
+        filter={convertedQuery}
         onChangeFilter={handlerFilterChange}
         onResetFilter={resetFilter}
       >

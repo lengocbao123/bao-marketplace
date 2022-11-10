@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import { FC, useState } from 'react';
-import { FilterType } from 'hooks/use-filters';
 import { Input, InputLabel } from 'components/atoms';
 import { BinanceIcon, EthereumIcon, PolygonIcon } from 'components/icons/blockchain';
 import { SearchIcon } from 'components/icons/outline';
@@ -10,7 +9,7 @@ import { useDebounce } from 'usehooks-ts';
 import useSWR from 'swr';
 
 export interface NftsFiltersProps {
-  filter: FilterType;
+  filter: any;
   onChange: (key: string, value: any) => void;
   className?: string;
 }

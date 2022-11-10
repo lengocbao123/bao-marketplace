@@ -9,29 +9,33 @@ import queryString from 'query-string';
 import { fetcher } from 'lib/utils/fetcher';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
+import { convertQueryParamsToArray } from '../../lib/utils/query';
 
 export async function getServerSideProps({ query, resolvedUrl }) {
-  const collectionQuery = queryString.stringify({
+  const collectionQueryString = new URLSearchParams({
     ...query,
     page: query.page ? query.page : 1,
     filter: query.filter ? query.filter : '24_hours',
-  });
+  }).toString();
 
-  if (!query.filter) {
+  if (!query.filter || !query.page) {
     return {
       redirect: {
-        destination: `${resolvedUrl}?${collectionQuery}`,
+        destination: `${resolvedUrl}?${collectionQueryString}`,
         permanent: false,
       },
     };
   }
-  const [collections, periods] = await Promise.all([fetcher(`/collections?${collectionQuery}`), fetcher('/periods')]);
+  const [collections, periods] = await Promise.all([
+    fetcher(`/collections?${collectionQueryString}`),
+    fetcher('/periods'),
+  ]);
 
   return {
     props: {
-      collectionQuery,
+      collectionQueryString,
       fallback: {
-        [`/collections?${collectionQuery}`]: collections,
+        [`/collections?${collectionQueryString}`]: collections,
         '/periods': periods,
       },
     },
@@ -39,31 +43,31 @@ export async function getServerSideProps({ query, resolvedUrl }) {
 }
 
 const ExploreCollectionPage: NextPageWithLayout = ({
-  collectionQuery,
+  collectionQueryString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const query = queryString.parse(collectionQuery, { arrayFormat: 'bracket', parseNumbers: true, parseBooleans: true });
-  const router = useRouter();
   const { data: periods, error: errorPeriods } = useSWR(`/periods`);
-  const { data: collections, error: errorCollections } = useSWR(`/collections?${collectionQuery}`);
+  const { data: collections, error: errorCollections } = useSWR(`/collections?${collectionQueryString}`);
+  const router = useRouter();
+  const { query } = router;
 
   const handlerFilterChange = (key: string, value: any) => {
     router.push({
       pathname: router.pathname,
-      query: queryString.stringify({ ...query, [key]: value }, { arrayFormat: 'bracket' }),
+      query: { ...query, [key]: value },
     });
   };
 
   const resetFilter = () => {
-    const newQuery = { page: 1, filter: query.filter };
     router.push({
       pathname: router.pathname,
-      query: queryString.stringify(newQuery, { arrayFormat: 'bracket' }),
+      query: { page: 1, filter: query.filter },
     });
   };
 
   if (errorPeriods || errorCollections) {
     return <div>failed to load</div>;
   }
+  const convertedQuery = convertQueryParamsToArray(query);
 
   return (
     <Fragment>
@@ -75,9 +79,9 @@ const ExploreCollectionPage: NextPageWithLayout = ({
         className={'bg-neutral-10 aspect-[1440/144] w-full object-cover object-center'}
       />
       <ExploreSection
-        filtersComponent={<CollectionsFilters filter={query} onChange={handlerFilterChange} />}
-        filter={query}
-        tabs={periods.map((item) => ({ label: item.title, value: item.value, active: item.value === query.period }))}
+        filtersComponent={<CollectionsFilters filter={convertedQuery} onChange={handlerFilterChange} />}
+        filter={convertedQuery}
+        tabs={periods.map((item) => ({ label: item.title, value: item.value, active: item.value === query.filter }))}
         tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border sm:justify-center"
         bodyClassName="container"
         onChangeFilter={handlerFilterChange}
