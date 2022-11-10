@@ -58,7 +58,7 @@ export const CardNft: FC<CardNftProps> = ({ className, user, link, image, title,
               </div>
 
               <div className={'justify-self-end sm:justify-self-start'}>
-                <Link href={`/users/${user.id}/nfts?filter=on-sale`}>
+                <Link href={`/users/${user.id}/inventory`}>
                   <Avatar
                     name={user.username ?? getUsernameFromEmail(user.email)}
                     size="sm"
@@ -67,7 +67,7 @@ export const CardNft: FC<CardNftProps> = ({ className, user, link, image, title,
                     className={'sm:hidden'}
                   />
                 </Link>
-                <Link href={`/users/${user.id}/nfts?filter=on-sale`}>
+                <Link href={`/users/${user.id}/inventory`}>
                   <Avatar
                     name={user.username ?? getUsernameFromEmail(user.email)}
                     size="sm"
