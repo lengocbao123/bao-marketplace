@@ -88,17 +88,29 @@ const Home: NextPageWithLayout = ({ id, nftsQueryString }: InferGetServerSidePro
 
   const resetFilter = () => {
     const newQuery = { page: 1, filter: query.filter };
-    router.push({
-      ...router,
-      query: { id: query.id, slug: query.slug, ...newQuery },
-    });
+    router.push(
+      {
+        ...router,
+        query: { id: query.id, slug: query.slug, ...newQuery },
+      },
+      undefined,
+      {
+        scroll: false,
+      },
+    );
   };
 
   const handlerFilterChange = (key: string, value: any) => {
-    router.push({
-      pathname: router.pathname,
-      query: { ...query, [key]: value },
-    });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...query, [key]: value },
+      },
+      undefined,
+      {
+        scroll: false,
+      },
+    );
   };
 
   const convertedQuery = convertQueryParamsToArray(query);

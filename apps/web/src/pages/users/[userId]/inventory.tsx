@@ -9,16 +9,27 @@ import useSWR from 'swr';
 import { convertQueryParamsToArray } from 'lib/utils/query';
 import { USER_INVENTORY_TABS } from 'lib/constants';
 import { NftsFilters, NftsList } from 'components/organisms/nfts';
+import { useEffect } from 'react';
 
 export async function getServerSideProps({ query, resolvedUrl }) {
-  const queryParams = {};
+  const nftsQueryParams = {};
+  const collectionsQueryParams = {};
   Object.keys(query).forEach((key) => {
     if (key !== 'userId') {
-      queryParams[key] = query[key];
+      nftsQueryParams[key] = query[key];
+    }
+    if (key !== 'userId' && key !== 'filter' && key !== 'collection') {
+      collectionsQueryParams[key] = query[key];
     }
   });
-  const queryString = new URLSearchParams({
-    ...queryParams,
+  const nftsQueryString = new URLSearchParams({
+    ...nftsQueryParams,
+    page: query.page ? query.page : 1,
+    filter: query.filter ? query.filter : 'on-sale',
+  }).toString();
+
+  const collectionsQueryString = new URLSearchParams({
+    ...nftsQueryParams,
     page: query.page ? query.page : 1,
     filter: query.filter ? query.filter : 'on-sale',
   }).toString();
@@ -26,47 +37,76 @@ export async function getServerSideProps({ query, resolvedUrl }) {
   if (!query.filter || !query.page) {
     return {
       redirect: {
-        destination: `${resolvedUrl}?${queryString}`,
+        destination: `${resolvedUrl}?${nftsQueryString}`,
         permanent: false,
       },
     };
   }
   const [nfts, collections] = await Promise.all([
-    fetcher(`/nfts?user.id=${query.userId}&${queryString}`),
-    fetcher(`/collections?${queryString}`),
+    fetcher(`/nfts?user.id=${query.userId}&${nftsQueryString}`),
+    fetcher(`/collections?user.id=${query.userId}&${collectionsQueryString}`),
   ]);
 
   return {
     props: {
-      queryString,
+      nftsQueryString,
+      collectionsQueryString,
       fallback: {
-        [`/nfts?user.id=${query.userId}&${queryString}`]: nfts,
-        [`/collections?${queryString}`]: collections,
+        [`/nfts?user.id=${query.userId}&${nftsQueryString}`]: nfts,
+        [`/collections?user.id=${query.userId}&${collectionsQueryString}`]: collections,
       },
     },
   };
 }
 
 const UserCollectionsPage: NextPageWithLayout = ({
-  queryString,
+  nftsQueryString,
+  collectionsQueryString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const { query } = router;
-  const { data: collections, error: errorCollections } = useSWR(`/collections?${queryString}`);
-  const { data: nfts, error: errorNfts } = useSWR(`/nfts?user.id=${query.userId}&${queryString}`);
+  const { data: collections, error: errorCollections } = useSWR(
+    `/collections?user.id=${query.userId}&${collectionsQueryString}`,
+  );
+  const { data: nfts, error: errorNfts } = useSWR(`/nfts?user.id=${query.userId}&${nftsQueryString}`);
 
   const handlerFilterChange = (key: string, value: any) => {
-    router.push({
-      pathname: router.pathname,
-      query: { ...query, [key]: value },
-    });
+    if (key === 'filter') {
+      router.push(
+        {
+          pathname: router.pathname,
+          query: { userId: query.userId, page: 1, [key]: value },
+        },
+        undefined,
+        {
+          scroll: false,
+        },
+      );
+    } else {
+      router.push(
+        {
+          pathname: router.pathname,
+          query: { ...query, [key]: value },
+        },
+        undefined,
+        {
+          scroll: false,
+        },
+      );
+    }
   };
 
   const resetFilter = () => {
-    router.push({
-      pathname: router.pathname,
-      query: { page: 1, filter: query.filter },
-    });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { userId: query.userId, page: 1, filter: query.filter },
+      },
+      undefined,
+      {
+        scroll: false,
+      },
+    );
   };
 
   if (errorCollections || errorNfts) {

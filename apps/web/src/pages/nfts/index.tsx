@@ -73,17 +73,29 @@ const ExplorePage: NextPageWithLayout = ({
   }));
 
   const resetFilter = () => {
-    router.push({
-      pathname: router.pathname,
-      query: { page: 1, filter: query.filter },
-    });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { page: 1, filter: query.filter },
+      },
+      undefined,
+      {
+        scroll: false,
+      },
+    );
   };
 
   const handlerFilterChange = (key: string, value: any) => {
-    router.push({
-      pathname: router.pathname,
-      query: { ...query, [key]: value },
-    });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...query, [key]: value },
+      },
+      undefined,
+      {
+        scroll: false,
+      },
+    );
   };
 
   const convertedQuery = convertQueryParamsToArray(query);

@@ -51,17 +51,29 @@ const ExploreCollectionPage: NextPageWithLayout = ({
   const { query } = router;
 
   const handlerFilterChange = (key: string, value: any) => {
-    router.push({
-      pathname: router.pathname,
-      query: { ...query, [key]: value },
-    });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { ...query, [key]: value },
+      },
+      undefined,
+      {
+        scroll: false,
+      },
+    );
   };
 
   const resetFilter = () => {
-    router.push({
-      pathname: router.pathname,
-      query: { page: 1, filter: query.filter },
-    });
+    router.push(
+      {
+        pathname: router.pathname,
+        query: { page: 1, filter: query.filter },
+      },
+      undefined,
+      {
+        scroll: false,
+      },
+    );
   };
 
   if (errorPeriods || errorCollections) {
