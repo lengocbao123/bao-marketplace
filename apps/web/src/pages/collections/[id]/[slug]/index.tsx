@@ -11,8 +11,12 @@ import { fetcher } from 'lib/utils/fetcher';
 import useSWR from 'swr';
 import { CollectionData, NftData } from 'types';
 import { convertQueryParamsToArray } from 'lib/utils/query';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
 
-export async function getServerSideProps({ query, resolvedUrl }) {
+export async function getServerSideProps({ req, res, query, resolvedUrl }) {
+  const session = await unstable_getServerSession(req, res, authOptions);
+  const fetchApi = fetcher(session);
   const { filter, id, page } = query;
   const queryParams = {};
   Object.keys(query).forEach((key) => {
@@ -28,8 +32,8 @@ export async function getServerSideProps({ query, resolvedUrl }) {
   }).toString();
 
   const [collection, nftsByCollection] = await Promise.all([
-    fetcher<CollectionData>(`/collections/${id}`),
-    fetcher<NftData[]>(`/nfts?collection.id=${id}&${nftsQueryString}`),
+    fetchApi<CollectionData>(`/collections/${id}`),
+    fetchApi<NftData[]>(`/nfts?collection.id=${id}&${nftsQueryString}`),
   ]);
   if (!filter || !page) {
     return {

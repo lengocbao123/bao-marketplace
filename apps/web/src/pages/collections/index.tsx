@@ -5,14 +5,17 @@ import { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import { NextPageWithLayout } from 'pages/_app';
 import { Fragment } from 'react';
-import queryString from 'query-string';
 import { fetcher } from 'lib/utils/fetcher';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { convertQueryParamsToArray } from 'lib/utils/query';
 import { CollectionData } from 'types/data';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
 
-export async function getServerSideProps({ query, resolvedUrl }) {
+export async function getServerSideProps({ req, res, query, resolvedUrl }) {
+  const session = await unstable_getServerSession(req, res, authOptions);
+  const fetchApi = fetcher(session);
   const collectionQueryString = new URLSearchParams({
     ...query,
     page: query.page ? query.page : 1,
@@ -28,8 +31,8 @@ export async function getServerSideProps({ query, resolvedUrl }) {
     };
   }
   const [collections, periods] = await Promise.all([
-    fetcher(`/collections?${collectionQueryString}`),
-    fetcher('/periods'),
+    fetchApi(`/collections?${collectionQueryString}`),
+    fetchApi('/periods'),
   ]);
 
   return {
@@ -53,8 +56,8 @@ const ExploreCollectionPage: NextPageWithLayout = ({
   const router = useRouter();
   const { query } = router;
 
-  const handlerFilterChange = (key: string, value: any) => {
-    router.push(
+  const handlerFilterChange = async (key: string, value: any) => {
+    await router.push(
       {
         pathname: router.pathname,
         query: { ...query, [key]: value },
@@ -66,12 +69,12 @@ const ExploreCollectionPage: NextPageWithLayout = ({
     );
   };
 
-  const resetFilter = () => {
+  const resetFilter = async () => {
     const resetQuery = { page: 1, filter: query.filter };
     if (query.sort) {
       resetQuery['sort'] = query.sort;
     }
-    router.push(
+    await router.push(
       {
         pathname: router.pathname,
         query: resetQuery,

@@ -1,9 +1,8 @@
 import { ButtonLink } from 'components/atoms';
 import { CardCollectionRanking, ChipFilter, ChipOption, Section } from 'components/molecules';
-import { fetcher } from 'lib/utils/fetcher';
 import { convertToSlug } from 'lib/utils/string';
 import { FC, HTMLAttributes } from 'react';
-import useSWR, { mutate } from 'swr';
+import useSWR, { mutate, useSWRConfig } from 'swr';
 import { CollectionData } from 'types/data';
 
 export type TopCollectionsProps = HTMLAttributes<HTMLDivElement>;
@@ -11,7 +10,7 @@ export type TopCollectionsProps = HTMLAttributes<HTMLDivElement>;
 export const TopCollections: FC<TopCollectionsProps> = ({}) => {
   const { data: periods, error: errorPeriods } = useSWR(`/periods`);
   const { data: collections, error: errorCollections } = useSWR<CollectionData[]>(`/top-collections`);
-
+  const {fetcher} =useSWRConfig()
   if (errorPeriods || errorCollections) {
     return <div>failed to load</div>;
   }

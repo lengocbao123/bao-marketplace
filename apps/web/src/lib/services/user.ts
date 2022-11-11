@@ -1,8 +1,7 @@
-import { fetcher } from 'lib/utils/fetcher';
-import { ResendVerifyEmailResponse, UserLoginResponse, UserResponse } from 'types/data';
+import { UserLoginResponse, UserResponse } from 'types/data';
 
 export const login = (username: string, password: string): Promise<UserLoginResponse> => {
-  return fetcher<UserLoginResponse>('/auth/login', {
+  return fetch('/auth/login', {
     method: 'POST',
     body: JSON.stringify({ username, password }),
   })
@@ -15,7 +14,7 @@ export const login = (username: string, password: string): Promise<UserLoginResp
 };
 
 export const register = (email: string, password: string, passwordConfirm: string): Promise<UserResponse> => {
-  return fetcher<UserResponse>('/auth/register', {
+  return fetch('/auth/register', {
     method: 'POST',
     body: JSON.stringify({ username: email, password, email, passwordConfirm }),
   })
@@ -28,7 +27,7 @@ export const register = (email: string, password: string, passwordConfirm: strin
 };
 
 export const getUserInfo = (): Promise<UserResponse> => {
-  return fetcher<UserResponse>('/user', {})
+  return fetch('/user', {})
     .then((data) => {
       return data;
     })
@@ -38,7 +37,7 @@ export const getUserInfo = (): Promise<UserResponse> => {
 };
 
 export const resendVerifyEmail = (email: string) => {
-  return fetcher<ResendVerifyEmailResponse>('/auth/resend-verify-email', {
+  return fetch('/auth/resend-verify-email', {
     method: 'POST',
     body: JSON.stringify({ email }),
   })

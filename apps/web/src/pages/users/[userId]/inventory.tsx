@@ -11,8 +11,12 @@ import { USER_INVENTORY_TABS } from 'lib/constants';
 import { NftsFilters, NftsList } from 'components/organisms/nfts';
 import { CollectionData, NftData } from 'types/data';
 import { format } from 'date-fns';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
 
-export async function getServerSideProps({ query, resolvedUrl }) {
+export async function getServerSideProps({ req, res, query, resolvedUrl }) {
+  const session = await unstable_getServerSession(req, res, authOptions);
+  const fetchApi = fetcher(session);
   const nftsQueryParams = {};
   const collectionsQueryParams = {};
   Object.keys(query).forEach((key) => {
@@ -45,9 +49,9 @@ export async function getServerSideProps({ query, resolvedUrl }) {
     };
   }
   const [nfts, collections, user] = await Promise.all([
-    fetcher<NftData[]>(`/nfts?user.id=${query.userId}&${nftsQueryString}`),
-    fetcher<CollectionData[]>(`/collections?user.id=${query.userId}&${collectionsQueryString}`),
-    fetcher(`/users/${query.userId}`),
+    fetchApi<NftData[]>(`/nfts?user.id=${query.userId}&${nftsQueryString}`),
+    fetchApi<CollectionData[]>(`/collections?user.id=${query.userId}&${collectionsQueryString}`),
+    fetchApi(`/users/${query.userId}`),
   ]);
 
   return {
@@ -75,9 +79,9 @@ const UserInventoryPage: NextPageWithLayout = ({
   const { data: nfts, error: errorNfts } = useSWR<NftData[]>(`/nfts?user.id=${query.userId}&${nftsQueryString}`);
   const { data: user, error: errorUser } = useSWR(`/users/${query.userId}`);
 
-  const handlerFilterChange = (key: string, value: any) => {
+  const handlerFilterChange = async (key: string, value: any) => {
     if (key === 'filter') {
-      router.push(
+      await router.push(
         {
           pathname: router.pathname,
           query: { userId: query.userId, page: 1, [key]: value },
@@ -88,7 +92,7 @@ const UserInventoryPage: NextPageWithLayout = ({
         },
       );
     } else {
-      router.push(
+      await router.push(
         {
           pathname: router.pathname,
           query: { ...query, [key]: value },

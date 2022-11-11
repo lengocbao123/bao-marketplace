@@ -17,11 +17,14 @@ import { InferGetServerSidePropsType } from 'next';
 import { fetcher } from 'lib/utils/fetcher';
 import useSWR from 'swr';
 import { convertToSlug } from 'lib/utils/string';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
 
-export async function getServerSideProps({ query }) {
+export async function getServerSideProps({ req, res, query }) {
+  const session = await unstable_getServerSession(req, res, authOptions);
+  const fetchApi = fetcher(session);
   const { id } = query;
-
-  const [nft, relativeNfts] = await Promise.all([fetcher(`/nfts/${id}`), fetcher(`/nfts?_limit=4`)]);
+  const [nft, relativeNfts] = await Promise.all([fetchApi(`/nfts/${id}`), fetchApi(`/nfts?_limit=4`)]);
 
   return {
     props: {

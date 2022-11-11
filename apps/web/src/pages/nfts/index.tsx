@@ -10,18 +10,21 @@ import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { convertQueryParamsToArray } from 'lib/utils/query';
 import { CategoryData, NftData } from 'types/data';
+import { unstable_getServerSession } from 'next-auth';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
 
-export async function getServerSideProps({ query, resolvedUrl }) {
+export async function getServerSideProps({ req, res, query, resolvedUrl }) {
+  const session = await unstable_getServerSession(req, res, authOptions);
   const nftsQueryString = new URLSearchParams({
     ...query,
     page: query.page ? query.page : 1,
     filter: query.filter ? query.filter : 'all',
   }).toString();
-
+  const fetchApi = fetcher(session);
   const [categories, nfts, collections] = await Promise.all([
-    fetcher('/categories'),
-    fetcher(`/nfts?${nftsQueryString}`),
-    fetcher('/collections'),
+    fetchApi('/categories'),
+    fetchApi(`/nfts?${nftsQueryString}`),
+    fetchApi('/collections'),
   ]);
 
   if (!query.page || !query.filter) {
@@ -73,12 +76,12 @@ const ExplorePage: NextPageWithLayout = ({
     active: item.id === query.filter,
   }));
 
-  const resetFilter = () => {
+  const resetFilter = async () => {
     const resetQuery = { page: 1, filter: query.filter };
     if (query.sort) {
       resetQuery['sort'] = query.sort;
     }
-    router.push(
+    await router.push(
       {
         pathname: router.pathname,
         query: resetQuery,
@@ -90,8 +93,8 @@ const ExplorePage: NextPageWithLayout = ({
     );
   };
 
-  const handlerFilterChange = (key: string, value: any) => {
-    router.push(
+  const handlerFilterChange = async (key: string, value: any) => {
+    await router.push(
       {
         pathname: router.pathname,
         query: { ...query, [key]: value },
