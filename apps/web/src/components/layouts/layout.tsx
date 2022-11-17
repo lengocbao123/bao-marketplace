@@ -1,5 +1,5 @@
-import { FC, Fragment, HTMLAttributes } from 'react';
 import { Footer, Header } from 'components/organisms';
+import { FC, Fragment, HTMLAttributes } from 'react';
 
 export type LayoutProps = HTMLAttributes<HTMLElement>;
 
@@ -13,7 +13,7 @@ export const Layout: FC<LayoutProps> = (props) => {
 
   return (
     <Fragment>
-      <Header />
+      <Header className={'bg-neutral-0 sticky top-0 z-20 border-b'} />
       <main {...layoutProps}>{children}</main>
       <Footer />
     </Fragment>
