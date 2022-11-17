@@ -1,8 +1,8 @@
 import clsx from 'clsx';
-import { createRef, forwardRef, InputHTMLAttributes, ReactElement, RefObject, useId, useState } from 'react';
 import { ButtonIcon } from 'components/atoms/button';
-import { SVG } from 'types/index';
 import { AlertIcon, EyeClosedIcon, EyeIcon } from 'components/icons/outline';
+import { forwardRef, InputHTMLAttributes, ReactElement, useId, useRef, useState } from 'react';
+import { SVG } from 'types/index';
 
 export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
@@ -36,14 +36,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, forwardedR
   const LeadingVisual = leadingVisual;
   const TrailingVisual = error ? AlertIcon : trailingVisual;
 
-  const inputRef = (forwardedRef as RefObject<HTMLInputElement>) || createRef<HTMLInputElement>();
+  const innerRef = useRef(null);
 
   // Switch type when click show password icon
-  const [currentInputType, setCurrentInputType] = useState(inputRef.current?.type);
+  const [currentInputType, setCurrentInputType] = useState(innerRef.current?.type);
   const handleShowPassword = () => {
-    if (inputRef.current) {
-      inputRef.current.type = inputRef.current.type === 'password' ? 'text' : 'password';
-      setCurrentInputType(inputRef.current.type);
+    if (innerRef.current) {
+      innerRef.current.type = innerRef.current.type === 'password' ? 'text' : 'password';
+      setCurrentInputType(innerRef.current.type);
     }
   };
 
@@ -82,7 +82,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, forwardedR
             data-component="input"
             {...inputProps}
             id={id}
-            ref={inputRef}
+            ref={(e) => {
+              if (typeof forwardedRef === 'function') {
+                forwardedRef(e);
+              } else if (forwardedRef?.current) {
+                forwardedRef.current = e;
+              }
+              innerRef.current = e;
+            }}
             className={
               'py-2.25 inline-flex w-full rounded-full border-none bg-transparent px-4 text-sm focus:ring-0 focus-visible:outline-none'
             }
