@@ -1,13 +1,14 @@
 import { Dialog, Transition } from '@headlessui/react';
 import clsx from 'clsx';
-import { useRouter } from 'next/router';
-import { FC, Fragment, HTMLAttributes, ReactNode, useEffect, useState } from 'react';
 import { Button, IconButton } from 'components/atoms';
 import { CrossIcon, MenuIcon } from 'components/icons/outline';
+import { useRouter } from 'next/router';
+import { FC, Fragment, HTMLAttributes, ReactNode, useEffect, useState } from 'react';
 
 export interface HamburgerSectionProps extends HTMLAttributes<HTMLDivElement> {
   openButtonIcon?: IconButton;
   heading?: string;
+  dialogClassName?: string;
   openButton?: ReactNode;
 }
 
@@ -17,6 +18,7 @@ export const HamburgerSection: FC<HamburgerSectionProps> = ({
   children,
   className,
   openButton,
+  dialogClassName,
   ...rest
 }) => {
   const [open, setOpen] = useState(false);
@@ -57,14 +59,19 @@ export const HamburgerSection: FC<HamburgerSectionProps> = ({
   return (
     <div className={clsx(className)} {...rest}>
       {!openButton ? (
-        <Button size="lg" icon={OpenButtonIcon} variant={'tertiary'} onClick={() => setOpen(true)} />
+        <Button
+          size="lg"
+          icon={open ? CrossIcon : OpenButtonIcon}
+          variant={'tertiary'}
+          onClick={() => setOpen(!open)}
+        />
       ) : (
-        <div className="w-fit" onClick={() => setOpen(true)}>
+        <div className="w-fit" onClick={() => setOpen(!open)}>
           {openButton}
         </div>
       )}
       <Transition.Root show={open} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={setOpen}>
+        <Dialog as="div" className={clsx('relative z-30', dialogClassName)} onClose={setOpen}>
           <Transition.Child
             as={Fragment}
             enter="ease-in-out duration-250"
