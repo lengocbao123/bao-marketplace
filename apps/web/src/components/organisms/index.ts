@@ -11,3 +11,4 @@ export * from './collections';
 export * from './profile-inventory';
 export * from './product';
 export * from './error';
+export * from './hamburger-dashboard';

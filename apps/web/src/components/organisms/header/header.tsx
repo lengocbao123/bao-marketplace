@@ -1,13 +1,14 @@
 import { Menu, Transition } from '@headlessui/react';
 import clsx from 'clsx';
-import { useSession, signOut } from 'next-auth/react';
+import { Avatar, Button, ButtonIcon, ButtonLink, Input } from 'components/atoms';
+import { PikassoColorIcon } from 'components/icons/brand';
+import { EditIcon, PersonIcon, SearchIcon, WalletIcon } from 'components/icons/outline';
+import { CaretDownIcon } from 'components/icons/solid';
+import { HamburgerDashboard } from 'components/organisms';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { FC, Fragment, HTMLAttributes } from 'react';
 import { UserData } from 'types/data';
-import { Avatar, Button, ButtonIcon, ButtonLink, Input } from 'components/atoms';
-import { PikassoColorIcon } from 'components/icons/brand';
-import { EditIcon, MenuIcon, PersonIcon, SearchIcon, WalletIcon } from 'components/icons/outline';
-import { CaretDownIcon } from 'components/icons/solid';
 
 /* ---------------------------------------------------------------------------------------------------------------------
  * User Menu
@@ -113,7 +114,7 @@ export const Header: FC<HeaderProps> = (props) => {
         <div className={'flex items-center justify-between gap-5 py-5'}>
           <div className="flex grow items-center gap-5">
             <div className={'lg:hidden'}>
-              <ButtonIcon variant={'tertiary'} icon={MenuIcon} title={'Menu'} />
+              <HamburgerDashboard />
             </div>
 
             <Link href={'/'} className={'-mt-2.5'}>
