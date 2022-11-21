@@ -41,7 +41,7 @@ export const List: FC<ListProps> = ({
         )}
 
         {!hasData ? (
-          <div>Empty</div>
+          <div>There is no available data!</div>
         ) : (
           <Fragment>
             <div

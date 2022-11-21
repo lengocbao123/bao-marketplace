@@ -118,7 +118,7 @@ const UserInventoryPage: NextPageWithLayout = ({
     );
   };
 
-  if (errorCollections || errorNfts) {
+  if (errorCollections || errorNfts || errorUser) {
     return <div>failed to load</div>;
   }
   const convertedQuery = convertQueryParamsToArray(query);
@@ -135,10 +135,7 @@ const UserInventoryPage: NextPageWithLayout = ({
         meta={{ totalItems: 8, itemCount: 8, itemsPerPage: 10, totalPages: 1, currentPage: query.page }}
       />
     ) : (
-      <NftsList
-        nfts={nfts}
-        meta={{ totalItems: 8, itemCount: 8, itemsPerPage: 10, totalPages: 3, currentPage: query.page }}
-      />
+      <NftsList nfts={nfts} meta={{ totalItems: 8, itemCount: 8, itemsPerPage: 10, totalPages: 3, currentPage: 1 }} />
     );
 
   return (

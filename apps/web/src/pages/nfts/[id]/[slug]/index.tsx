@@ -1,7 +1,7 @@
 import { NextSeo } from 'next-seo';
 import { Fragment, ReactElement } from 'react';
 import { Layout } from 'components/layouts';
-import { Breadcrumb } from 'components/molecules';
+import { Breadcrumb, DetailNftSkeleton, Error } from 'components/molecules';
 import {
   ProductInfo,
   ProductImage,
@@ -19,52 +19,60 @@ import useSWR from 'swr';
 import { convertToSlug } from 'lib/utils/string';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { NftResponse, NftsResponse } from 'types/data';
+import { isSuccess } from 'lib/utils/response';
 
 export async function getServerSideProps({ req, res, query }) {
   const session = await unstable_getServerSession(req, res, authOptions);
   const fetchApi = fetcher(session);
   const { id } = query;
-  const [nft, relativeNfts] = await Promise.all([fetchApi(`/nfts/${id}`), fetchApi(`/nfts?_limit=4`)]);
+  const [nft, relativeNfts] = await Promise.all([
+    fetchApi<NftResponse>(`/nft/${id}`),
+    fetchApi<NftsResponse>(`/nft/exchange/list?_limit=4`),
+  ]);
 
   return {
     props: {
       id,
       fallback: {
-        [`/nfts/${id}`]: nft,
-        '/nfts?_limit=4': relativeNfts,
+        [`/nft/${id}`]: nft,
+        '/nft/exchange/list?limit=4': relativeNfts,
       },
     },
   };
 }
 
 const Index: NextPageWithLayout = ({ id }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { data: nft, error: errorNfts } = useSWR(`/nfts/${id}`);
-  const { data: relativeNfts, error: errorRelativeNfts } = useSWR(`/nfts?_limit=4`);
+  const { data: nftResponse, error: errorNfts } = useSWR<NftResponse>(`/nft/${id}`);
+  const { data: relativeNftsResponse, error: errorRelativeNfts } = useSWR<NftsResponse>(`/nft/exchange/list?limit=4`);
 
-  const hasOrder = nft.order;
-  if (errorNfts || errorRelativeNfts) {
-    return <div>failed to load</div>;
+  if (errorNfts || !isSuccess(nftResponse.message)) {
+    return <Error />;
   }
 
-  if (!nft) {
-    return <div>loading...</div>;
+  if (!nftResponse) {
+    return <DetailNftSkeleton />;
   }
+  const { data: nft } = nftResponse;
+  const { list: relativeNfts } = relativeNftsResponse.data;
+  const hasOrder = nft.orders && nft.orders[0] && nft.orders[0].prices && nft.orders[0].prices[0];
 
   return (
     <Fragment>
-      <NextSeo title="Product Details" />
+      <NextSeo title={nft.name} />
       <Breadcrumb
         className="bg-neutral-10 mb-7.5 py-2.5"
         links={[
           { label: 'Collections', href: '/collections', as: '/collections' },
           {
-            label: nft.collection.name,
-            as: `/collections/${nft.collection.id}/${convertToSlug(nft.collection.name)}`,
+            label: nft.collection_info.name,
+            as: `/collections/${nft.collection_info.id}/${convertToSlug(nft.collection_info.name)}`,
             href: '/collections/[id]/[slug]',
           },
           { label: nft.name, href: '/', as: '/' },
         ]}
       />
+
       <div className="gap-y-7.5 container grid grid-cols-5 gap-x-6">
         {/* Start Desktop Screen */}
         <div className="gap-y-7.5 col-span-2 hidden flex-col sm:flex">
@@ -73,8 +81,8 @@ const Index: NextPageWithLayout = ({ id }: InferGetServerSidePropsType<typeof ge
         </div>
         <div className="gap-y-7.5 col-span-3 hidden flex-col sm:flex">
           <ProductInfo className="w-full" nft={nft} />
-          {hasOrder && <ProductExchange className="w-full" order={nft.order} />}
-          <ProductDetails className="w-full" />
+          {hasOrder && <ProductExchange className="w-full" data={nft.orders[0].prices[0]} nftId={nft.id} />}
+          <ProductDetails nft={nft} className="w-full" />
         </div>
         {/* End Desktop Screen*/}
 
@@ -82,14 +90,25 @@ const Index: NextPageWithLayout = ({ id }: InferGetServerSidePropsType<typeof ge
         <div className="gap-y-7.5 col-span-5 flex flex-col sm:hidden">
           <ProductInfo className="col-span-5" nft={nft} />
           <ProductImage className="col-span-5" alt={nft.name} image={nft.image} />
-          {hasOrder && <ProductExchange className="col-span-5" order={nft.order} />}
-          <ProductDetails className="col-span-5" />
+          {hasOrder && <ProductExchange className="col-span-5" data={nft.orders[0].prices[0]} nftId={nft.id} />}
+          <ProductDetails nft={nft} className="col-span-5" />
           {nft.attributes?.length > 0 && <ProductProperties className="col-span-5" properties={nft.attributes} />}
         </div>
         {/* End Mobile Screen*/}
         <ProductOfferHistory className="mt-7.5 col-span-5" />
-        <ProductSaleHistory className="mt-7.5 col-span-5" sales={nft.order.prices} />
-        <ProductSimilar className="mt-7.5 col-span-5" products={relativeNfts} />
+        {false && (
+          <ProductSaleHistory
+            className="mt-7.5 col-span-5"
+            sales={!!nft.orders ? nft.orders.map((order) => order.prices) : []}
+          />
+        )}
+        <ProductSimilar
+          loading={!relativeNftsResponse}
+          isError={errorRelativeNfts || !isSuccess(relativeNftsResponse.message)}
+          className="mt-7.5 col-span-5"
+          products={relativeNfts}
+          collection={nft.collection_info}
+        />
       </div>
     </Fragment>
   );

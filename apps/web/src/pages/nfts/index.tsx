@@ -1,5 +1,5 @@
 import { Layout } from 'components/layouts';
-import { ExploreSection, TabData } from 'components/molecules';
+import { Error, ExploreSection, ListNftsSkeleton, TabData } from 'components/molecules';
 import { NftsFilters, NftsList } from 'components/organisms/nfts';
 import { fetcher } from 'lib/utils/fetcher';
 import { InferGetServerSidePropsType } from 'next';
@@ -9,9 +9,10 @@ import { Fragment } from 'react';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { convertQueryParamsToArray } from 'lib/utils/query';
-import { CategoryData, NftData } from 'types/data';
+import { CategoriesResponse, NftsResponse } from 'types/data';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { isSuccess } from 'lib/utils/response';
 
 export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const session = await unstable_getServerSession(req, res, authOptions);
@@ -22,8 +23,8 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   }).toString();
   const fetchApi = fetcher(session);
   const [categories, nfts, collections] = await Promise.all([
-    fetchApi('/categories'),
-    fetchApi(`/nfts?${nftsQueryString}`),
+    fetchApi<CategoriesResponse>('/category/list'),
+    fetchApi<NftsResponse>(`/nft/exchange/list?${nftsQueryString}`),
     fetchApi('/collections'),
   ]);
 
@@ -40,8 +41,8 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
     props: {
       nftsQueryString,
       fallback: {
-        '/categories': categories,
-        [`/nfts?${nftsQueryString}`]: nfts,
+        '/category/list': categories,
+        [`/nft/exchange/list?${nftsQueryString}`]: nfts,
         '/collections?q=': collections,
       },
     },
@@ -52,15 +53,11 @@ const ExplorePage: NextPageWithLayout = ({
   nftsQueryString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
-  const { data: categories, error: errorCategories } = useSWR<CategoryData[]>('/categories');
-  const { data: nfts, error: errorNfts } = useSWR<NftData[]>(`/nfts?${nftsQueryString}`);
+  const { data: categoriesResponse, error: errorCategories } = useSWR<CategoriesResponse>('/category/list');
+  const { data: nftsResponse, error: errorNfts } = useSWR<NftsResponse>(`/nft/exchange/list?${nftsQueryString}`);
   const { query } = router;
-  if (errorCategories || errorNfts) {
-    return <div>failed to load</div>;
-  }
-
-  if (!categories || !nfts) {
-    return <div>loading...</div>;
+  if (errorCategories || errorNfts || !isSuccess(nftsResponse.message) || !isSuccess(categoriesResponse.message)) {
+    return <Error />;
   }
 
   const categoryTabs: TabData[] = [
@@ -69,7 +66,7 @@ const ExplorePage: NextPageWithLayout = ({
       name: 'All',
       code: 'all',
     },
-    ...categories,
+    ...categoriesResponse.data,
   ].map((item) => ({
     label: item.name,
     value: item.id,
@@ -126,10 +123,11 @@ const ExplorePage: NextPageWithLayout = ({
         onChangeFilter={handlerFilterChange}
         onResetFilter={resetFilter}
       >
-        <NftsList
-          nfts={nfts}
-          meta={{ totalItems: 8, itemCount: 8, itemsPerPage: 10, totalPages: 3, currentPage: query.page }}
-        />
+        {nftsResponse ? (
+          <NftsList nfts={nftsResponse.data.list} meta={nftsResponse.data.meta} />
+        ) : (
+          <ListNftsSkeleton number={10} />
+        )}
       </ExploreSection>
     </Fragment>
   );

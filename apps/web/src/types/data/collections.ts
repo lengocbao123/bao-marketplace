@@ -1,29 +1,28 @@
-import { BaseResponse } from './response';
+import { BaseResponse, PaginationData } from './response';
 import { UserData } from './user';
 
 export interface CollectionData {
-  id: string;
-  name: string;
-  owner: string;
-  logoImage: string;
-  featuredImage: string;
-  bannerImage: string;
-  url: string;
-  category: string;
-  chain: string;
-  totalNfts: number;
-  status: string;
-  projectId: string;
-  nftType: string;
-  nftContractAddress: string;
-  masterAccount: any;
-  description: string;
-  createdBy: string;
-  createdAt: string;
-  updatedAt: string;
-  project: any;
-  user: UserData;
+  id?: string;
+  name?: string;
+  chain?: string;
+  project?: string;
+  category?: [];
+  created_at?: string;
+  created_by?: string;
+  logo_image?: string;
+  owner_info?: UserData;
+  updated_at?: string;
+  description?: string;
+  banner_image?: string;
+  featured_image?: string;
+  created_by_info?: UserData;
+  nft_contract_address?: string;
 }
+
 export interface CollectionsResponse extends BaseResponse {
-  data: CollectionData[];
+  data: { list: CollectionData[]; meta: PaginationData };
+}
+
+export interface CollectionResponse extends BaseResponse {
+  data: CollectionData;
 }

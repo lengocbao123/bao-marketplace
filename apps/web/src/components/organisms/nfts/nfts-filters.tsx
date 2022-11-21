@@ -5,9 +5,8 @@ import { BinanceIcon, EthereumIcon, PolygonIcon } from 'components/icons/blockch
 import { SearchIcon } from 'components/icons/outline';
 import { CheckboxFilter, RangeFilter } from 'components/molecules';
 import { useDebounce } from 'usehooks-ts';
-
 import useSWR from 'swr';
-import { CollectionData } from 'types/data';
+import { CollectionsResponse } from 'types/data';
 
 export interface NftsFiltersProps {
   filter: any;
@@ -18,7 +17,7 @@ export interface NftsFiltersProps {
 export const NftsFilters: FC<NftsFiltersProps> = ({ className = '', filter, onChange }) => {
   const [collectionSearchText, setCollectionSearchText] = useState('');
   const debounceSearchText = useDebounce<string>(collectionSearchText, 1000);
-  const { data: collections, error: errorCollections } = useSWR<CollectionData[]>(
+  const { data: collections, error: errorCollections } = useSWR<CollectionsResponse>(
     `/collections?q=${debounceSearchText}`,
   );
 
@@ -77,8 +76,8 @@ export const NftsFilters: FC<NftsFiltersProps> = ({ className = '', filter, onCh
         name="collection"
         heading="Collections"
         options={
-          collections
-            ? collections.map((collection) => ({
+          collections && collections.data
+            ? collections.data.list.map((collection) => ({
                 label: collection.name,
                 value: collection.id,
               }))

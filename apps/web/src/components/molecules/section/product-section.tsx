@@ -2,19 +2,22 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import { FC, HTMLAttributes } from 'react';
 import { ChevronRightIcon } from 'components/icons/outline';
+import { convertToSlug } from '../../../lib/utils/string';
+import { CollectionData } from '../../../types/data';
 
 export interface ProductSectionProps extends HTMLAttributes<HTMLDivElement> {
   title?: string;
+  collection?: CollectionData;
 }
 
-export const ProductSection: FC<ProductSectionProps> = ({ className, title, children, ...rest }) => {
+export const ProductSection: FC<ProductSectionProps> = ({ collection, className, title, children, ...rest }) => {
   return (
     <section className={clsx(className)} {...rest}>
       {title && (
         <div className="flex justify-between">
           <h2 className={'text-neutral mb-3 font-bold lg:text-2xl'}>{title}</h2>
           <div className="flex items-center gap-2 text-sm">
-            <Link href="/explore/collections">View Collection</Link>
+            <Link href={`/collections/${collection.id}/${convertToSlug(collection.name)}`}>View Collection</Link>
             <ChevronRightIcon />
           </div>
         </div>

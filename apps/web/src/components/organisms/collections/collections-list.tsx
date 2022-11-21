@@ -13,7 +13,7 @@ export interface CollectionsListProps extends HTMLAttributes<HTMLDivElement> {
 export const CollectionsList: FC<CollectionsListProps> = ({ collections, meta, className }) => {
   return (
     <List
-      hasData={true}
+      hasData={collections.length > 0}
       totalItems={meta.totalItems}
       totalPages={meta.totalPages}
       page={meta.page}
@@ -26,7 +26,7 @@ export const CollectionsList: FC<CollectionsListProps> = ({ collections, meta, c
           title={collection.name}
           countOwners={10000}
           countItems={24000}
-          logoImage={collection.logoImage}
+          logoImage={collection.logo_image}
         />
       ))}
     </List>

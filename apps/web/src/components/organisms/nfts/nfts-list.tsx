@@ -2,33 +2,37 @@ import { CardNft } from 'components/molecules';
 import { List } from 'components/organisms/list';
 import { convertToSlug } from 'lib/utils/string';
 import { FC, HTMLAttributes } from 'react';
-import { NftData } from 'types/data';
+import { NftData, PaginationData } from 'types/data';
 
 export interface NftsListProps extends HTMLAttributes<HTMLDivElement> {
-  nfts: NftData[];
-  meta?: any;
-  links?: any;
+  nfts?: NftData[];
+  meta?: PaginationData;
 }
+
 export const NftsList: FC<NftsListProps> = ({ nfts, meta, className }) => {
   return (
     <List
-      hasData={true}
+      hasData={nfts.length > 0}
       totalItems={meta.totalItems}
       totalPages={meta.totalPages}
-      page={meta.page}
+      page={meta.currentPage}
       className={className}
     >
-      {nfts.map((nft) => (
-        <CardNft
-          key={nft.id}
-          link={{ as: `/nfts/${nft.id}/${convertToSlug(nft.name)}`, href: '/nfts/[id]/[slug]' }}
-          image={nft.image}
-          title={nft.name}
-          subtitle={'Monkey collection'}
-          price={100}
-          user={nft.owner}
-        />
-      ))}
+      {nfts.length > 0 ? (
+        nfts.map((nft) => (
+          <CardNft
+            key={nft.id}
+            link={{ as: `/nfts/${nft.id}/${convertToSlug(nft.name)}`, href: '/nfts/[id]/[slug]' }}
+            image={nft.image}
+            title={nft.name}
+            subtitle={nft.collection_info.name}
+            price={100}
+            user={nft.created_by_info}
+          />
+        ))
+      ) : (
+        <div>There is no available nft!</div>
+      )}
     </List>
   );
 };

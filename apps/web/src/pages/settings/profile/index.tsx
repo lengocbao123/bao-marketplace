@@ -11,15 +11,17 @@ import { PlusIcon } from 'components/icons/outline';
 import { BrowserIcon } from 'components/icons/solid';
 import { Layout } from 'components/layouts';
 import { CardPaymentMethod, FileImage } from 'components/molecules';
-import { USER } from 'lib/dummy';
 import { useFormCreateProfile } from 'lib/hooks/form/use-form-create-profile';
 import { convertImageUrlToFile } from 'lib/utils/navigator';
 import { redirectIfUnverified } from 'lib/utils/server';
+import { refreshUserProfile } from 'lib/auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { NextPageWithLayout } from 'pages/_app';
+import { UpdateUserInput } from 'types/data';
+import { useSession } from 'next-auth/react';
+
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
-
   if (session && session.user.status === 'verify_email') {
     return redirectIfUnverified();
   }
@@ -36,17 +38,33 @@ const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSer
   const [bannerUrl, setBannerUrl] = useState<any>(null);
   const [isEnable, setIsEnable] = useState(false);
   const [wallets, setWallets] = useState<any[]>([]);
+  const { data: session } = useSession();
+  const user: UpdateUserInput = session?.user;
 
   const {
     onSubmit,
     register,
     setValue,
-    formState: { errors, isValid, isSubmitting, isDirty },
+    formState: { errors, isSubmitting },
   } = useFormCreateProfile({
-    initialData: USER,
+    initialData: {
+      ...user,
+      bio: 'I am a software engineer',
+      website: 'https://codelight.co',
+      facebook: 'https://www.facebook.com/johndoe',
+      twitter: 'https://twitter.com/johndoe',
+      instagram: 'https://www.instagram.com/johndoe',
+      medium: 'https://medium.com/@johndoe',
+      wallets: [
+        {
+          name: 'visa',
+          walletAddress: '4242424242424242',
+        },
+      ],
+    },
 
     onSuccess: async () => {
-      // refreshUser();
+      await refreshUserProfile(false);
       toast.success('Your profile has been updated!');
     },
     onError: (error) => {
@@ -55,16 +73,16 @@ const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSer
   });
 
   useEffect(() => {
-    setWallets(USER?.wallets);
-    convertImageUrlToFile(USER?.avatarUrl)?.then((data) => {
+    setWallets(user.wallets || []);
+    convertImageUrlToFile(user.avatarUrl)?.then((data) => {
       setValue('avatarUrl', data);
       setAvatarUrl(data);
     });
-    convertImageUrlToFile(USER?.bannerUrl)?.then((data) => {
+    convertImageUrlToFile(user.bannerUrl)?.then((data) => {
       setValue('bannerUrl', data);
       setBannerUrl(data);
     });
-  }, [setValue]);
+  }, [setValue, user.avatarUrl, user.bannerUrl, user.wallets]);
 
   const handleClick = () => {
     if (dropzoneRef.current) {
@@ -245,7 +263,7 @@ const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSer
           <div className="mb-10 mt-10">
             <Button
               loading={isSubmitting}
-              disabled={isEnable || !avatarUrl || !isValid || !isDirty}
+              // disabled={isEnable || !avatarUrl || !isValid || !isDirty}
               size="md"
               label={'Save'}
               type={'submit'}

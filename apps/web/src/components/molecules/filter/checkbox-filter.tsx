@@ -7,6 +7,7 @@ type CheckboxOption = {
   value: string;
   disabled?: boolean;
 };
+
 export interface CheckboxFilterProps {
   heading?: string;
   loading?: boolean;
@@ -41,7 +42,9 @@ export const CheckboxFilter: FC<CheckboxFilterProps> = ({
   return (
     <AccordionSection heading={heading} className="py-5 pb-3" contentClassName="pb-0">
       {action && <div className="mb-6 w-full">{action}</div>}
-      {!loading ? (
+      {loading ? (
+        <div>loading...</div>
+      ) : options.length > 0 ? (
         options.map((option) => (
           <CheckboxInput
             key={option.value}
@@ -54,7 +57,7 @@ export const CheckboxFilter: FC<CheckboxFilterProps> = ({
           />
         ))
       ) : (
-        <div>loading...</div>
+        <div>There is no available data!</div>
       )}
     </AccordionSection>
   );

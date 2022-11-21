@@ -1,0 +1,18 @@
+[
+  {
+    "title": "All Time",
+    "value": "all_time"
+  },
+  {
+    "title": "24 Hours",
+    "value": "24_hours"
+  },
+  {
+    "title": "7 Days",
+    "value": "7_days"
+  },
+  {
+    "title": "30 Days",
+    "value": "30_days"
+  }
+]

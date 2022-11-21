@@ -2,9 +2,10 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import React, { FC, HTMLAttributes } from 'react';
 import { Avatar } from 'components/atoms';
+import { NftData } from '../../../types/data';
 
 export interface ProductInfoProps extends HTMLAttributes<HTMLDivElement> {
-  nft: any;
+  nft: NftData;
 }
 
 export const ProductInfo: FC<ProductInfoProps> = ({ className, nft, ...rest }) => {
@@ -13,10 +14,10 @@ export const ProductInfo: FC<ProductInfoProps> = ({ className, nft, ...rest }) =
       <div className="flex items-baseline justify-between">
         <Link
           href="/projects/my-projects/collections/[collectionId]"
-          as={`/projects/my-projects/collections/${nft.collection?.id}`}
+          as={`/projects/my-projects/collections/${nft.collection_info?.id}`}
           className={'text-secondary text-sm font-medium'}
         >
-          {nft.collection?.name}
+          {nft.collection_info?.name}
         </Link>
       </div>
 
@@ -25,15 +26,15 @@ export const ProductInfo: FC<ProductInfoProps> = ({ className, nft, ...rest }) =
       <div className="mt-3 flex flex-wrap gap-x-4 gap-y-3">
         <Avatar
           label={'Creator'}
-          name={nft.createdBy?.username || nft.createdBy?.email || 'Unknown'}
-          src={nft.createdBy?.avatarUrl}
+          name={nft.created_by_info?.username || nft.created_by_info?.email || 'Unknown'}
+          src={nft.created_by_info?.avatarUrl}
           className='flex hidden items-center text-sm sm:flex [&_[data-component="label"]]:mr-2'
         />
 
         <Avatar
           label={'Owner'}
-          name={nft.owner?.username || nft.owner?.email || 'Unknown'}
-          src={nft.owner?.avatarUrl}
+          name={nft.owner_info?.username || nft.owner_info?.email || 'Unknown'}
+          src={nft.owner_info?.avatarUrl}
           className='flex items-center text-sm [&_[data-component="label"]]:mr-2'
         />
       </div>

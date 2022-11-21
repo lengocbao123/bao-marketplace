@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { login } from 'lib/services';
+import { getUserInfo, login } from 'lib/services';
 import { isSuccess } from 'lib/utils/response';
 
 export const authOptions: NextAuthOptions = {
@@ -42,6 +42,7 @@ export const authOptions: NextAuthOptions = {
         token.roles = user.roles;
         token.status = user.status;
         token.username = user.username;
+        token.email = user.email;
         token.avatarUrl = user.avatarUrl;
       }
 
@@ -54,8 +55,9 @@ export const authOptions: NextAuthOptions = {
       session.user.roles = token.roles || null;
       session.user.username = token.username || null;
       session.user.image = token.avatarUrl || null;
-      session.user.status = token.status;
+      session.user.status = token.status || null;
       session.user.name = token.username;
+      session.user.email = token.email;
 
       return session;
     },
@@ -79,6 +81,26 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
     ...authOptions,
     callbacks: {
       ...authOptions.callbacks,
+      async jwt({ token, user }) {
+        if (token.accessToken && 'update' in req.query && req.query.update === 'true') {
+          const response = await getUserInfo(token.accessToken);
+          if (response.data) {
+            token.id = response.data.id;
+            token.status = response.data.status;
+            token.avatarUrl = response.data.avatarUrl;
+          }
+        } else if (user) {
+          token.accessToken = String(user.accessToken);
+          token.id = user.id;
+          token.roles = user.roles;
+          token.email = user.email;
+          token.status = user.status;
+          token.username = user.username;
+          token.avatarUrl = user.avatarUrl;
+        }
+
+        return token;
+      },
     },
   });
 }

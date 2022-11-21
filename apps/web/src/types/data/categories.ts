@@ -5,14 +5,14 @@ export interface CategoryData {
   name: string;
   code: string;
   logoImage?: string;
-  featuredImage?: string;
-  bannerImage?: string;
+  featured_image?: string;
+  banner_image?: string;
   status?: string;
   mapper: {
     [key: string]: string;
   };
-  createdAt?: string;
-  updatedAt?: string;
+  created_at?: string;
+  updated_at?: string;
 }
 export interface CategoriesResponse extends BaseResponse {
   data: CategoryData[];

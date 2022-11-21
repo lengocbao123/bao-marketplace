@@ -1,22 +1,20 @@
 import { ButtonLink, ListItem } from 'components/atoms';
-import { CardNft, ChipFilter, ChipOption, Section } from 'components/molecules';
+import { CardNft, ChipFilter, ChipOption, ListNftsSkeleton, Section } from 'components/molecules';
 import { FC, HTMLAttributes, useState } from 'react';
 import useSWR from 'swr';
-import { CategoryData, NftData } from 'types/data';
+import { CategoriesResponse, NftsResponse } from 'types/data';
+import { isSuccess } from 'lib/utils/response';
+import { convertToSlug } from 'lib/utils/string';
 
 export type ExplorerProps = HTMLAttributes<HTMLElement>;
 
 export const Explorer: FC<ExplorerProps> = ({}) => {
-  const { data: categories, error: errorCategories } = useSWR<CategoryData[]>(`/categories`);
+  const { data: categoriesResponse, error: errorCategories } = useSWR<CategoriesResponse>(`/category/list`);
   const [category, setCategory] = useState('b1527454-385d-4c9e-b91d-f84c6a1b6e12');
-  const { data: nfts, error: errorNfts } = useSWR<NftData[]>(`/nfts?_limit=8&category=${category}`);
+  const { data: nftsResponse, error: errorNfts } = useSWR<NftsResponse>(`/nft/exchange/list?limit=8`);
 
-  if (errorCategories || errorNfts) {
+  if (errorCategories || errorNfts || !isSuccess(nftsResponse.message) || !isSuccess(categoriesResponse.message)) {
     return <div>failed to load</div>;
-  }
-
-  if (!categories || !nfts) {
-    return <div>loading...</div>;
   }
 
   const onChangeCategory = (value: string) => {
@@ -24,29 +22,35 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
   };
 
   const options: ChipOption[] =
-    categories?.map((category) => ({
+    categoriesResponse.data?.map((category) => ({
       label: category.name,
       value: category.id,
     })) || [];
+
+  const { list: nftsList } = nftsResponse.data;
 
   return (
     <Section heading="Explore The Marketplace" lead="Discover NFTs">
       <div className="sm:space-y-7.5 space-y-5">
         <ChipFilter value={category} options={options} onChange={onChangeCategory} />
 
-        <ListItem>
-          {nfts.map((nft) => (
-            <CardNft
-              key={nft.id}
-              link={{ href: `/nfts/${nft.id}` }}
-              image={nft.image}
-              title={nft.name}
-              subtitle="Game NFTs"
-              price={20}
-              user={nft.owner}
-            />
-          ))}
-        </ListItem>
+        {nftsResponse ? (
+          <ListItem>
+            {nftsList.map((nft) => (
+              <CardNft
+                key={nft.id}
+                link={{ as: `/nfts/${nft.id}/${convertToSlug(nft.name)}`, href: '/nfts/[id]/[slug]' }}
+                image={nft.image}
+                title={nft.name}
+                subtitle="Game NFTs"
+                price={20}
+                user={nft.created_by_info}
+              />
+            ))}
+          </ListItem>
+        ) : (
+          <ListNftsSkeleton className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4" number={8} />
+        )}
 
         <div className="flex justify-center">
           <ButtonLink variant="tertiary" label="View more" href={'/nfts'} />

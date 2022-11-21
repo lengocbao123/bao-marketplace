@@ -3,20 +3,33 @@ import { FC, HTMLAttributes } from 'react';
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import useSWR from 'swr';
-import { CollectionData } from 'types/data';
+import { CollectionsResponse } from 'types/data';
+import { isSuccess } from '../../../lib/utils/response';
+import { CardPopularSkeleton } from '../../molecules/skeleton/card-popular-skeleton';
 
 export type PopularCollectionsProps = HTMLAttributes<HTMLElement>;
 
 export const PopularCollections: FC<PopularCollectionsProps> = (props) => {
   const { ...popularCollectionsProps } = props;
-  const { data: collections, error } = useSWR<CollectionData[]>(`/collections`);
+  const { data: collections, error } = useSWR<CollectionsResponse>(`/collections`);
 
-  if (error) {
-    return <div>Error</div>;
+  if (error || !isSuccess(collections.message)) {
+    return (
+      <Section heading={'Popular Collections'} {...popularCollectionsProps}>
+        <div className={'text-center'}>Oops! Something went wrong</div>
+      </Section>
+    );
   }
 
   if (!collections) {
-    return <div>Loading...</div>;
+    return (
+      <Section heading={'Popular Collections'}>
+        <div className="flex">
+          <CardPopularSkeleton />
+          <CardPopularSkeleton />
+        </div>
+      </Section>
+    );
   }
 
   return (
@@ -36,13 +49,13 @@ export const PopularCollections: FC<PopularCollectionsProps> = (props) => {
           },
         }}
       >
-        {collections.map((collection) => (
+        {collections.data.list.map((collection) => (
           <SwiperSlide key={collection.id}>
             <CardPopular
               title={collection.name}
               description={collection.description}
               link={{ href: `/collections/${collection.id}` }}
-              image={collection.bannerImage}
+              image={collection.banner_image}
             />
           </SwiperSlide>
         ))}

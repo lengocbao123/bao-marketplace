@@ -3,16 +3,17 @@ import { NextSeo } from 'next-seo';
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 import { Layout } from 'components/layouts';
-import { Breadcrumb, ExploreSection } from 'components/molecules';
+import { Breadcrumb, Error, ExploreSection, ListNftsSkeleton } from 'components/molecules';
 import { CollectionProfile } from 'components/organisms';
 import { NftsFilters, NftsList } from 'components/organisms/nfts';
 import { NextPageWithLayout } from 'pages/_app';
 import { fetcher } from 'lib/utils/fetcher';
 import useSWR from 'swr';
-import { CollectionData, NftData } from 'types';
+import { CollectionData, CollectionResponse, NftsResponse } from 'types';
 import { convertQueryParamsToArray } from 'lib/utils/query';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
+import { isSuccess } from 'lib/utils/response';
 
 export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const session = await unstable_getServerSession(req, res, authOptions);
@@ -33,7 +34,7 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
 
   const [collection, nftsByCollection] = await Promise.all([
     fetchApi<CollectionData>(`/collections/${id}`),
-    fetchApi<NftData[]>(`/nfts?collection.id=${id}&${nftsQueryString}`),
+    fetchApi<NftsResponse>(`/nft/exchange/list`),
   ]);
   if (!filter || !page) {
     return {
@@ -50,16 +51,16 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
       nftsQueryString,
       fallback: {
         [`/collections/${id}`]: collection,
-        [`/nfts?collection.id=${id}`]: nftsByCollection,
+        [`/nft/exchange/list?${nftsQueryString}`]: nftsByCollection,
       },
     },
   };
 }
 
 const Home: NextPageWithLayout = ({ id, nftsQueryString }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { data: collection, error: errorCollection } = useSWR<CollectionData>(`/collections/${id}`);
-  const { data: nftsByCollection, error: errorNftsByCollection } = useSWR<NftData[]>(
-    `/nfts?collection.id=${id}&${nftsQueryString}`,
+  const { data: collectionResponse, error: errorCollection } = useSWR<CollectionResponse>(`/collections/${id}`);
+  const { data: nftsByCollectionResponse, error: errorNftsByCollection } = useSWR<NftsResponse>(
+    `/nft/exchange/list?${nftsQueryString}`,
   );
 
   const router = useRouter();
@@ -82,11 +83,16 @@ const Home: NextPageWithLayout = ({ id, nftsQueryString }: InferGetServerSidePro
     },
   ];
 
-  if (errorCollection || errorNftsByCollection) {
-    return <div>failed to load</div>;
+  if (
+    errorCollection ||
+    errorNftsByCollection ||
+    !isSuccess(nftsByCollectionResponse.message) ||
+    !isSuccess(collectionResponse.message)
+  ) {
+    return <Error />;
   }
 
-  if (!collection || !nftsByCollection) {
+  if (!collectionResponse || !nftsByCollectionResponse) {
     return <div>loading...</div>;
   }
 
@@ -121,6 +127,7 @@ const Home: NextPageWithLayout = ({ id, nftsQueryString }: InferGetServerSidePro
   };
 
   const convertedQuery = convertQueryParamsToArray(query);
+  const { data: collection } = collectionResponse;
 
   return (
     <Fragment>
@@ -142,10 +149,11 @@ const Home: NextPageWithLayout = ({ id, nftsQueryString }: InferGetServerSidePro
           onResetFilter={resetFilter}
           onChangeFilter={handlerFilterChange}
         >
-          <NftsList
-            nfts={nftsByCollection}
-            meta={{ totalItems: 8, itemCount: 8, itemsPerPage: 10, totalPages: 1, currentPage: query.page }}
-          />
+          {nftsByCollectionResponse ? (
+            <NftsList nfts={nftsByCollectionResponse.data.list} meta={nftsByCollectionResponse.data.meta} />
+          ) : (
+            <ListNftsSkeleton number={10} />
+          )}
         </ExploreSection>
       </div>
     </Fragment>

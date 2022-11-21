@@ -13,6 +13,7 @@
     "@badrap/bar-of-progress": "^0.2.2",
     "@headlessui/react": "^1.7.4",
     "@hookform/resolvers": "^2.9.10",
+    "@pikasso-sdk/react": "^0.3.0",
     "clsx": "^1.2.1",
     "date-fns": "^2.29.3",
     "ethers": "^5.7.2",

@@ -5,13 +5,14 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import { NextPageWithLayout } from './_app';
 import { authOptions } from './api/auth/[...nextauth]';
+import { CategoriesResponse, NftsResponse } from '../types/data';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
   const fetchApi = fetcher(session);
   const [categories, nfts, collections, topCollections, periods] = await Promise.all([
-    fetchApi('/categories'),
-    fetchApi('/nfts?_limit=8&category=b1527454-385d-4c9e-b91d-f84c6a1b6e12'),
+    fetchApi<CategoriesResponse>('/category/list'),
+    fetchApi<NftsResponse>('/nft/exchange/list?limit=8'),
     fetchApi('/collections'),
     fetchApi('/top-collections'),
     fetchApi('/periods'),
@@ -21,8 +22,8 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
     props: {
       session,
       fallback: {
-        '/categories': categories,
-        '/nfts?_limit=8&category=b1527454-385d-4c9e-b91d-f84c6a1b6e12': nfts,
+        '/category/list': categories,
+        '/nft/exchange/list?limit=8': nfts,
         '/collections': collections,
         '/top-collections': topCollections,
         '/periods': periods,
