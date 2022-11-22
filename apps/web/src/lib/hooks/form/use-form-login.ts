@@ -7,7 +7,7 @@ import { UserForm } from 'types/index';
 import { useRouter } from 'next/router';
 
 export interface UseFormLogin {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -15,7 +15,7 @@ export const useFormLogin = (options: { initialData?: UseFormLogin } & UserForm<
   const router = useRouter();
   const { callbackUrl } = router.query as { callbackUrl: string };
   const schema = yup.object().shape({
-    email: yup.string().email('Email is invalid').required('Email is required'),
+    username: yup.string().required('Username is required'),
     password: yup.string().required('Password is required'),
   });
 
@@ -31,11 +31,11 @@ export const useFormLogin = (options: { initialData?: UseFormLogin } & UserForm<
   const onSubmit = async (formData: UseFormLogin) => {
     try {
       const body = new FormData();
-      body.append('email', formData.email);
+      body.append('username', formData.username);
       body.append('password', formData.password);
 
       const result = await signIn('credentials', {
-        email: formData.email,
+        username: formData.username,
         password: formData.password,
         redirect: false,
         callbackUrl: callbackUrl || '/',

@@ -19,13 +19,21 @@ export const login = (username: string, password: string): Promise<UserLoginResp
     });
 };
 
-export const register = (email: string, password: string, passwordConfirm: string): Promise<UserResponse> => {
+export const register = (
+  username: string,
+  email: string,
+  password: string,
+  passwordConfirm: string,
+): Promise<UserResponse> => {
   return fetch(`${publicRuntimeConfig.apiBaseUrl}/auth/register`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
     method: 'POST',
-    body: JSON.stringify({ username: email, password, email, passwordConfirm }),
+    body: JSON.stringify({ username, password, email, passwordConfirm }),
   })
     .then((data) => {
-      return data;
+      return data.json();
     })
     .catch((error) => {
       return error;
@@ -46,11 +54,14 @@ export const getUserInfo = (accessToken: string): Promise<UserResponse> => {
 
 export const resendVerifyEmail = (email: string) => {
   return fetch(`${publicRuntimeConfig.apiBaseUrl}/auth/resend-verify-email`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
     method: 'POST',
     body: JSON.stringify({ email }),
   })
     .then((data) => {
-      return data;
+      return data.json();
     })
     .catch((error) => {
       return error;

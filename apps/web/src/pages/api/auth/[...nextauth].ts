@@ -9,13 +9,13 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
-        email: { label: 'Username', type: 'text', placeholder: 'jsmith' },
+        username: { label: 'Username', type: 'text' },
         password: { label: 'Password', type: 'password' },
       },
 
       async authorize(credentials) {
         try {
-          const { email: username, password } = credentials as { email: string; password: string };
+          const { username, password } = credentials as { username: string; password: string };
           const { message, data } = await login(username, password);
           if (isSuccess(message)) {
             return {

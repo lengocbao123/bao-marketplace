@@ -31,7 +31,12 @@ export const useFormSignUp = (options: { initialData?: UseFormSignUp } & UserFor
 
   const onSubmit = async (formData: UseFormSignUp) => {
     try {
-      const result: UserResponse = await register(formData.email, formData.password, formData.confirmPassword);
+      const result: UserResponse = await register(
+        formData.username,
+        formData.email,
+        formData.password,
+        formData.confirmPassword,
+      );
       if (result.statusCode === 200) {
         await options?.onSuccess?.(formData, result.data);
       } else {

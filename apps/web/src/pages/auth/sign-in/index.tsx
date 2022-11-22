@@ -30,7 +30,7 @@ const SignIn: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSe
     onSubmit,
     formState: { errors, isSubmitting },
   } = useFormLogin({
-    initialData: { email: '', password: '' },
+    initialData: { username: '', password: '' },
     onError: (error) => {
       toast.error(error);
     },
@@ -57,12 +57,12 @@ const SignIn: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSe
       >
         <form onSubmit={onSubmit}>
           <TextField
-            {...register('email')}
-            error={errors?.email?.message}
+            {...register('username')}
+            error={errors?.username?.message}
             className={'mt-10'}
-            title={'Email Address'}
-            placeholder={'example@name.com'}
-            type={'email'}
+            title={'Username'}
+            placeholder={'example'}
+            type={'text'}
             block
           />
           <TextField
