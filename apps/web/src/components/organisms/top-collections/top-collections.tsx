@@ -10,13 +10,15 @@ import { isSuccess } from 'lib/utils/response';
 export type TopCollectionsProps = HTMLAttributes<HTMLDivElement>;
 
 export const TopCollections: FC<TopCollectionsProps> = ({}) => {
-  const { data: collections, error: errorCollections } = useSWR<CollectionsResponse>(`/top-collections`);
+  const { data: collections, error: errorCollections } = useSWR<CollectionsResponse>(`/collection/exchange/list`);
   const { fetcher } = useSWRConfig();
   const isError = errorCollections || !isSuccess(collections.message);
   const loading = !collections;
 
   const handleChangeTimeRange = async (range: string) => {
-    await mutate(`/top-collections`, fetcher(`/top-collections?period=${range}`), { revalidate: false });
+    await mutate(`/collection/exchange/list`, fetcher(`/collection/exchange/list?period=${range}`), {
+      revalidate: false,
+    });
   };
 
   const options: ChipOption[] =

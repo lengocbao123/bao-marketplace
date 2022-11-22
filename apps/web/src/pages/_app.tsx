@@ -80,7 +80,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout<PageP
       />
 
       <SWRConfig
-        value={{ fetcher: fetcher(pageProps.session), fallback: pageProps.fallback || {}, revalidateOnFocus: false }}
+        value={{ fetcher: fetcher(pageProps.session), fallback: pageProps.fallback || {}, revalidateOnFocus: true }}
       >
         <SessionProvider session={pageProps.session}>
           <DefaultSeo {...nextSeoConfig} />

@@ -33,13 +33,14 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
       },
     };
   }
-  const collections = await fetchApi<CollectionsResponse>(`/collections?${collectionQueryString}`);
+  const collections = await fetchApi<CollectionsResponse>(`/collection/exchange/list?${collectionQueryString}`);
+  console.log({ collections });
 
   return {
     props: {
       collectionQueryString,
       fallback: {
-        [`/collections?${collectionQueryString}`]: collections,
+        [`/collection/exchange/list?${collectionQueryString}`]: collections,
       },
     },
   };
@@ -49,7 +50,7 @@ const ExploreCollectionPage: NextPageWithLayout = ({
   collectionQueryString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { data: collections, error: errorCollections } = useSWR<CollectionsResponse>(
-    `/collections?${collectionQueryString}`,
+    `/collection/exchange/list?${collectionQueryString}`,
   );
   const router = useRouter();
   const { query } = router;

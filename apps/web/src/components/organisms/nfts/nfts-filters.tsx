@@ -16,9 +16,9 @@ export interface NftsFiltersProps {
 
 export const NftsFilters: FC<NftsFiltersProps> = ({ className = '', filter, onChange }) => {
   const [collectionSearchText, setCollectionSearchText] = useState('');
-  const debounceSearchText = useDebounce<string>(collectionSearchText, 1000);
+  const debounceSearchText = useDebounce<string>(collectionSearchText, 500);
   const { data: collections, error: errorCollections } = useSWR<CollectionsResponse>(
-    `/collections?q=${debounceSearchText}`,
+    `/collection/exchange/list?q=${debounceSearchText}`,
   );
 
   if (errorCollections) {

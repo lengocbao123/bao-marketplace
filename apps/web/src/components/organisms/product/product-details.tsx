@@ -18,12 +18,15 @@ export const ProductDetails: FC<ProductDetailsProps> = ({ nft, className, ...res
       >
         <table className={'w-full text-sm'}>
           <tbody>
-            <TableInfoRow label={'Contract Address'} value={getShortAddress(nft.mint_tx_hash)} />
-            <TableInfoRow label={'Token ID'} value={'9012345678901234567890'} />
+            <TableInfoRow
+              label={'Contract Address'}
+              value={getShortAddress(nft.collection_info.nft_contract_address)}
+            />
+            <TableInfoRow label={'Token ID'} value={nft.nft_id.toString()} />
             <TableInfoRow className={'uppercase'} label={'Token Standard'} value={nft.nft_type} />
-            <TableInfoRow label={'Blockchain'} value={'Polygon'} />
-            <TableInfoRow label={'Metadata'} value={'Centralized'} />
-            <TableInfoRow label={'Creator Fees'} value={'0%'} />
+            <TableInfoRow className={'capitalize'} label={'Blockchain'} value={nft.collection_info.chain} />
+            {/*<TableInfoRow label={'Metadata'} value={'Centralized'} />*/}
+            {/*<TableInfoRow label={'Creator Fees'} value={'0%'} />*/}
           </tbody>
         </table>
       </AccordionSection>

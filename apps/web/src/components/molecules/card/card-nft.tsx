@@ -11,7 +11,7 @@ export interface CardNftProps extends HTMLAttributes<HTMLDivElement> {
   image?: string | null;
   title: string;
   subtitle: string;
-  price: number;
+  price?: number;
   user: any;
 }
 
@@ -50,12 +50,14 @@ export const CardNft: FC<CardNftProps> = ({ className, user, link, image, title,
 
           <div className="border-neutral-10 mt-2 border-t pt-2 sm:mt-3 sm:pt-3">
             <div className="grid grid-cols-2">
-              <div className="space-y-1.5">
-                <div className="hidden text-xs text-neutral-50 sm:block">Price</div>
-                <div className="bg-gradient-2 bg-clip-text text-base font-bold text-transparent">
-                  {formatCurrency(price)}
+              {price && (
+                <div className="space-y-1.5">
+                  <div className="hidden text-xs text-neutral-50 sm:block">Price</div>
+                  <div className="bg-gradient-2 bg-clip-text text-base font-bold text-transparent">
+                    {formatCurrency(price)}
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className={'justify-self-end sm:justify-self-start'}>
                 <Link href={`/users/${user.id}/inventory`}>

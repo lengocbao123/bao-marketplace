@@ -21,6 +21,7 @@ import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { NftResponse, NftsResponse } from 'types/data';
 import { isSuccess } from 'lib/utils/response';
+import { getNftPrice } from 'lib/utils/nft';
 
 export async function getServerSideProps({ req, res, query }) {
   const session = await unstable_getServerSession(req, res, authOptions);
@@ -55,7 +56,7 @@ const Index: NextPageWithLayout = ({ id }: InferGetServerSidePropsType<typeof ge
   }
   const { data: nft } = nftResponse;
   const { list: relativeNfts } = relativeNftsResponse.data;
-  const hasOrder = nft.orders && nft.orders[0] && nft.orders[0].prices && nft.orders[0].prices[0];
+  const nftPrice=getNftPrice(nft.orders);
 
   return (
     <Fragment>
@@ -81,7 +82,7 @@ const Index: NextPageWithLayout = ({ id }: InferGetServerSidePropsType<typeof ge
         </div>
         <div className="gap-y-7.5 col-span-3 hidden flex-col sm:flex">
           <ProductInfo className="w-full" nft={nft} />
-          {hasOrder && <ProductExchange className="w-full" data={nft.orders[0].prices[0]} nftId={nft.id} />}
+          {nftPrice && <ProductExchange className="w-full" data={getNftPrice(nft.orders)} nftId={nft.id} />}
           <ProductDetails nft={nft} className="w-full" />
         </div>
         {/* End Desktop Screen*/}
@@ -90,7 +91,7 @@ const Index: NextPageWithLayout = ({ id }: InferGetServerSidePropsType<typeof ge
         <div className="gap-y-7.5 col-span-5 flex flex-col sm:hidden">
           <ProductInfo className="col-span-5" nft={nft} />
           <ProductImage className="col-span-5" alt={nft.name} image={nft.image} />
-          {hasOrder && <ProductExchange className="col-span-5" data={nft.orders[0].prices[0]} nftId={nft.id} />}
+          {nftPrice && <ProductExchange className="col-span-5" data={getNftPrice(nft.orders)} nftId={nft.id} />}
           <ProductDetails nft={nft} className="col-span-5" />
           {nft.attributes?.length > 0 && <ProductProperties className="col-span-5" properties={nft.attributes} />}
         </div>

@@ -13,7 +13,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const [categories, nfts, collections, topCollections, periods] = await Promise.all([
     fetchApi<CategoriesResponse>('/category/list'),
     fetchApi<NftsResponse>('/nft/exchange/list?limit=8'),
-    fetchApi('/collections'),
+    fetchApi('/collection/exchange/list'),
     fetchApi('/top-collections'),
     fetchApi('/periods'),
   ]);
@@ -24,7 +24,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       fallback: {
         '/category/list': categories,
         '/nft/exchange/list?limit=8': nfts,
-        '/collections': collections,
+        '/collection/exchange/list': collections,
         '/top-collections': topCollections,
         '/periods': periods,
       },

@@ -5,6 +5,7 @@ import useSWR from 'swr';
 import { CategoriesResponse, NftsResponse } from 'types/data';
 import { isSuccess } from 'lib/utils/response';
 import { convertToSlug } from 'lib/utils/string';
+import { getNftPrice } from '../../../lib/utils/nft';
 
 export type ExplorerProps = HTMLAttributes<HTMLElement>;
 
@@ -36,17 +37,21 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
 
         {nftsResponse ? (
           <ListItem>
-            {nftsList.map((nft) => (
-              <CardNft
-                key={nft.id}
-                link={{ as: `/nfts/${nft.id}/${convertToSlug(nft.name)}`, href: '/nfts/[id]/[slug]' }}
-                image={nft.image}
-                title={nft.name}
-                subtitle="Game NFTs"
-                price={20}
-                user={nft.created_by_info}
-              />
-            ))}
+            {nftsList.map((nft) => {
+              const nftPrice = getNftPrice(nft.orders);
+
+              return (
+                <CardNft
+                  key={nft.id}
+                  link={{ as: `/nfts/${nft.id}/${convertToSlug(nft.name)}`, href: '/nfts/[id]/[slug]' }}
+                  image={nft.image}
+                  title={nft.name}
+                  subtitle="Game NFTs"
+                  price={nftPrice ? nftPrice.price : null}
+                  user={nft.created_by_info}
+                />
+              );
+            })}
           </ListItem>
         ) : (
           <ListNftsSkeleton className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4" number={8} />

@@ -4,14 +4,15 @@ import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import useSWR from 'swr';
 import { CollectionsResponse } from 'types/data';
-import { isSuccess } from '../../../lib/utils/response';
-import { CardPopularSkeleton } from '../../molecules/skeleton/card-popular-skeleton';
+import { isSuccess } from 'lib/utils/response';
+import { CardPopularSkeleton } from 'components/molecules/skeleton/card-popular-skeleton';
+import { convertToSlug } from 'lib/utils/string';
 
 export type PopularCollectionsProps = HTMLAttributes<HTMLElement>;
 
 export const PopularCollections: FC<PopularCollectionsProps> = (props) => {
   const { ...popularCollectionsProps } = props;
-  const { data: collections, error } = useSWR<CollectionsResponse>(`/collections`);
+  const { data: collections, error } = useSWR<CollectionsResponse>(`/collection/exchange/list`);
 
   if (error || !isSuccess(collections.message)) {
     return (
@@ -54,7 +55,7 @@ export const PopularCollections: FC<PopularCollectionsProps> = (props) => {
             <CardPopular
               title={collection.name}
               description={collection.description}
-              link={{ href: `/collections/${collection.id}` }}
+              link={{ href: `/collections/${collection.id}/${convertToSlug(collection.name)}` }}
               image={collection.banner_image}
             />
           </SwiperSlide>

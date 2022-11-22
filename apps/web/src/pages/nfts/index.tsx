@@ -25,7 +25,7 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const [categories, nfts, collections] = await Promise.all([
     fetchApi<CategoriesResponse>('/category/list'),
     fetchApi<NftsResponse>(`/nft/exchange/list?${nftsQueryString}`),
-    fetchApi('/collections'),
+    fetchApi('/collection/exchange/list'),
   ]);
 
   if (!query.page || !query.filter) {
@@ -43,7 +43,7 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
       fallback: {
         '/category/list': categories,
         [`/nft/exchange/list?${nftsQueryString}`]: nfts,
-        '/collections?q=': collections,
+        '/collection/exchange/list?q=': collections,
       },
     },
   };

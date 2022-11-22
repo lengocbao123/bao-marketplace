@@ -16,9 +16,9 @@ export const CardProperty: FC<CardPropertyProps> = ({ className, type, value, ra
       )}
       {...rest}
     >
-      <div className="">
+      <div>
         <div className="text-secondary-70 text-xs">{type}</div>
-        <div className="text-lg font-bold uppercase">{value}</div>
+        <div className="break-all text-lg font-bold uppercase">{value}</div>
         {rarity && <div className="text-xs text-neutral-50">{rarity}</div>}
       </div>
     </div>
