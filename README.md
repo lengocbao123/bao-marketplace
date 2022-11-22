@@ -52,3 +52,5 @@ cd with-tailwind
 yarn install
 git init . && git add . && git commit -m "feat: initial project"
 ```
+
+Update count: 1
