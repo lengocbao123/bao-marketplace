@@ -10,12 +10,11 @@ import { CategoriesResponse, NftsResponse } from '../types/data';
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
   const fetchApi = fetcher(session);
-  const [categories, nfts, collections, topCollections, periods] = await Promise.all([
+  const [categories, nfts, collections, topCollections] = await Promise.all([
     fetchApi<CategoriesResponse>('/category/list'),
     fetchApi<NftsResponse>('/nft/exchange/list?limit=8'),
     fetchApi('/collection/exchange/list'),
     fetchApi('/top-collections'),
-    fetchApi('/periods'),
   ]);
 
   return {
@@ -26,7 +25,6 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
         '/nft/exchange/list?limit=8': nfts,
         '/collection/exchange/list': collections,
         '/top-collections': topCollections,
-        '/periods': periods,
       },
     },
   };
