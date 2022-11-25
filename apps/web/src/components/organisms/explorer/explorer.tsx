@@ -46,7 +46,7 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
                   link={{ as: `/nfts/${nft.id}/${convertToSlug(nft.name)}`, href: '/nfts/[id]/[slug]' }}
                   image={nft.image}
                   title={nft.name}
-                  subtitle="Game NFTs"
+                  subtitle={nft.collection_info.name}
                   price={nftPrice ? nftPrice.price : null}
                   user={nft.created_by_info}
                 />
