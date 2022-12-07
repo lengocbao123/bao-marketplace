@@ -1,4 +1,4 @@
-import { BaseResponse, PaginationData } from './response';
+import { BaseListResponse, BaseResponse } from './response';
 import { UserData } from './user';
 
 export interface CollectionData {
@@ -17,11 +17,10 @@ export interface CollectionData {
   featured_image?: string;
   created_by_info?: UserData;
   nft_contract_address?: string;
+  total_nft?:number
 }
 
-export interface CollectionsResponse extends BaseResponse {
-  data: { list: CollectionData[]; meta: PaginationData };
-}
+export type CollectionsResponse = BaseListResponse<CollectionData>
 
 export interface CollectionResponse extends BaseResponse {
   data: CollectionData;

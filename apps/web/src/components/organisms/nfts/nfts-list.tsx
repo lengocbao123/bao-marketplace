@@ -14,9 +14,9 @@ export const NftsList: FC<NftsListProps> = ({ nfts, meta, className }) => {
   return (
     <List
       hasData={nfts.length > 0}
-      totalItems={meta.totalItems}
-      totalPages={meta.totalPages}
-      page={meta.currentPage}
+      totalItems={meta.total_items}
+      totalPages={meta.total_pages}
+      page={meta.current_page}
       className={className}
     >
       {nfts.length > 0 ? (

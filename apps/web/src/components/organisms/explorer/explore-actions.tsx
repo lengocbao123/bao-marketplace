@@ -1,40 +1,38 @@
 import clsx from 'clsx';
 import { HTMLAttributes, FC } from 'react';
 import { ButtonText } from 'components/atoms';
-import { DropdownSelect } from 'components/molecules';
+import { DropdownSelect, SelectOption } from 'components/molecules';
 import { ExploreFilterToggle } from './explore-filter-toggle';
-const SORT_OPTIONS = [
+
+const SORT_OPTIONS: SelectOption[] = [
   {
-    value: { sortBy: 'listedAt', sortAscending: false },
+    value: 'recently_listed',
     label: 'Recently Listed',
   },
   {
-    value: { sortBy: 'price', sortAscending: true },
+    value: 'price_low_to_high',
     label: 'Price: Low to High',
   },
   {
-    value: { sortBy: 'price', sortAscending: false },
+    value: 'price_high_to_low',
     label: 'Price: High to Low',
   },
-  {
-    value: { sortBy: 'lastSaleDate', sortAscending: false },
-    label: 'Highest Last Sale',
-  },
 ];
+
 export interface ExploreActionsProps extends HTMLAttributes<HTMLDivElement> {
   isDisplayingFilter: boolean;
   numOfFilters: number;
-  selectedSortOption?: any;
+  selectedSortOption?: SelectOption;
   onClearFilter?: () => void;
   toggleFilter?: () => void;
-  onSelectSort?: (sort: any) => void;
+  onSelectSort?: (sort: SelectOption) => void;
 }
 
 export const ExploreActions: FC<ExploreActionsProps> = ({
   numOfFilters,
   className,
   isDisplayingFilter,
-  selectedSortOption,
+  selectedSortOption = SORT_OPTIONS[0],
   toggleFilter,
   onClearFilter,
   onSelectSort,
@@ -57,13 +55,7 @@ export const ExploreActions: FC<ExploreActionsProps> = ({
           options={SORT_OPTIONS}
           onChange={onSelectSort}
           activeIndex={
-            selectedSortOption
-              ? SORT_OPTIONS.findIndex(
-                  (option) =>
-                    option.value.sortAscending === selectedSortOption.sortAscending &&
-                    option.value.sortBy === selectedSortOption.sortBy,
-                )
-              : null
+            selectedSortOption ? SORT_OPTIONS.findIndex((option) => option.value === selectedSortOption.value) : null
           }
         />
       </div>

@@ -21,6 +21,7 @@ export interface UserData {
   email?: string;
   username?: string;
   status?: string;
+  bannerUrl?: any;
   avatarUrl?: string;
   last_name?: string;
   first_name?: string;

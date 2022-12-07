@@ -1,6 +1,8 @@
 // is message from server success or not
-export const isSuccess = (message?: string | null) => {
-  if (message) {
+import { isString } from 'next/dist/build/webpack/plugins/jsconfig-paths-plugin';
+
+export const isSuccess = (message?: string | null | string[]) => {
+  if (message && isString(message)) {
     return message.toLowerCase().includes('success');
   }
 

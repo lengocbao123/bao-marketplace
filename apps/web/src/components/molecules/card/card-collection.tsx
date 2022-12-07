@@ -69,10 +69,12 @@ export const CardCollection: FC<CardCollectionProps> = ({
           {title}
         </Link>
 
-        <div className="mt-0.5 text-sm font-normal lowercase text-neutral-50">
-          {pluralize(countOwners, 'owner').replace(countOwners.toString(), formatAbbreviationNumber(countOwners))} |{' '}
-          {pluralize(countItems, 'item').replace(countItems.toString(), formatAbbreviationNumber(countItems))}
-        </div>
+        {countItems && (
+          <div className="mt-0.5 text-sm font-normal lowercase text-neutral-50">
+            {pluralize(countOwners, 'owner').replace(countOwners.toString(), formatAbbreviationNumber(countOwners))} |{' '}
+            {pluralize(countItems, 'item').replace(countItems.toString(), formatAbbreviationNumber(countItems))}
+          </div>
+        )}
       </div>
     </div>
   );

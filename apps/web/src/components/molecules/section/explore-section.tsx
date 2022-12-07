@@ -1,11 +1,12 @@
 import clsx from 'clsx';
 import { FC, Fragment, HTMLAttributes, ReactNode, useEffect, useState } from 'react';
-import { HamburgerSection, TabData, Tabs } from '..';
+import { HamburgerSection, SelectOption, TabData, Tabs } from '..';
 import { Button } from 'components/atoms';
 import { FilterIcon } from 'components/icons/outline';
 import { ExploreActions, ExploreFilterToggle } from 'components/organisms';
 
 export interface ExploreSectionProps extends HTMLAttributes<HTMLDivElement> {
+  name?: string;
   filtersComponent: ReactNode;
   tabs?: Array<TabData>;
   tabsClassName?: string;
@@ -16,6 +17,7 @@ export interface ExploreSectionProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const ExploreSection: FC<ExploreSectionProps> = ({
+  name,
   filtersComponent,
   children,
   tabs,
@@ -27,8 +29,8 @@ export const ExploreSection: FC<ExploreSectionProps> = ({
 }) => {
   const [isDisplayingFilter, setIsDisplayingFilter] = useState(true);
   const [numberOfFilters, setNumberOfFilters] = useState<number>(0);
-  const handleSelectSort = async (sort) => {
-    await onChangeFilter('sort', JSON.stringify(sort.value));
+  const handleSelectSort = async (sortOption: SelectOption) => {
+    await onChangeFilter('sortBy', sortOption.value);
   };
 
   useEffect(() => {
@@ -50,13 +52,20 @@ export const ExploreSection: FC<ExploreSectionProps> = ({
 
   return (
     <Fragment>
-      <Tabs
-        data={tabs}
-        onChangeTab={(value) => {
-          onChangeFilter('filter', value);
-        }}
-        className={clsx(tabsClassName)}
-      />
+      {tabs && (
+        <Tabs
+          data={tabs}
+          onChangeTab={(value) => {
+            if (name === 'collections') {
+              onChangeFilter('period', value);
+            }
+            if (name === 'nfts') {
+              onChangeFilter('category', value);
+            }
+          }}
+          className={clsx(tabsClassName)}
+        />
+      )}
 
       <div className={clsx(bodyClassName)}>
         <div className="flex justify-between">

@@ -5,7 +5,7 @@ import { Button } from 'components/atoms';
 import { ChevronDownIcon } from 'components/icons/outline';
 
 export type SelectOption = {
-  value: any;
+  value: string;
   label: string;
 };
 

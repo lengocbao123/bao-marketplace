@@ -1,11 +1,12 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 import { InputLabel } from 'components/atoms';
-import { BinanceIcon, EthereumIcon, PolygonIcon } from 'components/icons/blockchain';
 import { CheckboxFilter, RangeFilter } from 'components/molecules';
+import { PIKASSO_CHAINS } from 'lib/constants';
+import { BaseFilter } from 'types/data';
 
 export interface CollectionsFiltersProps {
-  filter: any;
+  filter: BaseFilter;
   onChange: (key: string, value: any) => void;
   className?: string;
 }
@@ -14,35 +15,26 @@ export const CollectionsFilters: FC<CollectionsFiltersProps> = ({ className = ''
   return (
     <div className={clsx('flex min-h-screen flex-col items-start justify-start divide-y', className)}>
       <CheckboxFilter
-        name="blockchain"
-        heading="Blockchains"
-        options={[
-          {
-            label: <InputLabel icon={BinanceIcon} text="Binance" />,
-            value: 'binance',
-            disabled: true,
-          },
-          {
-            label: <InputLabel icon={EthereumIcon} text="Ethereum" />,
-            value: 'Ethereum',
-          },
-          {
-            label: <InputLabel icon={PolygonIcon} text="Polygon" iconOrientation="right" />,
-            value: 'Polygon',
-          },
-        ]}
+        name="chain"
+        heading="Chain"
+        options={PIKASSO_CHAINS.map((chain) => {
+          return {
+            label: <InputLabel icon={chain.Icon} text={chain.label} />,
+            value: chain.value,
+          };
+        })}
         onChange={onChange}
-        values={filter.blockchain}
+        values={filter.chain}
       />
       <RangeFilter
         className="py-5"
         heading="Price"
         defaultRange={
-          filter.price
+          filter.priceMin && filter.priceMax
             ? {
-                min: filter.price[0],
-                max: filter.price[1],
-              }
+              min: filter.priceMin,
+              max: filter.priceMax,
+            }
             : null
         }
         onApply={(formData) => onChange('price', [formData.min, formData.max])}

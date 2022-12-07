@@ -29,8 +29,8 @@ export interface ProfileInventoryProps extends HTMLAttributes<HTMLDivElement> {
   banner: string;
   avatar: string;
   name: string;
-  bio: string;
-  joined: string;
+  bio?: string;
+  joined?: string;
   address: string;
   socialLinks?: SocialLinkProps[];
 }
@@ -74,7 +74,7 @@ export const ProfileInventory: FC<ProfileInventoryProps> = (props) => {
             src={avatar}
           />
           <div className={clsx('md:mt-25 mt-20 text-3xl font-bold')}>{name}</div>
-          <TextTruncate text={bio} className={'mt-3 text-sm text-neutral-50'} />
+          {bio && <TextTruncate text={bio} className={'mt-3 text-sm text-neutral-50'} />}
         </div>
         <div
           className={
@@ -83,7 +83,9 @@ export const ProfileInventory: FC<ProfileInventoryProps> = (props) => {
         >
           <div className={'flex justify-between'}>
             <div className={'text-sm text-neutral-50'}>Joined</div>
-            <div className={'text-neutral text-sm font-medium'}>{format(new Date(joined), 'MMMM yyyy')}</div>
+            {joined && (
+              <div className={'text-neutral text-sm font-medium'}>{format(new Date(joined), 'MMMM yyyy')}</div>
+            )}
           </div>
           <hr className={'border-neutral-10'} />
           <div className={'flex justify-between'}>

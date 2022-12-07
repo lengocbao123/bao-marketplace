@@ -3,26 +3,28 @@ import { Error, ExploreSection, ListNftsSkeleton, TabData } from 'components/mol
 import { NftsFilters, NftsList } from 'components/organisms/nfts';
 import { fetcher } from 'lib/utils/fetcher';
 import { InferGetServerSidePropsType } from 'next';
-import Image from 'next/image';
 import { NextPageWithLayout } from 'pages/_app';
-import { Fragment } from 'react';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { convertQueryParamsToArray } from 'lib/utils/query';
-import { CategoriesResponse, NftsResponse } from 'types/data';
+import { NftsResponse } from 'types/data';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { isSuccess } from 'lib/utils/response';
+import { ContainerInventory } from 'components/organisms';
 
 export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const session = await unstable_getServerSession(req, res, authOptions);
-  const nftsQueryString = new URLSearchParams({
+  const nftQuery = {
     ...query,
     page: query.page ? query.page : 1,
-  }).toString();
+    filter: 'createdBy',
+  };
+  delete nftQuery.userId;
+  nftQuery[nftQuery.filter] = query.userId;
+  const nftsQueryString = new URLSearchParams(nftQuery).toString();
   const fetchApi = fetcher(session);
-  const [categories, nfts, collections] = await Promise.all([
-    fetchApi<CategoriesResponse>('/category/list'),
+  const [nfts, collections] = await Promise.all([
     fetchApi<NftsResponse>(`/nft/exchange/list?${nftsQueryString}`),
     fetchApi('/collection/exchange/list'),
   ]);
@@ -40,38 +42,23 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
     props: {
       nftsQueryString,
       fallback: {
-        '/category/list': categories,
         [`/nft/exchange/list?${nftsQueryString}`]: nfts,
-        '/collection/exchange/list?q=': collections,
+        '/collection/exchange/list': collections,
       },
     },
   };
 }
 
-const ExplorePage: NextPageWithLayout = ({
+const UserCreateNftsPage: NextPageWithLayout = ({
   nftsQueryString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
-  const { data: categoriesResponse, error: errorCategories } = useSWR<CategoriesResponse>('/category/list');
+  const { query } = router;
   const { data: nftsResponse, error: errorNfts } = useSWR<NftsResponse>(`/nft/exchange/list?${nftsQueryString}`);
 
-  const { query } = router;
-  if (errorCategories || errorNfts || !isSuccess(nftsResponse.message) || !isSuccess(categoriesResponse.message)) {
+  if (errorNfts || !isSuccess(nftsResponse.message)) {
     return <Error />;
   }
-
-  const categoryTabs: TabData[] = [
-    {
-      id: 'all',
-      name: 'All',
-      code: 'all',
-    },
-    ...categoriesResponse.data,
-  ].map((item) => ({
-    label: item.name,
-    value: item.id,
-    active: (item.code === 'all' && !query.category) || item.id === query.category,
-  }));
 
   const resetFilter = async () => {
     const resetQuery = { page: 1 };
@@ -88,8 +75,6 @@ const ExplorePage: NextPageWithLayout = ({
     let newQuery = query;
     if (key === 'price') {
       newQuery = { ...newQuery, priceMin: value[0], priceMax: value[1] };
-    } else if (key === 'category' && value === 'all' && 'category' in newQuery) {
-      delete newQuery.category;
     } else {
       newQuery = { ...query, [key]: value };
     }
@@ -102,19 +87,10 @@ const ExplorePage: NextPageWithLayout = ({
   const convertedQuery = convertQueryParamsToArray(query);
 
   return (
-    <Fragment>
-      <Image
-        src={'/assets/images/banner/banner.png'}
-        width={1440}
-        height={144}
-        alt="Explore Banner"
-        className={'bg-neutral-10 aspect-[1440/144] w-full object-cover object-center'}
-      />
+    <ContainerInventory>
       <ExploreSection
         name={'nfts'}
         filtersComponent={<NftsFilters filter={convertedQuery} onChange={handlerFilterChange} />}
-        tabs={categoryTabs}
-        tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border sm:justify-center"
         bodyClassName="container"
         filter={convertedQuery}
         onChangeFilter={handlerFilterChange}
@@ -126,10 +102,10 @@ const ExplorePage: NextPageWithLayout = ({
           <ListNftsSkeleton number={10} />
         )}
       </ExploreSection>
-    </Fragment>
+    </ContainerInventory>
   );
 };
 
-ExplorePage.getLayout = (page) => <Layout>{page}</Layout>;
+UserCreateNftsPage.getLayout = (page) => <Layout>{page}</Layout>;
 
-export default ExplorePage;
+export default UserCreateNftsPage;

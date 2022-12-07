@@ -29,7 +29,7 @@ export const ProductSimilar: FC<ProductSimilarProps> = ({
           <ListNftsSkeleton className="grid grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-4" number={4} />
         ) : products.length > 0 ? (
           products.map((product, index) => {
-            const nftPrice =getNftPrice(product.orders)
+            const nftPrice = getNftPrice(product.orders);
 
             return (
               <CardNft

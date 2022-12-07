@@ -48,7 +48,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, forwardedR
   };
 
   return (
-    <div className={clsx('flex-col gap-2.5', block ? 'flex' : 'inline-flex')}>
+    <div className={clsx('w-full flex-col gap-2.5', block ? 'flex' : 'inline-flex')}>
       {(label || hint) && (
         <div className={'flex items-center justify-between'}>
           <label className={'text-base font-semibold'} htmlFor={id}>

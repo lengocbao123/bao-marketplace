@@ -2,11 +2,11 @@ import { CardCollection } from 'components/molecules';
 import { List } from 'components/organisms/list';
 import { convertToSlug } from 'lib/utils/string';
 import { FC, HTMLAttributes } from 'react';
-import { CollectionData } from 'types/data';
+import { CollectionData, PaginationData } from 'types/data';
 
 export interface CollectionsListProps extends HTMLAttributes<HTMLDivElement> {
   collections: CollectionData[];
-  meta?: any;
+  meta?: PaginationData;
   links?: any;
 }
 
@@ -14,9 +14,9 @@ export const CollectionsList: FC<CollectionsListProps> = ({ collections, meta, c
   return (
     <List
       hasData={collections.length > 0}
-      totalItems={meta.totalItems}
-      totalPages={meta.totalPages}
-      page={meta.page}
+      totalItems={meta.total_items}
+      totalPages={meta.total_pages}
+      page={meta.current_page}
       className={className}
     >
       {collections?.map((collection) => (
@@ -25,7 +25,7 @@ export const CollectionsList: FC<CollectionsListProps> = ({ collections, meta, c
           link={{ href: `/collections/${collection.id}/${convertToSlug(collection.name)}` }}
           title={collection.name}
           countOwners={10000}
-          countItems={24000}
+          countItems={collection.total_nft}
           logoImage={collection.logo_image}
         />
       ))}

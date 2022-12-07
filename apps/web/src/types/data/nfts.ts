@@ -1,4 +1,4 @@
-import { BaseResponse, PaginationData } from './response';
+import { BaseListResponse, BaseResponse, PaginationData } from './response';
 import { UserData } from './user';
 import { CollectionData } from './collections';
 import { ProjectData } from './projects';
@@ -30,9 +30,7 @@ export interface NftData {
   is_put_on_market?: boolean;
 }
 
-export interface NftsResponse extends BaseResponse {
-  data?: { list: NftData[]; meta: PaginationData };
-}
+export type NftsResponse = BaseListResponse<NftData>;
 
 export interface NftResponse extends BaseResponse {
   data?: NftData;

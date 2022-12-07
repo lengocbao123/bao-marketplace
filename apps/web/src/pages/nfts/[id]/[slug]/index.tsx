@@ -56,7 +56,7 @@ const Index: NextPageWithLayout = ({ id }: InferGetServerSidePropsType<typeof ge
   }
   const { data: nft } = nftResponse;
   const { list: relativeNfts } = relativeNftsResponse.data;
-  const nftPrice=getNftPrice(nft.orders);
+  const nftPrice = getNftPrice(nft.orders);
 
   return (
     <Fragment>
