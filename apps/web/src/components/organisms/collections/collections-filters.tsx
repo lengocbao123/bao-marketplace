@@ -1,9 +1,10 @@
 import clsx from 'clsx';
 import { FC } from 'react';
-import { InputLabel } from 'components/atoms';
+import { Avatar } from 'components/atoms';
 import { CheckboxFilter, RangeFilter } from 'components/molecules';
 import { PIKASSO_CHAINS } from 'lib/constants';
 import { BaseFilter } from 'types/data';
+import * as React from 'react';
 
 export interface CollectionsFiltersProps {
   filter: BaseFilter;
@@ -19,7 +20,7 @@ export const CollectionsFilters: FC<CollectionsFiltersProps> = ({ className = ''
         heading="Chain"
         options={PIKASSO_CHAINS.map((chain) => {
           return {
-            label: <InputLabel icon={chain.Icon} text={chain.label} />,
+            label: <Avatar name={chain.label} src={chain.Icon} size={'sm'} />,
             value: chain.value,
           };
         })}
@@ -32,9 +33,9 @@ export const CollectionsFilters: FC<CollectionsFiltersProps> = ({ className = ''
         defaultRange={
           filter.priceMin && filter.priceMax
             ? {
-              min: filter.priceMin,
-              max: filter.priceMax,
-            }
+                min: filter.priceMin,
+                max: filter.priceMax,
+              }
             : null
         }
         onApply={(formData) => onChange('price', [formData.min, formData.max])}

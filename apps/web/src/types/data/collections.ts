@@ -17,10 +17,10 @@ export interface CollectionData {
   featured_image?: string;
   created_by_info?: UserData;
   nft_contract_address?: string;
-  total_nft?:number
+  total_nft?: number;
 }
 
-export type CollectionsResponse = BaseListResponse<CollectionData>
+export type CollectionsResponse = BaseListResponse<CollectionData>;
 
 export interface CollectionResponse extends BaseResponse {
   data: CollectionData;

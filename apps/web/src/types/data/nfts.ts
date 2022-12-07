@@ -1,4 +1,4 @@
-import { BaseListResponse, BaseResponse, PaginationData } from './response';
+import { BaseListResponse, BaseResponse } from './response';
 import { UserData } from './user';
 import { CollectionData } from './collections';
 import { ProjectData } from './projects';

@@ -6,6 +6,7 @@ export interface InputLabelProps {
   icon?: FC<SVGProps<SVGSVGElement>>;
   iconOrientation?: 'left' | 'right';
 }
+
 export const InputLabel: FC<InputLabelProps> = ({ text, icon, iconOrientation = 'left' }) => {
   const Icon = icon;
 

@@ -5,17 +5,18 @@ import { TextTruncate } from 'components/molecules';
 import { CollectionInfo } from './collection-info';
 import { CollectionSocials } from './collection-socials';
 import { Avatar } from 'components/atoms';
+import { CollectionData } from 'types/data';
 
 export interface CollectionProfileProps extends HTMLAttributes<HTMLDivElement> {
-  collection: any;
+  collection: CollectionData;
 }
 
 export const CollectionProfile: FC<CollectionProfileProps> = ({ className, collection }) => {
   return (
     <div className={clsx(className)}>
-      {collection.bannerImage ? (
+      {collection.featured_image ? (
         <Image
-          src={collection.bannerImage}
+          src={collection.featured_image}
           width={1440}
           height={280}
           alt={collection.name}
@@ -29,9 +30,9 @@ export const CollectionProfile: FC<CollectionProfileProps> = ({ className, colle
         <div className="relative flex grow">
           <div className="lg:gap-5">
             <div className="relative -top-12 -mb-12 flex flex-none items-end justify-between lg:-top-20 lg:-mb-20">
-              {collection.logoImage ? (
+              {collection.logo_image ? (
                 <Image
-                  src={collection.logoImage}
+                  src={collection.logo_image}
                   width={164}
                   height={164}
                   alt={collection.name}
@@ -54,11 +55,11 @@ export const CollectionProfile: FC<CollectionProfileProps> = ({ className, colle
               <h1 className={'mb-4 text-2xl font-bold lg:text-3xl'}>{collection.name}</h1>
 
               <div className="mb-4 flex gap-2">
-                {collection.user && collection.user.avatarUrl && (
+                {collection.created_by_info && collection.created_by_info.avatarUrl && (
                   <Avatar
                     label={'Creator'}
-                    name={collection.user.username || collection.user.email || 'Unknown'}
-                    src={collection.user.avatarUrl}
+                    name={collection.created_by_info.email || 'Unknown'}
+                    src={collection.created_by_info.avatarUrl}
                     className='flex items-center text-sm [&_[data-component="label"]]:mr-2'
                   />
                 )}
@@ -73,7 +74,7 @@ export const CollectionProfile: FC<CollectionProfileProps> = ({ className, colle
         </div>
         <div className="w-screen sm:w-[282px] sm:flex-none">
           <CollectionSocials className="hidden sm:block" />
-          <CollectionInfo />
+          <CollectionInfo collection={collection} />
         </div>
       </div>
     </div>

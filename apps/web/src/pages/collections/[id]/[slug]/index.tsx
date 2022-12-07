@@ -18,7 +18,7 @@ import { isSuccess } from 'lib/utils/response';
 export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const session = await unstable_getServerSession(req, res, authOptions);
   const fetchApi = fetcher(session);
-  const { filter, id, page } = query;
+  const { id, page } = query;
   const queryParams = {};
   Object.keys(query).forEach((key) => {
     if (key !== 'slug' && key !== 'id') {
@@ -29,14 +29,13 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const nftsQueryString = new URLSearchParams({
     ...queryParams,
     page: page ? page : 1,
-    filter: filter ? filter : 'on-sale',
   }).toString();
 
   const [collection, nftsByCollection] = await Promise.all([
-    fetchApi<CollectionData>(`/collections/${id}`),
-    fetchApi<NftsResponse>(`/nft/exchange/list`),
+    fetchApi<CollectionData>(`/collection/${id}`),
+    fetchApi<NftsResponse>(`/nft/exchange/list?${nftsQueryString}&collection=${id}`),
   ]);
-  if (!filter || !page) {
+  if (!page) {
     return {
       redirect: {
         destination: `${resolvedUrl}?${nftsQueryString}`,
@@ -50,17 +49,17 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
       id,
       nftsQueryString,
       fallback: {
-        [`/collections/${id}`]: collection,
-        [`/nft/exchange/list?${nftsQueryString}`]: nftsByCollection,
+        [`/collection/${id}`]: collection,
+        [`/nft/exchange/list?${nftsQueryString}&collection=${id}`]: nftsByCollection,
       },
     },
   };
 }
 
 const Home: NextPageWithLayout = ({ id, nftsQueryString }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { data: collectionResponse, error: errorCollection } = useSWR<CollectionResponse>(`/collections/${id}`);
+  const { data: collectionResponse, error: errorCollection } = useSWR<CollectionResponse>(`/collection/${id}`);
   const { data: nftsByCollectionResponse, error: errorNftsByCollection } = useSWR<NftsResponse>(
-    `/nft/exchange/list?${nftsQueryString}`,
+    `/nft/exchange/list?${nftsQueryString}&collection=${id}`,
   );
 
   const router = useRouter();
@@ -114,16 +113,10 @@ const Home: NextPageWithLayout = ({ id, nftsQueryString }: InferGetServerSidePro
   };
 
   const handlerFilterChange = (key: string, value: any) => {
-    router.push(
-      {
-        pathname: router.pathname,
-        query: { ...query, [key]: value },
-      },
-      undefined,
-      {
-        scroll: false,
-      },
-    );
+    router.push({
+      pathname: router.pathname,
+      query: { ...query, [key]: value },
+    });
   };
 
   const convertedQuery = convertQueryParamsToArray(query);
@@ -142,7 +135,10 @@ const Home: NextPageWithLayout = ({ id, nftsQueryString }: InferGetServerSidePro
       <CollectionProfile className="m-0" collection={collection} />
       <div className="container">
         <ExploreSection
-          filtersComponent={<NftsFilters filter={convertedQuery} onChange={handlerFilterChange} />}
+          name={'nfts'}
+          filtersComponent={
+            <NftsFilters fields={['status', 'chain', 'price']} filter={convertedQuery} onChange={handlerFilterChange} />
+          }
           tabs={tabs}
           filter={convertedQuery}
           tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border-b"

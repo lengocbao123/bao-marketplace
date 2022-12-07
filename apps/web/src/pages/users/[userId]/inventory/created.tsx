@@ -1,5 +1,5 @@
 import { Layout } from 'components/layouts';
-import { Error, ExploreSection, ListNftsSkeleton, TabData } from 'components/molecules';
+import { Error, ExploreSection, ListNftsSkeleton } from 'components/molecules';
 import { NftsFilters, NftsList } from 'components/organisms/nfts';
 import { fetcher } from 'lib/utils/fetcher';
 import { InferGetServerSidePropsType } from 'next';
@@ -90,7 +90,13 @@ const UserCreateNftsPage: NextPageWithLayout = ({
     <ContainerInventory>
       <ExploreSection
         name={'nfts'}
-        filtersComponent={<NftsFilters filter={convertedQuery} onChange={handlerFilterChange} />}
+        filtersComponent={
+          <NftsFilters
+            filter={convertedQuery}
+            onChange={handlerFilterChange}
+            collectionsQuery={new URLSearchParams({ createdBy: query.userId } as any).toString()}
+          />
+        }
         bodyClassName="container"
         filter={convertedQuery}
         onChangeFilter={handlerFilterChange}

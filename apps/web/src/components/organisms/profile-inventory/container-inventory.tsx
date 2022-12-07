@@ -1,17 +1,31 @@
 import { useRouter } from 'next/router';
-import { Tabs } from 'components/molecules';
+import { Error, Tabs } from 'components/molecules';
 import { USER_INVENTORY_TABS } from 'lib/constants';
-import { UserData } from 'types/data';
+import { UserResponse } from 'types/data';
 import React, { FC, HTMLAttributes } from 'react';
 import { ProfileInventory } from './profile-inventory';
+import useSWR from 'swr';
+import { isSuccess } from 'lib/utils/response';
+import { format } from 'date-fns';
 
-export interface ContainerInventoryProps extends HTMLAttributes<HTMLDivElement> {
-  user?: UserData;
-}
+export type ContainerInventoryProps = HTMLAttributes<HTMLDivElement>;
 
-export const ContainerInventory: FC<ContainerInventoryProps> = ({ user, children }) => {
+export const ContainerInventory: FC<ContainerInventoryProps> = ({ children }) => {
   const router = useRouter();
   const { query } = router;
+  const { data: userResponse, error: errorUser } = useSWR<UserResponse>(`/user/exchange/${query.userId}`);
+  console.log({
+    userResponse,
+    errorUser,
+  });
+  if (!userResponse) {
+    return <div>loading</div>;
+  }
+  if (errorUser || !isSuccess(userResponse.message)) {
+    return <Error />;
+  }
+
+  const user = userResponse.data;
 
   return (
     <div className={'space-y-10 sm:space-y-20'}>
@@ -21,8 +35,8 @@ export const ContainerInventory: FC<ContainerInventoryProps> = ({ user, children
           avatar={user.avatarUrl}
           name={user.email}
           // bio={user.}
-          // joined={format(new Date(user.createdAt), 'MM/dd/yyyy')}
-          address={'0xbf....0cee'}
+          joined={format(new Date(user.created_at), 'MM/dd/yyyy')}
+          address={''}
           socialLinks={[
             { link: '/', type: 'twitter' },
             { link: '/', type: 'discord' },

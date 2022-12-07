@@ -2,6 +2,20 @@ import clsx from 'clsx';
 import Image from 'next/image';
 import { FC, HTMLAttributes } from 'react';
 
+interface StaticImageData {
+  src: string;
+  height: number;
+  width: number;
+  blurDataURL?: string;
+  blurWidth?: number;
+  blurHeight?: number;
+}
+
+interface StaticRequire {
+  default: StaticImageData;
+}
+
+export type StaticImport = StaticRequire | StaticImageData;
 export type Size = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 
 /**
@@ -46,7 +60,7 @@ const getShortName = (alt: string) => {
 
 export type AvatarProps = HTMLAttributes<HTMLDivElement> & {
   name: string;
-  src?: string;
+  src?: string | StaticImport;
   size?: Size;
   onlyAvatar?: boolean;
   label?: string;

@@ -9,6 +9,7 @@ import { getShortAddress } from 'lib/utils/string';
 import { Avatar, TextTruncate } from 'components/atoms';
 import { DiscordIcon, TwitterIcon } from 'components/icons/brand';
 import { CopyIcon, GlobeIcon } from 'components/icons/outline';
+import { DUMMY_USER_BIO } from 'lib/constants';
 
 export type SocialLink = 'twitter' | 'discord' | 'website';
 
@@ -31,12 +32,12 @@ export interface ProfileInventoryProps extends HTMLAttributes<HTMLDivElement> {
   name: string;
   bio?: string;
   joined?: string;
-  address: string;
+  address?: string;
   socialLinks?: SocialLinkProps[];
 }
 
 export const ProfileInventory: FC<ProfileInventoryProps> = (props) => {
-  const { banner, avatar, name, bio, joined, address, socialLinks, className, ...profileProps } = props;
+  const { banner, avatar, name, joined, address, socialLinks, className, ...profileProps } = props;
   const handleCopyAddressToClipboard = (address: string) => {
     copyToClipboard(
       address,
@@ -73,8 +74,8 @@ export const ProfileInventory: FC<ProfileInventoryProps> = (props) => {
             }
             src={avatar}
           />
-          <div className={clsx('md:mt-25 mt-20 text-3xl font-bold')}>{name}</div>
-          {bio && <TextTruncate text={bio} className={'mt-3 text-sm text-neutral-50'} />}
+          <div className={clsx('md:mt-7.5 mt-5 text-3xl font-bold')}>{name}</div>
+          <TextTruncate text={DUMMY_USER_BIO} className={'mt-3 text-sm text-neutral-50'} />
         </div>
         <div
           className={
@@ -91,7 +92,7 @@ export const ProfileInventory: FC<ProfileInventoryProps> = (props) => {
           <div className={'flex justify-between'}>
             <div className={'text-sm text-neutral-50'}>Address</div>
             <div className={'text-neutral flex gap-2 text-sm font-medium'}>
-              {getShortAddress(address)}
+              {address ? getShortAddress(address) : '-'}
               <CopyIcon className={'cursor-pointer text-xl'} onClick={() => handleCopyAddressToClipboard(address)} />
             </div>
           </div>
