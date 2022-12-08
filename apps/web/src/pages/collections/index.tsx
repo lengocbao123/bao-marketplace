@@ -5,20 +5,17 @@ import { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import { NextPageWithLayout } from 'pages/_app';
 import { Fragment } from 'react';
-import { fetcher } from 'lib/utils/fetcher';
-import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { convertQueryParamsToArray } from 'lib/utils/query';
-import { CollectionsResponse } from 'types/data';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { PERIODS } from 'lib/dummy';
-import { isSuccess } from 'lib/utils/response';
 import { NextSeo } from 'next-seo';
+import { useCollections } from 'lib/services/hooks';
+import { getCollections } from 'lib/services';
 
 export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const session = await unstable_getServerSession(req, res, authOptions);
-  const fetchApi = fetcher(session);
   const collectionQueryString = new URLSearchParams({
     ...query,
     page: query.page ? query.page : 1,
@@ -32,7 +29,7 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
       },
     };
   }
-  const collections = await fetchApi<CollectionsResponse>(`/collection/exchange/list?${collectionQueryString}`);
+  const collections = await getCollections(session, collectionQueryString);
 
   return {
     props: {
@@ -47,9 +44,7 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
 const ExploreCollectionPage: NextPageWithLayout = ({
   collectionQueryString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { data: collections, error: errorCollections } = useSWR<CollectionsResponse>(
-    `/collection/exchange/list?${collectionQueryString}`,
-  );
+  const { collections, error: errorCollections } = useCollections(collectionQueryString);
   const router = useRouter();
   const { query } = router;
 
@@ -79,7 +74,7 @@ const ExploreCollectionPage: NextPageWithLayout = ({
     });
   };
 
-  if (errorCollections || !isSuccess(collections.message)) {
+  if (errorCollections) {
     return <Error />;
   }
   const convertedQuery = convertQueryParamsToArray(query);
@@ -94,7 +89,7 @@ const ExploreCollectionPage: NextPageWithLayout = ({
         alt="Explore Banner"
         className={'bg-neutral-10 aspect-[1440/144] w-full object-cover object-center'}
       />
-      {errorCollections || !isSuccess(collections.message) ? (
+      {errorCollections ? (
         <Error className={'py-10'} />
       ) : (
         <ExploreSection
@@ -111,7 +106,7 @@ const ExploreCollectionPage: NextPageWithLayout = ({
           onChangeFilter={handlerFilterChange}
           onResetFilter={resetFilter}
         >
-          <CollectionsList collections={collections.data.list} meta={collections.data.meta} />
+          <CollectionsList collections={collections.list} meta={collections.meta} />
         </ExploreSection>
       )}
     </Fragment>

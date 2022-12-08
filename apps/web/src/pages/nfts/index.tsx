@@ -1,18 +1,16 @@
 import { Layout } from 'components/layouts';
 import { Error, ExploreSection, ListNftsSkeleton, TabData } from 'components/molecules';
 import { NftsFilters, NftsList } from 'components/organisms/nfts';
-import { fetcher } from 'lib/utils/fetcher';
 import { InferGetServerSidePropsType } from 'next';
 import Image from 'next/image';
 import { NextPageWithLayout } from 'pages/_app';
 import { Fragment } from 'react';
-import useSWR from 'swr';
 import { useRouter } from 'next/router';
-import { convertQueryParamsToArray } from 'lib/utils/query';
-import { CategoriesResponse, NftsResponse } from 'types/data';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
-import { isSuccess } from 'lib/utils/response';
+import { useNftsFilter } from 'lib/hooks/use-nfts-filter';
+import { useCategories, useNfts } from 'lib/services/hooks';
+import { getCollections, getNfts, getCategories } from 'lib/services';
 
 export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const session = await unstable_getServerSession(req, res, authOptions);
@@ -20,11 +18,10 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
     ...query,
     page: query.page ? query.page : 1,
   }).toString();
-  const fetchApi = fetcher(session);
   const [categories, nfts, collections] = await Promise.all([
-    fetchApi<CategoriesResponse>('/category/list'),
-    fetchApi<NftsResponse>(`/nft/exchange/list?${nftsQueryString}`),
-    fetchApi('/collection/exchange/list'),
+    getCategories(session),
+    getNfts(session, nftsQueryString),
+    getCollections(session, ''),
   ]);
 
   if (!query.page) {
@@ -52,11 +49,11 @@ const ExplorePage: NextPageWithLayout = ({
   nftsQueryString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
-  const { data: categoriesResponse, error: errorCategories } = useSWR<CategoriesResponse>('/category/list');
-  const { data: nftsResponse, error: errorNfts } = useSWR<NftsResponse>(`/nft/exchange/list?${nftsQueryString}`);
+  const { categories, error: errorCategories } = useCategories();
+  const { nfts, loading, error } = useNfts(nftsQueryString);
+  const { query, convertedQuery, handleChange, resetFilter } = useNftsFilter(router.query);
 
-  const { query } = router;
-  if (errorCategories || errorNfts || !isSuccess(nftsResponse.message) || !isSuccess(categoriesResponse.message)) {
+  if (errorCategories || error) {
     return <Error />;
   }
 
@@ -66,40 +63,12 @@ const ExplorePage: NextPageWithLayout = ({
       name: 'All',
       code: 'all',
     },
-    ...categoriesResponse.data,
+    ...categories,
   ].map((item) => ({
     label: item.name,
     value: item.id,
     active: (item.code === 'all' && !query.category) || item.id === query.category,
   }));
-
-  const resetFilter = async () => {
-    const resetQuery = { page: 1 };
-    if (query.sort) {
-      resetQuery['sort'] = query.sort;
-    }
-    await router.push({
-      pathname: router.pathname,
-      query: resetQuery,
-    });
-  };
-
-  const handlerFilterChange = async (key: string, value: any) => {
-    let newQuery = query;
-    if (key === 'price') {
-      newQuery = { ...newQuery, priceMin: value[0], priceMax: value[1] };
-    } else if (key === 'category' && value === 'all' && 'category' in newQuery) {
-      delete newQuery.category;
-    } else {
-      newQuery = { ...query, [key]: value };
-    }
-    await router.push({
-      pathname: router.pathname,
-      query: newQuery,
-    });
-  };
-
-  const convertedQuery = convertQueryParamsToArray(query);
 
   return (
     <Fragment>
@@ -112,19 +81,15 @@ const ExplorePage: NextPageWithLayout = ({
       />
       <ExploreSection
         name={'nfts'}
-        filtersComponent={<NftsFilters filter={convertedQuery} onChange={handlerFilterChange} />}
+        filtersComponent={<NftsFilters filter={convertedQuery} onChange={handleChange} />}
         tabs={categoryTabs}
         tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border sm:justify-center"
         bodyClassName="container"
         filter={convertedQuery}
-        onChangeFilter={handlerFilterChange}
+        onChangeFilter={handleChange}
         onResetFilter={resetFilter}
       >
-        {nftsResponse ? (
-          <NftsList nfts={nftsResponse.data.list} meta={nftsResponse.data.meta} />
-        ) : (
-          <ListNftsSkeleton number={10} />
-        )}
+        {!loading ? <NftsList nfts={nfts.list} meta={nfts.meta} /> : <ListNftsSkeleton number={10} />}
       </ExploreSection>
     </Fragment>
   );

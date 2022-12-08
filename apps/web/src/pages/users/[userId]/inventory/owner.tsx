@@ -1,17 +1,15 @@
 import { Layout } from 'components/layouts';
 import { Error, ExploreSection, ListNftsSkeleton } from 'components/molecules';
 import { NftsFilters, NftsList } from 'components/organisms/nfts';
-import { fetcher } from 'lib/utils/fetcher';
 import { InferGetServerSidePropsType } from 'next';
 import { NextPageWithLayout } from 'pages/_app';
-import useSWR from 'swr';
 import { useRouter } from 'next/router';
-import { convertQueryParamsToArray } from 'lib/utils/query';
-import { NftsResponse } from 'types/data';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
-import { isSuccess } from 'lib/utils/response';
 import { ContainerInventory } from 'components/organisms';
+import { useNftsFilter } from 'lib/hooks/use-nfts-filter';
+import { useNfts } from 'lib/services/hooks';
+import { getCollections, getNftsByOwnerUserId } from 'lib/services';
 
 export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const session = await unstable_getServerSession(req, res, authOptions);
@@ -25,10 +23,9 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   nftQuery[nftQuery.filter] = query.userId;
 
   const nftsQueryString = new URLSearchParams(nftQuery).toString();
-  const fetchApi = fetcher(session);
   const [nfts, collections] = await Promise.all([
-    fetchApi<NftsResponse>(`/nft/exchange/list?${nftsQueryString}`),
-    fetchApi('/collection/exchange/list'),
+    getNftsByOwnerUserId(session, query.userId, nftsQueryString),
+    getCollections(session, query.userId),
   ]);
 
   if (!query.page) {
@@ -55,54 +52,23 @@ const UserOwnNftsPage: NextPageWithLayout = ({
   nftsQueryString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
-  const { query } = router;
-  const { data: nftsResponse, error: errorNfts } = useSWR<NftsResponse>(`/nft/exchange/list?${nftsQueryString}`);
+  const { convertedQuery, handleChange, resetFilter } = useNftsFilter(router.query);
+  const { nfts, loading, error } = useNfts(nftsQueryString);
 
-  if (errorNfts || !isSuccess(nftsResponse.message)) {
+  if (error) {
     return <Error />;
   }
-
-  const resetFilter = async () => {
-    const resetQuery = { page: 1 };
-    if (query.sort) {
-      resetQuery['sort'] = query.sort;
-    }
-    await router.push({
-      pathname: router.pathname,
-      query: resetQuery,
-    });
-  };
-
-  const handlerFilterChange = async (key: string, value: any) => {
-    let newQuery = query;
-    if (key === 'price') {
-      newQuery = { ...newQuery, priceMin: value[0], priceMax: value[1] };
-    } else {
-      newQuery = { ...query, [key]: value };
-    }
-    await router.push({
-      pathname: router.pathname,
-      query: newQuery,
-    });
-  };
-
-  const convertedQuery = convertQueryParamsToArray(query);
 
   return (
     <ContainerInventory>
       <ExploreSection
         name={'nfts'}
-        filtersComponent={<NftsFilters filter={convertedQuery} onChange={handlerFilterChange} />}
-        bodyClassName="container"
+        filtersComponent={<NftsFilters filter={convertedQuery} onChange={handleChange} />}
         filter={convertedQuery}
-        onChangeFilter={handlerFilterChange}
+        onChangeFilter={handleChange}
         onResetFilter={resetFilter}
       >
-        {nftsResponse ? (
-          <NftsList nfts={nftsResponse.data.list} meta={nftsResponse.data.meta} />
-        ) : (
-          <ListNftsSkeleton number={10} />
-        )}
+        {!loading ? <NftsList nfts={nfts.list} meta={nfts.meta} /> : <ListNftsSkeleton number={10} />}
       </ExploreSection>
     </ContainerInventory>
   );

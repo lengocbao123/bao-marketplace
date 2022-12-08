@@ -3,15 +3,13 @@ import { Error, ExploreSection, ListNftsSkeleton } from 'components/molecules';
 import { CollectionsFilters, CollectionsList } from 'components/organisms';
 import { InferGetServerSidePropsType } from 'next';
 import { NextPageWithLayout } from 'pages/_app';
-import { fetcher } from 'lib/utils/fetcher';
-import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { convertQueryParamsToArray } from 'lib/utils/query';
-import { CollectionsResponse } from 'types/data';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
-import { isSuccess } from 'lib/utils/response';
 import { ContainerInventory } from 'components/organisms';
+import { getCollectionsByUserId } from 'lib/services';
+import { useCollectionsByUserId } from 'lib/services/hooks';
 
 export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const collectionsQuery = {
@@ -19,10 +17,8 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
     page: query.page ? query.page : 1,
   };
   delete collectionsQuery.userId;
-  collectionsQuery['createdBy'] = query.userId;
 
   const session = await unstable_getServerSession(req, res, authOptions);
-  const fetchApi = fetcher(session);
   const collectionQueryString = new URLSearchParams(collectionsQuery).toString();
 
   if (!query.page) {
@@ -33,13 +29,13 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
       },
     };
   }
-  const collections = await fetchApi<CollectionsResponse>(`/collection/exchange/list?${collectionQueryString}`);
+  const collections = await getCollectionsByUserId(session, query.userId as string, collectionQueryString);
 
   return {
     props: {
       collectionQueryString,
       fallback: {
-        [`/collection/exchange/list?${collectionQueryString}`]: collections,
+        [`/collection/exchange/list?createdBy=${query.userId}&${collectionQueryString}`]: collections,
       },
     },
   };
@@ -51,13 +47,11 @@ const InventoryCollectionPage: NextPageWithLayout = ({
   const router = useRouter();
   const { query } = router;
 
-  const { data: collections, error: errorCollections } = useSWR<CollectionsResponse>(
-    `/collection/exchange/list?${collectionQueryString}`,
+  const { collections, error: errorCollections } = useCollectionsByUserId(
+    query.userId as string,
+    collectionQueryString,
   );
-  console.log({
-    collections,
-    errorCollections,
-  });
+
   const handlerFilterChange = async (key: string, value: any) => {
     let newQuery = query;
     if (key === 'price') {
@@ -84,14 +78,14 @@ const InventoryCollectionPage: NextPageWithLayout = ({
     });
   };
 
-  if (errorCollections || !isSuccess(collections.message)) {
+  if (errorCollections) {
     return <Error />;
   }
   const convertedQuery = convertQueryParamsToArray(query);
 
   return (
     <ContainerInventory>
-      {errorCollections || !isSuccess(collections.message) ? (
+      {errorCollections ? (
         <Error className={'py-10'} />
       ) : (
         <ExploreSection
@@ -103,7 +97,7 @@ const InventoryCollectionPage: NextPageWithLayout = ({
           onResetFilter={resetFilter}
         >
           {collections ? (
-            <CollectionsList collections={collections.data.list} meta={collections.data.meta} />
+            <CollectionsList collections={collections.list} meta={collections.meta} />
           ) : (
             <ListNftsSkeleton number={10} />
           )}

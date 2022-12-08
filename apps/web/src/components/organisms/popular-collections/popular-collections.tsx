@@ -2,19 +2,17 @@ import { CardPopular, Section } from 'components/molecules';
 import { FC, HTMLAttributes } from 'react';
 import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import useSWR from 'swr';
-import { CollectionsResponse } from 'types/data';
-import { isSuccess } from 'lib/utils/response';
 import { CardPopularSkeleton } from 'components/molecules/skeleton/card-popular-skeleton';
 import { convertToSlug } from 'lib/utils/string';
+import { usePopularCollections } from 'lib/services/hooks';
 
 export type PopularCollectionsProps = HTMLAttributes<HTMLElement>;
 
 export const PopularCollections: FC<PopularCollectionsProps> = (props) => {
   const { ...popularCollectionsProps } = props;
-  const { data: collections, error } = useSWR<CollectionsResponse>(`/collection/exchange/list`);
+  const { collections, error } = usePopularCollections();
 
-  if (error || !isSuccess(collections.message)) {
+  if (error) {
     return (
       <Section heading={'Popular Collections'} {...popularCollectionsProps}>
         <div className={'text-center'}>Oops! Something went wrong</div>
@@ -50,7 +48,7 @@ export const PopularCollections: FC<PopularCollectionsProps> = (props) => {
           },
         }}
       >
-        {collections.data.list.map((collection) => (
+        {collections.list.map((collection) => (
           <SwiperSlide key={collection.id}>
             <CardPopular
               title={collection.name}

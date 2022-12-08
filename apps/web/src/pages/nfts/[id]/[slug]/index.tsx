@@ -14,23 +14,17 @@ import {
 } from 'components/organisms';
 import { NextPageWithLayout } from 'pages/_app';
 import { InferGetServerSidePropsType } from 'next';
-import { fetcher } from 'lib/utils/fetcher';
-import useSWR from 'swr';
 import { convertToSlug } from 'lib/utils/string';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
-import { NftResponse, NftsResponse } from 'types/data';
-import { isSuccess } from 'lib/utils/response';
 import { getNftPrice } from 'lib/utils/nft';
+import { useNftById, useRelativeNfts } from 'lib/services/hooks';
+import { getNftById, getRelativeNfts } from 'lib/services';
 
 export async function getServerSideProps({ req, res, query }) {
   const session = await unstable_getServerSession(req, res, authOptions);
-  const fetchApi = fetcher(session);
   const { id } = query;
-  const [nft, relativeNfts] = await Promise.all([
-    fetchApi<NftResponse>(`/nft/${id}`),
-    fetchApi<NftsResponse>(`/nft/exchange/list?_limit=4`),
-  ]);
+  const [nft, relativeNfts] = await Promise.all([getNftById(session, id), getRelativeNfts(session)]);
 
   return {
     props: {
@@ -44,18 +38,17 @@ export async function getServerSideProps({ req, res, query }) {
 }
 
 const Index: NextPageWithLayout = ({ id }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { data: nftResponse, error: errorNfts } = useSWR<NftResponse>(`/nft/${id}`);
-  const { data: relativeNftsResponse, error: errorRelativeNfts } = useSWR<NftsResponse>(`/nft/exchange/list?limit=4`);
+  const { nft, loading, error } = useNftById(id);
+  const { nfts: relativeNfts, loading: relativeNftsLoading, error: errorRelativeNfts } = useRelativeNfts();
 
-  if (errorNfts || !isSuccess(nftResponse.message)) {
+  if (error || errorRelativeNfts) {
     return <Error />;
   }
 
-  if (!nftResponse) {
+  if (loading) {
     return <DetailNftSkeleton />;
   }
-  const { data: nft } = nftResponse;
-  const { list: relativeNfts } = relativeNftsResponse.data;
+
   const nftPrice = getNftPrice(nft.orders);
 
   return (
@@ -104,8 +97,8 @@ const Index: NextPageWithLayout = ({ id }: InferGetServerSidePropsType<typeof ge
           />
         )}
         <ProductSimilar
-          loading={!relativeNftsResponse}
-          isError={errorRelativeNfts || !isSuccess(relativeNftsResponse.message)}
+          loading={relativeNftsLoading}
+          isError={errorRelativeNfts}
           className="mt-7.5 col-span-5"
           products={relativeNfts}
           collection={nft.collection_info}

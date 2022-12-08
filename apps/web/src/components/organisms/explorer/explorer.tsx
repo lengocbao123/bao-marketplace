@@ -1,20 +1,18 @@
 import { ButtonLink, ListItem } from 'components/atoms';
 import { CardNft, ChipFilter, ChipOption, ListNftsSkeleton, Section } from 'components/molecules';
 import { FC, HTMLAttributes, useState } from 'react';
-import useSWR from 'swr';
-import { CategoriesResponse, NftsResponse } from 'types/data';
-import { isSuccess } from 'lib/utils/response';
 import { convertToSlug } from 'lib/utils/string';
-import { getNftPrice } from '../../../lib/utils/nft';
+import { getNftPrice } from 'lib/utils/nft';
+import { useCategories, useFeatureNfts } from 'lib/services/hooks';
 
 export type ExplorerProps = HTMLAttributes<HTMLElement>;
 
 export const Explorer: FC<ExplorerProps> = ({}) => {
-  const { data: categoriesResponse, error: errorCategories } = useSWR<CategoriesResponse>(`/category/list`);
-  const [category, setCategory] = useState('b1527454-385d-4c9e-b91d-f84c6a1b6e12');
-  const { data: nftsResponse, error: errorNfts } = useSWR<NftsResponse>(`/nft/exchange/list?limit=8`);
+  const { categories, error: errorCategories } = useCategories();
+  const [category, setCategory] = useState(categories[0].id);
+  const { nfts, loading: nftsLoading, error: errorNfts } = useFeatureNfts('limit=8');
 
-  if (errorCategories || errorNfts || !isSuccess(nftsResponse.message) || !isSuccess(categoriesResponse.message)) {
+  if (errorCategories || errorNfts) {
     return <div>failed to load</div>;
   }
 
@@ -23,19 +21,19 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
   };
 
   const options: ChipOption[] =
-    categoriesResponse.data?.map((category) => ({
+    categories.map((category) => ({
       label: category.name,
       value: category.id,
     })) || [];
 
-  const { list: nftsList } = nftsResponse.data;
+  const { list: nftsList } = nfts;
 
   return (
     <Section heading="Explore The Marketplace" lead="Discover NFTs">
       <div className="sm:space-y-7.5 space-y-5">
         <ChipFilter value={category} options={options} onChange={onChangeCategory} />
 
-        {nftsResponse ? (
+        {!nftsLoading ? (
           <ListItem>
             {nftsList.map((nft) => {
               const nftPrice = getNftPrice(nft.orders);
