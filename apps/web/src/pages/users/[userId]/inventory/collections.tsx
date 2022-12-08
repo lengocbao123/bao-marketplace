@@ -8,8 +8,8 @@ import { convertQueryParamsToArray } from 'lib/utils/query';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { ContainerInventory } from 'components/organisms';
-import { getCollectionsByUserId } from 'lib/services';
-import { useCollectionsByUserId } from 'lib/services/hooks';
+import { getCollectionsByUserId } from 'services';
+import { useCollectionsByUserId } from 'hooks/services';
 
 export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const collectionsQuery = {

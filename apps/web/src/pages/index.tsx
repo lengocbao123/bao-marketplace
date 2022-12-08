@@ -4,7 +4,7 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import { NextPageWithLayout } from './_app';
 import { authOptions } from './api/auth/[...nextauth]';
-import { getCategories, getFeatureNfts, getPopularCollections, getTopCollections } from 'lib/services';
+import { getCategories, getFeatureNfts, getPopularCollections, getTopCollections } from 'services';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);

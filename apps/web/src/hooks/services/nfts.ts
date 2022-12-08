@@ -50,3 +50,21 @@ export const useRelativeNfts = () => {
     error: error || (data && !isSuccess(data.message)),
   };
 };
+export const useNftsByCreatedUserId = (userId: string, query: string) => {
+  const { data, error } = useSWR<NftsResponse>(`/nft/exchange/list?createdBy=${userId}&${query}`);
+
+  return {
+    nfts: data.data,
+    loading: !error && !data,
+    error: error || (data && !isSuccess(data.message)),
+  };
+};
+export const useNftsByOwnerUserId = (userId: string, query: string) => {
+  const { data, error } = useSWR<NftsResponse>(`/nft/exchange/list?owner=${userId}&${query}`);
+
+  return {
+    nfts: data.data,
+    loading: !error && !data,
+    error: error || (data && !isSuccess(data.message)),
+  };
+};

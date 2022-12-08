@@ -11,8 +11,8 @@ import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { PERIODS } from 'lib/dummy';
 import { NextSeo } from 'next-seo';
-import { useCollections } from 'lib/services/hooks';
-import { getCollections } from 'lib/services';
+import { useCollections } from 'hooks/services';
+import { getCollections } from 'services';
 
 export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const session = await unstable_getServerSession(req, res, authOptions);

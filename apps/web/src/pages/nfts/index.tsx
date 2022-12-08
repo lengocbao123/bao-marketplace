@@ -8,9 +8,9 @@ import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
-import { useNftsFilter } from 'lib/hooks/use-nfts-filter';
-import { useCategories, useNfts } from 'lib/services/hooks';
-import { getCollections, getNfts, getCategories } from 'lib/services';
+import { useNftsFilter } from 'hooks/use-nfts-filter';
+import { useCategories, useNfts } from 'hooks/services';
+import { getCollections, getNfts, getCategories } from 'services';
 
 export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const session = await unstable_getServerSession(req, res, authOptions);

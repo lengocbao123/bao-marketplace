@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { getUserInfo, login } from 'lib/services';
+import { getUserInfo, login } from 'services';
 import { isSuccess } from 'lib/utils/response';
 
 export const authOptions: NextAuthOptions = {

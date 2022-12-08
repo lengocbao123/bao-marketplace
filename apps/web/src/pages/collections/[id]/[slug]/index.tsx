@@ -9,9 +9,9 @@ import { NftsFilters, NftsList } from 'components/organisms/nfts';
 import { NextPageWithLayout } from 'pages/_app';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
-import { useNftsFilter } from 'lib/hooks/use-nfts-filter';
-import { useCollectionById, useNftsByCollectionId } from 'lib/services/hooks';
-import { getCollectionById, getNftsByCollectionId } from 'lib/services';
+import { useNftsFilter } from 'hooks/use-nfts-filter';
+import { useCollectionById, useNftsByCollectionId } from 'hooks/services';
+import { getCollectionById, getNftsByCollectionId } from 'services';
 
 export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const session = await unstable_getServerSession(req, res, authOptions);

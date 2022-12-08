@@ -1,5 +1,5 @@
 import { NftResponse, NftsResponse } from 'types/data';
-import { fetcher } from '../utils/fetcher';
+import { fetcher } from '../lib/utils/fetcher';
 import { Session } from 'next-auth';
 
 export const getNfts = (session: Session, query: string) => {

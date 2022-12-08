@@ -4,7 +4,7 @@ import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { CardPopularSkeleton } from 'components/molecules/skeleton/card-popular-skeleton';
 import { convertToSlug } from 'lib/utils/string';
-import { usePopularCollections } from 'lib/services/hooks';
+import { usePopularCollections } from 'hooks/services';
 
 export type PopularCollectionsProps = HTMLAttributes<HTMLElement>;
 

@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { UpdateUserInput, UserForm } from 'types/index';
-import { updateUserInfo } from 'lib/services';
+import { updateUserInfo } from 'services';
 import { useSession } from 'next-auth/react';
 
 export const useFormCreateProfile = (options: { initialData: UpdateUserInput } & UserForm<UpdateUserInput, any>) => {

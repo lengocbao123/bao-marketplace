@@ -9,7 +9,7 @@ import { toast } from 'react-hot-toast';
 import { Button, CheckboxInput } from 'components/atoms';
 import { Layout } from 'components/layouts';
 import { FormAuth, TextField } from 'components/molecules';
-import { useFormLogin } from 'lib/hooks/form/use-form-login';
+import { useFormLogin } from 'hooks/form/use-form-login';
 import { redirectIfAuthenticated } from 'lib/utils/server';
 import { NextPageWithLayout } from 'pages/_app';
 

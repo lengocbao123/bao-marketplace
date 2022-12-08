@@ -8,7 +8,7 @@ import { toast } from 'react-hot-toast';
 import { Button } from 'components/atoms';
 import { CheckMailGraphic } from 'components/icons/graphic';
 import { SimpleLayout } from 'components/layouts';
-import { resendVerifyEmail } from 'lib/services';
+import { resendVerifyEmail } from 'services';
 import { isSuccess } from 'lib/utils/response';
 import { redirectIfAuthenticated } from 'lib/utils/server';
 import { ResendVerifyEmailResponse } from 'types/data';

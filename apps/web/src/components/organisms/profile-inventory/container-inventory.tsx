@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { Error, Tabs } from 'components/molecules';
+import { Error, PageSkeleton, Tabs } from 'components/molecules';
 import { USER_INVENTORY_TABS } from 'lib/constants';
 import { UserResponse } from 'types/data';
 import React, { FC, HTMLAttributes } from 'react';
@@ -14,12 +14,9 @@ export const ContainerInventory: FC<ContainerInventoryProps> = ({ children }) =>
   const router = useRouter();
   const { query } = router;
   const { data: userResponse, error: errorUser } = useSWR<UserResponse>(`/user/exchange/${query.userId}`);
-  console.log({
-    userResponse,
-    errorUser,
-  });
+
   if (!userResponse) {
-    return <div>loading</div>;
+    return <PageSkeleton />;
   }
   if (errorUser || !isSuccess(userResponse.message)) {
     return <Error />;

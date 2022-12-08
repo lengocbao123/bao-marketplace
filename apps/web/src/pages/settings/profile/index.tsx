@@ -11,7 +11,7 @@ import { PlusIcon } from 'components/icons/outline';
 import { BrowserIcon } from 'components/icons/solid';
 import { Layout } from 'components/layouts';
 import { CardPaymentMethod, FileImage } from 'components/molecules';
-import { useFormCreateProfile } from 'lib/hooks/form/use-form-create-profile';
+import { useFormCreateProfile } from 'hooks/form/use-form-create-profile';
 import { convertImageUrlToFile } from 'lib/utils/navigator';
 import { redirectIfUnverified } from 'lib/utils/server';
 import { refreshUserProfile } from 'lib/auth';

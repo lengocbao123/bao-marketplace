@@ -18,8 +18,8 @@ import { convertToSlug } from 'lib/utils/string';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { getNftPrice } from 'lib/utils/nft';
-import { useNftById, useRelativeNfts } from 'lib/services/hooks';
-import { getNftById, getRelativeNfts } from 'lib/services';
+import { useNftById, useRelativeNfts } from 'hooks/services';
+import { getNftById, getRelativeNfts } from 'services';
 
 export async function getServerSideProps({ req, res, query }) {
   const session = await unstable_getServerSession(req, res, authOptions);

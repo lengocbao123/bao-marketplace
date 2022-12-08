@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { FC, HTMLAttributes } from 'react';
-import { useTextTruncate } from 'lib/hooks/use-text-truncate';
+import { useTextTruncate } from 'hooks/use-text-truncate';
 import { ArrowDownIcon } from 'components/icons/outline';
 
 export interface TextTruncateProps extends HTMLAttributes<HTMLDivElement> {

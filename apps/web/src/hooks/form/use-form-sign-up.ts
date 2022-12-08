@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { UserForm, UserResponse } from 'types/index';
-import { register } from 'lib/services';
+import { register } from 'services';
 
 export interface UseFormSignUp {
   username: string;

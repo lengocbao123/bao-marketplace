@@ -7,9 +7,9 @@ import { useRouter } from 'next/router';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { ContainerInventory } from 'components/organisms';
-import { useNftsFilter } from 'lib/hooks/use-nfts-filter';
-import { useNfts } from 'lib/services/hooks';
-import { getCollectionsByUserId, getNftsByCreatedUserId } from 'lib/services';
+import { useNftsFilter } from 'hooks/use-nfts-filter';
+import { useNftsByCreatedUserId } from 'hooks/services';
+import { getCollectionsByUserId, getNftsByCreatedUserId } from 'services';
 
 export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   const session = await unstable_getServerSession(req, res, authOptions);
@@ -29,7 +29,7 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
   if (!query.page) {
     return {
       redirect: {
-        destination: `${resolvedUrl} ?${nftsQueryString}`,
+        destination: `${resolvedUrl}?${nftsQueryString}`,
         permanent: false,
       },
     };
@@ -39,7 +39,7 @@ export async function getServerSideProps({ req, res, query, resolvedUrl }) {
     props: {
       nftsQueryString,
       fallback: {
-        [` / nft / exchange / list ?${nftsQueryString}`]: nfts,
+        [`/nft/exchange/list?createdBy=${query.userId}&${nftsQueryString}`]: nfts,
         '/collection/exchange/list': collections,
       },
     },
@@ -50,7 +50,7 @@ const UserCreateNftsPage: NextPageWithLayout = ({
   nftsQueryString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
-  const { nfts, loading, error } = useNfts(nftsQueryString);
+  const { nfts, loading, error } = useNftsByCreatedUserId(router.query.userId as string, nftsQueryString);
   const { query, convertedQuery, handleChange, resetFilter } = useNftsFilter(router.query);
 
   if (error) {

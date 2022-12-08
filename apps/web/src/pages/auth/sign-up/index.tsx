@@ -7,7 +7,7 @@ import { toast } from 'react-hot-toast';
 import { Button } from 'components/atoms';
 import { Layout } from 'components/layouts';
 import { FormAuth, TextField } from 'components/molecules';
-import { useFormSignUp } from 'lib/hooks/form/use-form-sign-up';
+import { useFormSignUp } from 'hooks/form/use-form-sign-up';
 import { getErrorMessage } from 'lib/utils/get-error-message';
 import { redirectIfAuthenticated } from 'lib/utils/server';
 import { UserData } from 'types/data';

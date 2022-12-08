@@ -6,7 +6,7 @@ import { PIKASSO_CHAINS, STATUS } from 'lib/constants';
 import { CollectionsResponse, NftsFilter } from 'types/data';
 import { CollectionsCheckbox } from './collections-checkbox';
 import { useDebounce } from 'usehooks-ts';
-import { useSwrInfiniteCustom } from 'lib/hooks/use-swr-infinite-custom';
+import { useSwrInfiniteCustom } from 'hooks/use-swr-infinite-custom';
 import * as React from 'react';
 
 export interface NftsFiltersProps {

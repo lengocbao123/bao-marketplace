@@ -4,7 +4,7 @@ import { convertToSlug } from 'lib/utils/string';
 import { FC, HTMLAttributes } from 'react';
 import { mutate, useSWRConfig } from 'swr';
 import { PERIODS } from 'lib/dummy';
-import { useTopCollections } from 'lib/services/hooks';
+import { useTopCollections } from 'hooks/services';
 
 export type TopCollectionsProps = HTMLAttributes<HTMLDivElement>;
 

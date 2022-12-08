@@ -3,7 +3,7 @@ import { CardNft, ChipFilter, ChipOption, ListNftsSkeleton, Section } from 'comp
 import { FC, HTMLAttributes, useState } from 'react';
 import { convertToSlug } from 'lib/utils/string';
 import { getNftPrice } from 'lib/utils/nft';
-import { useCategories, useFeatureNfts } from 'lib/services/hooks';
+import { useCategories, useFeatureNfts } from 'hooks/services';
 
 export type ExplorerProps = HTMLAttributes<HTMLElement>;
 
