@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { ContainerInventory } from 'components/organisms';
-import { useNftsFilter } from 'hooks/use-nfts-filter';
+import { useFilter } from 'hooks/use-filter';
 import { useNftsByOwnerUserId } from 'hooks/services';
 import { getCollections, getNftsByOwnerUserId } from 'services';
 
@@ -52,7 +52,7 @@ const UserOwnNftsPage: NextPageWithLayout = ({
   nftsQueryString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
-  const { convertedQuery, handleChange, resetFilter } = useNftsFilter(router.query);
+  const { convertedQuery, handleChange, resetFilter } = useFilter(router.query);
   const { nfts, loading, error } = useNftsByOwnerUserId(router.query.userId as string, nftsQueryString);
 
   if (error) {

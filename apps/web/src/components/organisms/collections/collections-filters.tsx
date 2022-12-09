@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { FC } from 'react';
 import { Avatar } from 'components/atoms';
-import { CheckboxFilter, RangeFilter } from 'components/molecules';
+import { CheckboxFilter } from 'components/molecules';
 import { PIKASSO_CHAINS } from 'lib/constants';
 import { BaseFilter } from 'types/data';
 import * as React from 'react';
@@ -26,19 +26,6 @@ export const CollectionsFilters: FC<CollectionsFiltersProps> = ({ className = ''
         })}
         onChange={onChange}
         values={filter.chain}
-      />
-      <RangeFilter
-        className="py-5"
-        heading="Price"
-        defaultRange={
-          filter.priceMin && filter.priceMax
-            ? {
-                min: filter.priceMin,
-                max: filter.priceMax,
-              }
-            : null
-        }
-        onApply={(formData) => onChange('price', [formData.min, formData.max])}
       />
     </div>
   );

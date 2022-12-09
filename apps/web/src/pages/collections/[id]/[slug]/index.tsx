@@ -9,7 +9,7 @@ import { NftsFilters, NftsList } from 'components/organisms/nfts';
 import { NextPageWithLayout } from 'pages/_app';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
-import { useNftsFilter } from 'hooks/use-nfts-filter';
+import { useFilter } from 'hooks/use-filter';
 import { useCollectionById, useNftsByCollectionId } from 'hooks/services';
 import { getCollectionById, getNftsByCollectionId } from 'services';
 
@@ -57,7 +57,7 @@ const Home: NextPageWithLayout = ({ id, nftsQueryString }: InferGetServerSidePro
   const { collection, loading: collectionLoading, error: errorCollection } = useCollectionById(id);
   const { nfts, loading: nftsLoading, error: errorNfts } = useNftsByCollectionId(id, nftsQueryString);
   const router = useRouter();
-  const { query, convertedQuery, handleChange, resetFilter } = useNftsFilter(router.query);
+  const { query, convertedQuery, handleChange, resetFilter } = useFilter(router.query);
   const tabs = [
     {
       value: 'on-sale',

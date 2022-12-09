@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { ParsedUrlQuery } from 'querystring';
 import { convertQueryParamsToArray } from 'lib/utils/query';
+import { convertPeriod } from 'lib/utils/time';
 
 interface QueryFilter {
   userId?: string;
@@ -15,9 +16,12 @@ interface QueryFilter {
   chain?: string;
   category?: string;
   filter?: string;
+  createdAtMin?: number;
+  createdAtMax?: number;
+  period?: string;
 }
 
-export const useNftsFilter = (initQuery: ParsedUrlQuery) => {
+export const useFilter = (initQuery: ParsedUrlQuery) => {
   const [query, setQuery] = useState<QueryFilter>({
     page: 1,
     ...initQuery,
@@ -31,15 +35,29 @@ export const useNftsFilter = (initQuery: ParsedUrlQuery) => {
     });
   }, [query]);
   const handleChange = (key: string, value: string | string[] | number[]) => {
-    let newQuery = query;
+    const newQuery = { ...query, [key]: value };
+
     if (key === 'price' && Array.isArray(value)) {
-      newQuery = { ...newQuery, priceMin: value[0], priceMax: value[1] };
-    } else {
-      newQuery = { ...query, [key]: value };
+      newQuery.priceMin = value[0];
+      newQuery.priceMax = value[1];
     }
+
     if (key === 'category' && value === 'all' && 'category' in newQuery) {
       delete newQuery.category;
     }
+
+    if (key === 'period') {
+      const period = convertPeriod(value as string);
+      newQuery.createdAtMax = period.endTime;
+      newQuery.createdAtMin = period.startTime;
+    }
+
+    if (key === 'period' && value === 'all_time' && 'period' in newQuery) {
+      delete newQuery.period;
+      delete newQuery.createdAtMax;
+      delete newQuery.createdAtMin;
+    }
+
     setQuery(newQuery);
   };
 
@@ -51,5 +69,10 @@ export const useNftsFilter = (initQuery: ParsedUrlQuery) => {
     setQuery(resetQuery);
   };
 
-  return { query, handleChange, resetFilter, convertedQuery: convertQueryParamsToArray(query as ParsedUrlQuery) };
+  return {
+    query,
+    handleChange,
+    resetFilter,
+    convertedQuery: convertQueryParamsToArray(query as ParsedUrlQuery),
+  };
 };

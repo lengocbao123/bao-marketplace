@@ -10,7 +10,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
   const [categories, nfts, collections, topCollections] = await Promise.all([
     getCategories(session),
-    getFeatureNfts(session, 'limit=8'),
+    getFeatureNfts(session, 'category='),
     getPopularCollections(session),
     getTopCollections(session, 'period=24h'),
   ]);
@@ -20,9 +20,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
       session,
       fallback: {
         '/category/list': categories,
-        '/nft/exchange/list?limit=8': nfts,
+        '/nft/exchange/list?limit=8&category=': nfts,
         '/collection/exchange/list': collections,
-        '/collection/exchange/list?period=24h': topCollections,
+        '/collection/exchange/list?': topCollections,
       },
     },
   };

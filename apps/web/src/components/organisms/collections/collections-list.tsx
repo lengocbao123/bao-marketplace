@@ -27,6 +27,7 @@ export const CollectionsList: FC<CollectionsListProps> = ({ collections, meta, c
           countOwners={10000}
           countItems={collection.total_nft}
           logoImage={collection.logo_image}
+          featuredImage={collection.banner_image}
         />
       ))}
     </List>

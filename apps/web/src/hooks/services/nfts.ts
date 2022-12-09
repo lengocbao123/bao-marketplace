@@ -13,10 +13,10 @@ export const useNfts = (query: string) => {
 };
 
 export const useFeatureNfts = (query: string) => {
-  const { data, error } = useSWR<NftsResponse>(`/nft/exchange/list?${query}`);
+  const { data, error } = useSWR<NftsResponse>(`/nft/exchange/list?limit=8&${query}`);
 
   return {
-    nfts: data.data,
+    nfts: data ? data.data : null,
     loading: !error && !data,
     error: error || (data && !isSuccess(data.message)),
   };

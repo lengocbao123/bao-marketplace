@@ -8,7 +8,7 @@ import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import { unstable_getServerSession } from 'next-auth';
 import { authOptions } from 'pages/api/auth/[...nextauth]';
-import { useNftsFilter } from 'hooks/use-nfts-filter';
+import { useFilter } from 'hooks/use-filter';
 import { useCategories, useNfts } from 'hooks/services';
 import { getCollections, getNfts, getCategories } from 'services';
 
@@ -51,7 +51,7 @@ const ExplorePage: NextPageWithLayout = ({
   const router = useRouter();
   const { categories, error: errorCategories } = useCategories();
   const { nfts, loading, error } = useNfts(nftsQueryString);
-  const { query, convertedQuery, handleChange, resetFilter } = useNftsFilter(router.query);
+  const { query, convertedQuery, handleChange, resetFilter } = useFilter(router.query);
 
   if (errorCategories || error) {
     return <Error />;
@@ -66,7 +66,7 @@ const ExplorePage: NextPageWithLayout = ({
     ...categories,
   ].map((item) => ({
     label: item.name,
-    value: item.id,
+    value: item.code,
     active: (item.code === 'all' && !query.category) || item.id === query.category,
   }));
 

@@ -25,7 +25,7 @@ export const useTopCollections = (query) => {
   const { data, error } = useSWR<CollectionsResponse>(`/collection/exchange/list?${query}`);
 
   return {
-    collections: data.data,
+    collections: data ? data.data : null,
     loading: !error && !data,
     error: error || (data && !isSuccess(data.message)),
   };

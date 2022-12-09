@@ -7,7 +7,7 @@ export const getNfts = (session: Session, query: string) => {
 };
 
 export const getFeatureNfts = (session: Session, query: string) => {
-  return fetcher(session)<NftsResponse>(`/nft/exchange/list?${query}`);
+  return fetcher(session)<NftsResponse>(`/nft/exchange/list?limit=8&${query}`);
 };
 
 export const getNftsByCollectionId = (session: Session, collectionId: string, query: string) => {

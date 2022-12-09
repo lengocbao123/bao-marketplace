@@ -9,8 +9,8 @@ export type ExplorerProps = HTMLAttributes<HTMLElement>;
 
 export const Explorer: FC<ExplorerProps> = ({}) => {
   const { categories, error: errorCategories } = useCategories();
-  const [category, setCategory] = useState(categories[0].id);
-  const { nfts, loading: nftsLoading, error: errorNfts } = useFeatureNfts('limit=8');
+  const [category, setCategory] = useState('');
+  const { nfts, loading: nftsLoading, error: errorNfts } = useFeatureNfts(`category=${category}`);
 
   if (errorCategories || errorNfts) {
     return <div>failed to load</div>;
@@ -20,13 +20,19 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
     setCategory(value);
   };
 
-  const options: ChipOption[] =
-    categories.map((category) => ({
+  let options: ChipOption[] = [
+    {
+      label: 'All',
+      value: '',
+    },
+  ];
+  options = [
+    ...options,
+    ...(categories.map((category) => ({
       label: category.name,
-      value: category.id,
-    })) || [];
-
-  const { list: nftsList } = nfts;
+      value: category.code,
+    })) || []),
+  ];
 
   return (
     <Section heading="Explore The Marketplace" lead="Discover NFTs">
@@ -35,7 +41,7 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
 
         {!nftsLoading ? (
           <ListItem>
-            {nftsList.map((nft) => {
+            {nfts.list.map((nft) => {
               const nftPrice = getNftPrice(nft.orders);
 
               return (
@@ -52,7 +58,9 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
             })}
           </ListItem>
         ) : (
-          <ListNftsSkeleton className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4" number={8} />
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
+            <ListNftsSkeleton number={8} />
+          </div>
         )}
 
         <div className="flex justify-center">

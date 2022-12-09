@@ -1,25 +1,36 @@
 import { ButtonLink } from 'components/atoms';
 import { CardCollectionRanking, ChipFilter, ChipOption, Section, TopCollectionsSkeleton } from 'components/molecules';
 import { convertToSlug } from 'lib/utils/string';
-import { FC, HTMLAttributes } from 'react';
-import { mutate, useSWRConfig } from 'swr';
+import { FC, HTMLAttributes, useEffect, useState } from 'react';
 import { PERIODS } from 'lib/dummy';
 import { useTopCollections } from 'hooks/services';
+import { convertPeriod } from 'lib/utils/time';
 
 export type TopCollectionsProps = HTMLAttributes<HTMLDivElement>;
 
 export const TopCollections: FC<TopCollectionsProps> = ({}) => {
-  const { collections, error: errorCollections } = useTopCollections('period=24h');
-  const { fetcher } = useSWRConfig();
+  const [periodQuery, setPeriodQuery] = useState('');
+  const { collections, error: errorCollections } = useTopCollections(periodQuery);
+  const [period, setPeriod] = useState(PERIODS[0].value);
   const isError = errorCollections;
   const loading = !collections;
 
   const handleChangeTimeRange = async (range: string) => {
-    await mutate(`/collection/exchange/list?period=${range}`, fetcher(`/collection/exchange/list?period=${range}`), {
-      revalidate: false,
-    });
+    setPeriod(range);
   };
-
+  useEffect(() => {
+    const time = convertPeriod(period);
+    if (period === PERIODS[0].value) {
+      setPeriodQuery('');
+    } else {
+      setPeriodQuery(
+        new URLSearchParams({
+          createdAtMax: time.endTime,
+          createdAtMin: time.startTime,
+        } as any).toString(),
+      );
+    }
+  }, [period, setPeriodQuery]);
   const options: ChipOption[] =
     PERIODS?.map((period) => ({
       label: period.title,
@@ -29,7 +40,7 @@ export const TopCollections: FC<TopCollectionsProps> = ({}) => {
   return (
     <Section heading="Top Collections">
       <div className="sm:space-y-7.5 space-y-5">
-        <ChipFilter options={options} onChange={handleChangeTimeRange} />
+        <ChipFilter value={period} options={options} onChange={handleChangeTimeRange} />
         {isError ? (
           <div className={'text-center'}>Oops! Something went wrong</div>
         ) : loading ? (
