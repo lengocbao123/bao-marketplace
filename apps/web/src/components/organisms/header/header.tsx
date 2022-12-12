@@ -1,14 +1,15 @@
 import { Menu, Transition } from '@headlessui/react';
 import clsx from 'clsx';
-import { Avatar, Button, ButtonIcon, ButtonLink, Input } from 'components/atoms';
+import { Avatar, Button, ButtonIcon, ButtonLink } from 'components/atoms';
 import { PikassoColorIcon } from 'components/icons/brand';
-import { EditIcon, PersonIcon, SearchIcon, WalletIcon } from 'components/icons/outline';
+import { EditIcon, PersonIcon, WalletIcon } from 'components/icons/outline';
 import { CaretDownIcon } from 'components/icons/solid';
 import { HamburgerDashboard } from 'components/organisms';
 import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { FC, Fragment, HTMLAttributes } from 'react';
 import { UserData } from 'types/data';
+import { SearchInput } from 'components/molecules/search';
 
 /* ---------------------------------------------------------------------------------------------------------------------
  * User Menu
@@ -133,16 +134,7 @@ export const Header: FC<HeaderProps> = (props) => {
                 Resources
               </Link>
             </nav>
-
-            <div className="ml-auto flex justify-center justify-center lg:hidden">
-              <button>
-                <SearchIcon className={'text-2xl'} />
-              </button>
-            </div>
-
-            <form className={'hidden max-w-xs grow lg:block'}>
-              <Input block type={'search'} trailingVisual={SearchIcon} placeholder={'Search items, collections,....'} />
-            </form>
+            <SearchInput />
           </div>
 
           {!isSignIn ? (

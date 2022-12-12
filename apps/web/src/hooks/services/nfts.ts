@@ -6,7 +6,7 @@ export const useNfts = (query: string) => {
   const { data, error } = useSWR<NftsResponse>(`/nft/exchange/list?${query}`);
 
   return {
-    nfts: data.data,
+    nfts: data ? data.data : null,
     loading: !error && !data,
     error: error || (data && !isSuccess(data.message)),
   };
