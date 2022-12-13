@@ -3,6 +3,7 @@ import { UserData } from './user';
 import { CollectionData } from './collections';
 import { ProjectData } from './projects';
 import { OrderData } from './orders';
+import { Key } from 'react';
 
 export interface NftData {
   id?: string;
@@ -14,7 +15,7 @@ export interface NftData {
   status?: string;
   project?: string;
   nft_type?: string;
-  attributes?: string;
+  attributes?: Property[];
   collection?: string;
   created_at?: string;
   created_by?: string;
@@ -30,6 +31,7 @@ export interface NftData {
   is_put_on_market?: boolean;
 }
 
+export type Property = { name: Key | null | undefined; trait_type: string; value: string };
 export type NftsResponse = BaseListResponse<NftData>;
 
 export interface NftResponse extends BaseResponse {

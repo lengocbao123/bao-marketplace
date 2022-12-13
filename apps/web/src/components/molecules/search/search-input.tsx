@@ -62,7 +62,9 @@ export const SearchInput: React.FC<SearchInputProps> = () => {
         heading={'Search'}
       >
         <div className={'px-2'}>{input}</div>
-        <div className="w-max-sm w-full overflow-y-auto rounded-lg bg-white drop-shadow-2xl">{results}</div>
+        {searchKey && (
+          <div className="w-max-sm w-full overflow-y-auto rounded-lg bg-white drop-shadow-2xl">{results}</div>
+        )}
       </HamburgerSection>
       <div className={'hidden sm:block'}>
         {input}
