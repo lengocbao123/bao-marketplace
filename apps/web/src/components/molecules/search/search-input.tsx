@@ -3,18 +3,18 @@ import { CrossIcon, FilterIcon, SearchIcon } from 'components/icons/outline';
 import { ButtonIcon, Input } from 'components/atoms';
 import { useSearchInput } from 'hooks/use-search-input';
 import { Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useRef } from 'react';
 import { useSearch } from 'hooks/services/search';
-import { SearchResultsSkeleton } from '../skeleton/search-results-skeleton';
 import { SearchResults } from './search-results';
-import { HamburgerSection } from '../section';
+import { HamburgerSection, SearchResultsSkeleton } from 'components/molecules';
 
 export type SearchInputProps = React.HTMLAttributes<HTMLDivElement>;
 
-export const SearchInput: React.FC<SearchInputProps> = (props) => {
+export const SearchInput: React.FC<SearchInputProps> = () => {
   const [isShowingResults, setIsShowingResults] = useState(false);
   const { inputKey, searchKey, setInputKey } = useSearchInput();
-  const { data, loading } = useSearch(!!setInputKey, `q=${searchKey}`);
+  const { data, loading } = useSearch(!!searchKey, searchKey);
+
   const handleChange = (event) => {
     const { value } = event.target;
     setInputKey(value);
@@ -24,15 +24,20 @@ export const SearchInput: React.FC<SearchInputProps> = (props) => {
     setIsShowingResults(false);
     setInputKey('');
   };
+
   const results = (
     <Fragment>
       {loading ? (
         <SearchResultsSkeleton />
       ) : (
         <div>
-          <SearchResults title={'Collections'} />
-          <SearchResults title={'Nfts'} />
-          <SearchResults title={'Accounts'} />
+          {Object.keys(data).length !== 0 ? (
+            Object.keys(data).map((key: string) => {
+              return <SearchResults key={key} title={key} items={data[key]} />;
+            })
+          ) : (
+            <div className={'py-3 text-center'}>There is no available data!</div>
+          )}
         </div>
       )}
     </Fragment>

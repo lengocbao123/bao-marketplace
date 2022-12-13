@@ -1,8 +1,8 @@
 import * as React from 'react';
 
-export type CardPopularSkeletonProps = React.HTMLAttributes<HTMLDivElement>;
+export type SearchResultsSkeletonProps = React.HTMLAttributes<HTMLDivElement>;
 
-export const SearchResultsSkeleton: React.FC<CardPopularSkeletonProps> = () => {
+export const SearchResultsSkeleton: React.FC<SearchResultsSkeletonProps> = () => {
   return (
     <div>
       {Array.from(Array(4).keys()).map((index) => (

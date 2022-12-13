@@ -4,3 +4,4 @@ export * from './nfts';
 export * from './categories';
 export * from './collections';
 export * from './request';
+export * from './search';
