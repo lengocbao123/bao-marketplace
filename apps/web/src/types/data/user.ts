@@ -23,22 +23,21 @@ export interface UserData {
   status?: string;
   bannerUrl?: any;
   avatarUrl?: string;
-  last_name?: string;
-  first_name?: string;
+  avatar?: string;
+  lastName?: string;
+  firstName?: string;
   created_at?: string;
   updated_at?: string;
+  socialAccount?: {
+    website?: string;
+    facebook?: string;
+    twitter?: string;
+    instagram?: string;
+    medium?: string;
+  };
 }
 
 export interface UpdateUserInput extends User {
-  username?: string;
-  email?: string;
-  avatarUrl?: any;
-  bannerUrl?: any;
-  bio?: string;
-  website?: string;
-  facebook?: string;
-  twitter?: string;
-  instagram?: string;
-  medium?: string;
   wallets?: any[];
+  avatar?: any;
 }

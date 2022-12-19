@@ -1,6 +1,7 @@
 import { ButtonLink } from 'components/atoms';
 import { DiscordIcon } from 'components/icons/brand';
 import { Section } from 'components/molecules';
+import { PIKASSO_DISCORD_URL } from 'lib/constants';
 
 export const Community = () => {
   return (
@@ -16,7 +17,7 @@ export const Community = () => {
           </div>
 
           <div className="mx-auto sm:max-w-xs">
-            <ButtonLink icon={DiscordIcon} label="Launch Discord" href={'/'} block />
+            <ButtonLink icon={DiscordIcon} label="Launch Discord" href={PIKASSO_DISCORD_URL} target={'_blank'} block />
           </div>
         </div>
       </Section>

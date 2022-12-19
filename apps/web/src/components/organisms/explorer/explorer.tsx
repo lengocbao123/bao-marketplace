@@ -13,7 +13,7 @@ export const Explorer: FC<ExplorerProps> = ({}) => {
   const { nfts, loading: nftsLoading, error: errorNfts } = useFeatureNfts(`category=${category}`);
 
   if (errorCategories || errorNfts) {
-    return <div>failed to load</div>;
+    return <div className={'text-center'}>Oops! Something went wrong</div>;
   }
 
   const onChangeCategory = (value: string) => {

@@ -6,11 +6,12 @@ export const useSearch = (startSearching: boolean, searchText: string) => {
   const { data, error } = useSWR<SearchResponse>(startSearching ? `/nft/exchange/search?search=${searchText}` : null);
 
   return {
-    data: data
-      ? (parseData(data.data) as {
-          [key: string]: ResultData[];
-        })
-      : null,
+    data:
+      data && isSuccess(data.message)
+        ? (parseData(data.data) as {
+            [key: string]: ResultData[];
+          })
+        : null,
     loading: !error && !data,
     error: error || (data && !isSuccess(data.message)),
   };

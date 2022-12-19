@@ -64,7 +64,7 @@ export const CardNft: FC<CardNftProps> = ({ className, user, link, image, title,
                   <Avatar
                     name={user.username ?? getUsernameFromEmail(user.email)}
                     size="sm"
-                    src={user.avatarUrl}
+                    src={user.ava}
                     onlyAvatar
                     className={'sm:hidden'}
                   />

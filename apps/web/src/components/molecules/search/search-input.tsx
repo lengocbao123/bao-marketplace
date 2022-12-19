@@ -13,7 +13,7 @@ export type SearchInputProps = React.HTMLAttributes<HTMLDivElement>;
 export const SearchInput: React.FC<SearchInputProps> = () => {
   const [isShowingResults, setIsShowingResults] = useState(false);
   const { inputKey, searchKey, setInputKey } = useSearchInput();
-  const { data, loading } = useSearch(!!searchKey, searchKey);
+  const { data, loading, error } = useSearch(!!searchKey, searchKey);
 
   const handleChange = (event) => {
     const { value } = event.target;
@@ -25,7 +25,9 @@ export const SearchInput: React.FC<SearchInputProps> = () => {
     setInputKey('');
   };
 
-  const results = (
+  const results = error ? (
+    <div className={'py-3 text-center'}>Oops! Something went wrong</div>
+  ) : (
     <Fragment>
       {loading ? (
         <SearchResultsSkeleton />

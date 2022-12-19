@@ -2,13 +2,20 @@ import { DefaultSession } from 'next-auth';
 
 declare module 'next-auth' {
   interface User extends DefaultSession['user'] {
-    roles?: any[];
     id?: string;
+    lastName?: string;
+    firstName?: string;
     accessToken: string;
     status?: string;
     username?: string;
-    email?: string;
-    avatarUrl?: string;
+    socialAccount?: {
+      website?: string;
+      facebook?: string;
+      twitter?: string;
+      instagram?: string;
+      medium?: string;
+    };
+    avatar?: string;
   }
 
   interface Session extends DefaultSession {
@@ -19,14 +26,22 @@ declare module 'next-auth' {
 
 declare module 'next-auth/jwt' {
   interface DefaultJWT {
-    avatarUrl?: string;
     accessToken?: string;
-    roles?: any[];
     status?: string;
     username?: string;
     email?: string;
-    id: string;
+    lastName?: string;
+    firstName?: string;
+    socialAccount?: {
+      website?: string;
+      facebook?: string;
+      twitter?: string;
+      instagram?: string;
+      medium?: string;
+    };
+    avatar?: string;
   }
+
   interface JWT extends DefaultJWT {
     id: string;
   }

@@ -29,7 +29,7 @@ export const ContainerInventory: FC<ContainerInventoryProps> = ({ children }) =>
       {user && (
         <ProfileInventory
           banner={user.bannerUrl}
-          avatar={user.avatarUrl}
+          avatar={user.avatar}
           name={user.email}
           // bio={user.}
           joined={format(new Date(user.created_at), 'MM/dd/yyyy')}

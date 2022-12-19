@@ -39,25 +39,33 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.accessToken = String(user.accessToken);
         token.id = user.id;
-        token.roles = user.roles;
         token.status = user.status;
         token.username = user.username;
         token.email = user.email;
-        token.avatarUrl = user.avatarUrl;
+        token.avatar = user.image;
       }
 
       return token;
     },
 
     async session({ session, token }) {
-      session.accessToken = token.accessToken;
-      session.user.id = String(token.id || null);
-      session.user.roles = token.roles || null;
-      session.user.username = token.username || null;
-      session.user.image = token.avatarUrl || null;
-      session.user.status = token.status || null;
+      session.user.avatar = token.avatar || null;
+      session.user.image = token.avatar || null;
       session.user.name = token.username;
       session.user.email = token.email;
+      session.accessToken = token.accessToken;
+      session.user.id = String(token.id || null);
+      session.user.username = token.username || null;
+      session.user.status = token.status || null;
+      session.user.firstName = token.firstName;
+      session.user.lastName = token.lastName;
+      session.user.socialAccount = token.socialAccount || {
+        website: '',
+        facebook: '',
+        twitter: '',
+        instagram: '',
+        medium: '',
+      };
 
       return session;
     },
@@ -86,17 +94,21 @@ export default async function auth(req: NextApiRequest, res: NextApiResponse) {
           const response = await getUserInfo(token.accessToken);
           if (response.data) {
             token.id = response.data.id;
-            token.status = response.data.status;
-            token.avatarUrl = response.data.avatarUrl;
+            token.avatar = response.data.avatar;
+            token.lastName = response.data.lastName;
+            token.firstName = response.data.firstName;
+            token.socialAccount = response.data.socialAccount;
           }
         } else if (user) {
           token.accessToken = String(user.accessToken);
           token.id = user.id;
-          token.roles = user.roles;
           token.email = user.email;
           token.status = user.status;
           token.username = user.username;
-          token.avatarUrl = user.avatarUrl;
+          token.lastName = user.lastName;
+          token.firstName = user.firstName;
+          token.avatar = user.avatar;
+          token.socialAccount = user.socialAccount;
         }
 
         return token;

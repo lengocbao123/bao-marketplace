@@ -40,7 +40,7 @@ export const NftsFilters: FC<NftsFiltersProps> = ({
     return collectionsData;
   };
   if (error) {
-    return <div>failed to load</div>;
+    return <div className={'text-center'}>Oops! Something went wrong</div>;
   }
 
   return (

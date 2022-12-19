@@ -69,13 +69,23 @@ export const resendVerifyEmail = (email: string) => {
 };
 
 export const updateUserInfo = (input: UpdateUserInput, accessToken): Promise<UserResponse> => {
-  return fetch(`${publicRuntimeConfig.apiBaseUrl}/user-info`, {
+  const body = new FormData();
+  body.append('firstName', input.firstName);
+  body.append('lastName', input.lastName);
+  body.append('avatar', input.avatar);
+  body.append('socialAccount.website', input.socialAccount.website);
+  body.append('socialAccount.facebook', input.socialAccount.facebook);
+  body.append('socialAccount.twitter', input.socialAccount.twitter);
+  body.append('socialAccount.instagram', input.socialAccount.instagram);
+  body.append('socialAccount.medium', input.socialAccount.medium);
+
+  return fetch(`${publicRuntimeConfig.apiBaseUrl}/user/update-info`, {
     method: 'PUT',
     headers: {
-      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/json',
       Authorization: `Bearer ${accessToken}`,
     },
-    body: JSON.stringify(input),
+    body,
   })
     .then((data) => {
       return data.json();

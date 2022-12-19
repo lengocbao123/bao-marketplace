@@ -9,14 +9,14 @@ import { useSession } from 'next-auth/react';
 export const useFormCreateProfile = (options: { initialData: UpdateUserInput } & UserForm<UpdateUserInput, any>) => {
   const { data: session } = useSession();
   const schema = yup.object().shape({
-    username: yup.string().required('Please enter your display name.'),
-    email: yup.string().email(),
-    bio: yup.string().max(1200),
-    website: yup.string().nullable().url(),
-    facebook: yup.string().nullable().url(),
-    twitter: yup.string().nullable().url(),
-    instagram: yup.string().nullable().url(),
-    medium: yup.string().nullable().url(),
+
+    socialAccount: yup.object().shape({
+      website: yup.string().url(),
+      facebook: yup.string().url(),
+      twitter: yup.string().url(),
+      instagram: yup.string().url(),
+      medium: yup.string().url(),
+    }),
   });
 
   const defaultValues = useMemo(() => options.initialData, [options.initialData]);
