@@ -1,6 +1,5 @@
-import { SWRInfiniteKeyLoader } from 'swr/infinite/dist/infinite/types';
 import { useSession } from 'next-auth/react';
-import useSWRInfinite from 'swr/infinite';
+import useSWRInfinite, { SWRInfiniteKeyLoader } from 'swr/infinite';
 import { fetcher } from 'lib/utils/fetcher';
 import { PaginationData } from 'types/data';
 
