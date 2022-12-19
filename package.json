@@ -29,12 +29,12 @@
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
     "concurrently": "^7.6.0",
-    "eslint": "^8.28.0",
+    "eslint": "^8.30.0",
     "eslint-config-custom": "workspace:*",
     "husky": "^8.0.2",
     "json-server": "^0.17.1",
-    "prettier": "^2.8.0",
-    "prettier-plugin-tailwindcss": "^0.1.13",
+    "prettier": "^2.8.1",
+    "prettier-plugin-tailwindcss": "^0.2.1",
     "turbo": "^1.6.3"
   },
   "engines": {
