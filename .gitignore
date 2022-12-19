@@ -36,3 +36,6 @@ yarn-error.log*
 # ide
 .idea
 .vscode
+
+# not support
+package-lock.json
