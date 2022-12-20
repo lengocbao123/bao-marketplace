@@ -10,7 +10,7 @@ import { FacebookIcon, InstagramIcon, MediumIcon, TwitterIcon } from 'components
 import { PlusIcon } from 'components/icons/outline';
 import { BrowserIcon } from 'components/icons/solid';
 import { Layout } from 'components/layouts';
-import { CardPaymentMethod, FileImage } from 'components/molecules';
+import { CardPaymentMethod, FileImage, SocialLinkTextField } from 'components/molecules';
 import { useFormCreateProfile } from 'hooks/form/use-form-create-profile';
 import { convertImageUrlToFile } from 'lib/utils/navigator';
 import { redirectIfUnverified } from 'lib/utils/server';
@@ -19,7 +19,6 @@ import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { NextPageWithLayout } from 'pages/_app';
 import { UpdateUserInput } from 'types/data';
 import { useSession } from 'next-auth/react';
-import Link from 'next/link';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
@@ -80,6 +79,7 @@ const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSer
       wallets.filter((item) => item.walletAddress !== walletId),
     );
   };
+  console.log({ errors });
 
   return (
     <Fragment>
@@ -138,86 +138,54 @@ const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSer
           {/*</div>*/}
 
           <div className="mt-7 text-base font-semibold sm:text-base">Links</div>
-          <div className="border-neutral-10 mt-1 flex w-full flex-col rounded-xl border text-neutral-50">
-            <div className={'border-neutral-10 flex h-10 w-full border-b'}>
-              <div className={'border-neutral-10 flex w-12 items-center justify-center border-r'}>
-                <Link target={'_blank'} className={'hover:text-accent-info'} href={user.socialAccount.website || ''}>
-                  <BrowserIcon height={20} width={20} />
-                </Link>
-              </div>
-
-              <div
-                className={clsx(errors?.socialAccount?.message && 'border-accent-error border', 'h-full w-full px-3')}
-              >
-                <input
-                  placeholder={'yoursite.io'}
-                  className={clsx('text-neutral h-full w-full text-sm font-medium outline-none')}
-                  {...register('socialAccount.website')}
-                />
-              </div>
-            </div>
-
-            <div className={'border-neutral-10 flex h-10 w-full border-b'}>
-              <div className={'border-neutral-10 flex w-12 items-center justify-center border-r'}>
-                <Link target={'_blank'} className={'hover:text-accent-info'} href={user.socialAccount.facebook || ''}>
-                  <FacebookIcon height={20} width={20} />
-                </Link>
-              </div>
-
-              <div className={'h-full w-full px-3'}>
-                <input
-                  placeholder={'https://www.facebook.com/yourfacebook'}
-                  className={'text-neutral h-full w-full text-sm font-medium outline-none'}
-                  {...register('socialAccount.facebook')}
-                />
-              </div>
-            </div>
-
-            <div className={'border-neutral-10 flex h-10 w-full border-b'}>
-              <div className={'border-neutral-10 flex w-12 items-center justify-center border-r'}>
-                <Link target={'_blank'} className={'hover:text-accent-info'} href={user.socialAccount.twitter || ''}>
-                  <TwitterIcon height={20} width={20} />
-                </Link>
-              </div>
-
-              <div className={'h-full w-full px-3'}>
-                <input
-                  placeholder={'@YourTwitterHandle'}
-                  className={'text-neutral h-full w-full text-sm font-medium outline-none'}
-                  {...register('socialAccount.twitter')}
-                />
-              </div>
-            </div>
-
-            <div className={'border-neutral-10 flex h-10 w-full border-b'}>
-              <div className={'border-neutral-10 flex w-12 items-center justify-center border-r'}>
-                <Link target={'_blank'} className={'hover:text-accent-info'} href={user.socialAccount.instagram || ''}>
-                  <InstagramIcon height={20} width={20} />
-                </Link>
-              </div>
-              <div className={'h-full w-full px-3'}>
-                <input
-                  placeholder={'@YourInstagramHandle'}
-                  className={'text-neutral h-full w-full text-sm font-medium outline-none'}
-                  {...register('socialAccount.instagram')}
-                />
-              </div>
-            </div>
-
-            <div className={'flex h-10 w-full'}>
-              <div className={'border-neutral-10 flex w-12 items-center justify-center border-r'}>
-                <Link target={'_blank'} className={'hover:text-accent-info'} href={user.socialAccount.medium || ''}>
-                  <MediumIcon height={20} width={20} />
-                </Link>
-              </div>
-              <div className={'h-full w-full px-3'}>
-                <input
-                  placeholder={'@YourMediumHandle'}
-                  className={'text-neutral h-full w-full text-sm font-medium outline-none'}
-                  {...register('socialAccount.medium')}
-                />
-              </div>
-            </div>
+          <div className="border-neutral-10 mt-1 flex w-full flex-col overflow-hidden rounded-xl border text-neutral-50">
+            <SocialLinkTextField
+              className={'border-neutral-10 flex h-10 w-full border-b'}
+              url={user.socialAccount.website || ''}
+              error={!!errors?.socialAccount && !!errors?.socialAccount.website}
+              icon={BrowserIcon}
+              inputProps={{ ...register('socialAccount.website') }}
+            />
+            <SocialLinkTextField
+              className={'border-neutral-10 flex h-10 w-full border-b'}
+              url={user.socialAccount.facebook || ''}
+              error={!!errors?.socialAccount && !!errors?.socialAccount.facebook}
+              icon={FacebookIcon}
+              inputProps={{
+                ...register('socialAccount.facebook'),
+                placeholder: 'https://www.facebook.com/yourfacebook',
+              }}
+            />
+            <SocialLinkTextField
+              className={'border-neutral-10 flex h-10 w-full border-b'}
+              url={user.socialAccount.twitter || ''}
+              error={!!errors?.socialAccount && !!errors?.socialAccount.twitter}
+              icon={TwitterIcon}
+              inputProps={{
+                ...register('socialAccount.twitter'),
+                placeholder: '@YourTwitter',
+              }}
+            />
+            <SocialLinkTextField
+              className={'border-neutral-10 flex h-10 w-full border-b'}
+              url={user.socialAccount.instagram || ''}
+              error={!!errors?.socialAccount && !!errors?.socialAccount.instagram}
+              icon={InstagramIcon}
+              inputProps={{
+                ...register('socialAccount.instagram'),
+                placeholder: '@YourInstagram',
+              }}
+            />
+            <SocialLinkTextField
+              className={'border-neutral-10 flex h-10 w-full border-b'}
+              url={user.socialAccount.medium || ''}
+              error={!!errors?.socialAccount && !!errors?.socialAccount.medium}
+              icon={MediumIcon}
+              inputProps={{
+                ...register('socialAccount.medium'),
+                placeholder: '@YourMedium',
+              }}
+            />
           </div>
 
           <div className="mt-7.5 flex w-full justify-between">

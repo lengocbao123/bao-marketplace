@@ -4,6 +4,7 @@ import { FC, HTMLAttributes } from 'react';
 import { DiscordIcon, MediumIcon, TwitterIcon } from 'components/icons/brand';
 import { LinkIcon } from 'components/icons/outline';
 import { FormSubscribe } from 'components/molecules/form';
+import { PIKASSO_DISCORD_URL } from 'lib/constants';
 
 export type FooterProps = HTMLAttributes<HTMLElement>;
 
@@ -47,37 +48,37 @@ export const Footer: FC<FooterProps> = (props) => {
                 <nav>
                   <ul className={'space-y-3 text-sm font-medium'}>
                     <li>
-                      <Link href={'/'} className={'hover:text-neutral-0'}>
+                      <Link href={'/nfts'} className={'hover:text-neutral-0'}>
                         <span>All NFTs</span>
                       </Link>
                     </li>
                     <li>
-                      <Link href={'/'} className={'hover:text-neutral-0'}>
+                      <Link href={'/nfts?category='} className={'hover:text-neutral-0'}>
                         <span>Art</span>
                       </Link>
                     </li>
                     <li>
-                      <Link href={'/'} className={'hover:text-neutral-0'}>
+                      <Link href={'/nfts?category=photography'} className={'hover:text-neutral-0'}>
                         <span>Photography</span>
                       </Link>
                     </li>
                     <li>
-                      <Link href={'/'} className={'hover:text-neutral-0'}>
+                      <Link href={'/nfts?category=metaverses'} className={'hover:text-neutral-0'}>
                         <span>Metaverses</span>
                       </Link>
                     </li>
                     <li>
-                      <Link href={'/'} className={'hover:text-neutral-0'}>
+                      <Link href={'/nfts?category=music'} className={'hover:text-neutral-0'}>
                         <span>Music</span>
                       </Link>
                     </li>
                     <li>
-                      <Link href={'/'} className={'hover:text-neutral-0'}>
+                      <Link href={'/nfts?category=sports'} className={'hover:text-neutral-0'}>
                         <span>Sports</span>
                       </Link>
                     </li>
                     <li>
-                      <Link href={'/'} className={'hover:text-neutral-0'}>
+                      <Link href={'/nfts?category=games'} className={'hover:text-neutral-0'}>
                         <span>Games</span>
                       </Link>
                     </li>
@@ -140,7 +141,7 @@ export const Footer: FC<FooterProps> = (props) => {
                     <ul className={'flex gap-3'}>
                       <li>
                         <Link
-                          href={'https://discord.gg/E83XENYZrg'}
+                          href={PIKASSO_DISCORD_URL}
                           className={'hover:text-neutral-0'}
                           target={'_blank'}
                           rel={'nofollow'}

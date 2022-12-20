@@ -9,13 +9,12 @@ import { useSession } from 'next-auth/react';
 export const useFormCreateProfile = (options: { initialData: UpdateUserInput } & UserForm<UpdateUserInput, any>) => {
   const { data: session } = useSession();
   const schema = yup.object().shape({
-
     socialAccount: yup.object().shape({
-      website: yup.string().url(),
-      facebook: yup.string().url(),
-      twitter: yup.string().url(),
-      instagram: yup.string().url(),
-      medium: yup.string().url(),
+      website: yup.string().url('Invalid URL'),
+      facebook: yup.string().url('Invalid URL'),
+      twitter: yup.string().url('Invalid URL'),
+      instagram: yup.string().url('Invalid URL'),
+      medium: yup.string().url('Invalid URL'),
     }),
   });
 
