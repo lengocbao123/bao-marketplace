@@ -11,7 +11,7 @@ export interface SocialLinkTextFieldProps extends React.HTMLAttributes<HTMLDivEl
 }
 
 export const SocialLinkTextField: React.FC<SocialLinkTextFieldProps> = (props) => {
-  const { url, icon, error = false, inputProps ,className} = props;
+  const { url, icon, error = false, inputProps, className } = props;
   const Icon = icon;
 
   return (

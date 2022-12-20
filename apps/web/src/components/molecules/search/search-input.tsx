@@ -3,7 +3,7 @@ import { CrossIcon, FilterIcon, SearchIcon } from 'components/icons/outline';
 import { ButtonIcon, Input } from 'components/atoms';
 import { useSearchInput } from 'hooks/use-search-input';
 import { Transition } from '@headlessui/react';
-import { Fragment, useState, useRef } from 'react';
+import { Fragment, useState } from 'react';
 import { useSearch } from 'hooks/services/search';
 import { SearchResults } from './search-results';
 import { HamburgerSection, SearchResultsSkeleton } from 'components/molecules';

@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import { NextSeo } from 'next-seo';
