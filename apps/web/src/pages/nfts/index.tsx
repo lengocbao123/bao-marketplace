@@ -67,7 +67,7 @@ const ExplorePage: NextPageWithLayout = ({
   ].map((item) => ({
     label: item.name,
     value: item.code,
-    active: (item.code === 'all' && !query.category) || item.id === query.category,
+    active: (item.code === 'all' && !query.category) || item.code === query.category,
   }));
 
   return (

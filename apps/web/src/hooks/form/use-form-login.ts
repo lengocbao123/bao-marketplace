@@ -40,7 +40,8 @@ export const useFormLogin = (options: { initialData?: UseFormLogin } & UserForm<
         redirect: false,
         callbackUrl: callbackUrl || '/',
       });
-      if (result.ok) {
+
+      if (result.ok && !result.error) {
         await router.replace(result?.url || '/') /* .then(router.reload) */;
       } else {
         await options?.onError?.(`StatusCode: ${result.status}. message: ${result.error}`);

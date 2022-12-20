@@ -6,7 +6,7 @@ export const useCategories = () => {
   const { data, error } = useSWR<CategoriesResponse>('/category/list');
 
   return {
-    categories: data.data,
+    categories: data && isSuccess(data.message) ? data.data : null,
     loading: !error && !data,
     error: error || (data && !isSuccess(data.message)),
   };

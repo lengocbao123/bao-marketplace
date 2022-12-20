@@ -55,7 +55,7 @@ export const SearchItem: React.FC<SearchItemProps> = ({ item }) => {
       )}
       <div className={'truncate'}>
         <div>{item.data.name}</div>
-        <small dangerouslySetInnerHTML={{ __html: getHighlight(item.highlight) }}></small>
+        {item.highlight && <small dangerouslySetInnerHTML={{ __html: getHighlight(item.highlight) }}></small>}
       </div>
     </Link>
   );

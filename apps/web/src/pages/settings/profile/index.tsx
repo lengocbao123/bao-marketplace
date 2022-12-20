@@ -18,6 +18,7 @@ import { authOptions } from 'pages/api/auth/[...nextauth]';
 import { NextPageWithLayout } from 'pages/_app';
 import { UpdateUserInput } from 'types/data';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
@@ -36,6 +37,7 @@ const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSer
   const [avatarUrl, setAvatarUrl] = useState<any>(null);
   const [isEnable, setIsEnable] = useState(false);
   const [wallets, setWallets] = useState<any[]>([]);
+  const router = useRouter();
   const { data: session } = useSession();
   const user: UpdateUserInput = session?.user;
   const {
@@ -51,6 +53,7 @@ const Index: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSer
     onSuccess: async () => {
       await refreshUserProfile(false);
       toast.success('Your profile has been updated!');
+      router.reload();
     },
     onError: (error) => {
       toast.error(error);
