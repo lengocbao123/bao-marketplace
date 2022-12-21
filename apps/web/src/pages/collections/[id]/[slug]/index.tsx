@@ -57,7 +57,7 @@ const Home: NextPageWithLayout = ({ id, nftsQueryString }: InferGetServerSidePro
   const { collection, loading: collectionLoading, error: errorCollection } = useCollectionById(id);
   const { nfts, loading: nftsLoading, error: errorNfts } = useNftsByCollectionId(id, nftsQueryString);
   const router = useRouter();
-  const { query, convertedQuery, handleChange, resetFilter } = useFilter(router.query);
+  const { convertedQuery, handleChange, resetFilter } = useFilter(router.query);
 
   if (errorCollection || errorNfts) {
     return <Error />;
