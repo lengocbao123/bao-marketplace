@@ -58,23 +58,6 @@ const Home: NextPageWithLayout = ({ id, nftsQueryString }: InferGetServerSidePro
   const { nfts, loading: nftsLoading, error: errorNfts } = useNftsByCollectionId(id, nftsQueryString);
   const router = useRouter();
   const { query, convertedQuery, handleChange, resetFilter } = useFilter(router.query);
-  const tabs = [
-    {
-      value: 'on-sale',
-      label: 'On Sale',
-      active: query.filter === 'on-sale',
-    },
-    {
-      value: 'live-auction',
-      label: 'Live Auction',
-      active: query.filter === 'live-auction',
-    },
-    {
-      value: 'unlisted',
-      label: 'Unlisted',
-      active: query.filter === 'unlisted',
-    },
-  ];
 
   if (errorCollection || errorNfts) {
     return <Error />;
@@ -101,9 +84,9 @@ const Home: NextPageWithLayout = ({ id, nftsQueryString }: InferGetServerSidePro
           filtersComponent={
             <NftsFilters fields={['status', 'chain', 'price']} filter={convertedQuery} onChange={handleChange} />
           }
-          tabs={tabs}
+          tabs={[]}
           filter={convertedQuery}
-          tabsClassName="border-neutral-10 mb-7.5 bottom-1 flex justify-start border-b"
+          tabsClassName="border-neutral-10 my-7.5 bottom-1 flex justify-start border-b"
           onResetFilter={resetFilter}
           onChangeFilter={handleChange}
         >

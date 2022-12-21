@@ -2823,7 +2823,7 @@ packages:
     dependencies:
       '@coinbase/wallet-sdk': 3.6.3_@babel+core@7.20.5
       '@ledgerhq/connect-kit-loader': 1.0.1
-      '@wagmi/core': 0.8.5_e2yja5xqlu2mtzrtxmbqr4hoii
+      '@wagmi/core': 0.8.5_hblhv2k3vhenzdkbielvjtutq4
       '@walletconnect/ethereum-provider': 1.8.0
       abitype: 0.1.8_typescript@4.9.4
       ethers: 5.7.2
@@ -2838,7 +2838,7 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@wagmi/core/0.8.5_e2yja5xqlu2mtzrtxmbqr4hoii:
+  /@wagmi/core/0.8.5_hblhv2k3vhenzdkbielvjtutq4:
     resolution: {integrity: sha512-+oUQvJTs81QeD/vXqrhCSNVIiQy27yeHFiCWeDrvYZNyagp+8JO3wDom0pEd4UqEqhzHvFzAcHTmPWEq88B5uA==}
     peerDependencies:
       '@coinbase/wallet-sdk': '>=3.6.0'
@@ -2850,10 +2850,8 @@ packages:
       '@walletconnect/ethereum-provider':
         optional: true
     dependencies:
-      '@coinbase/wallet-sdk': 3.6.3_@babel+core@7.20.5
       '@wagmi/chains': 0.1.5
       '@wagmi/connectors': 0.1.2_cvqbqrtdr4etz74psdzarhksgm
-      '@walletconnect/ethereum-provider': 1.8.0
       abitype: 0.2.5_typescript@4.9.4
       ethers: 5.7.2
       eventemitter3: 4.0.7
@@ -8359,7 +8357,7 @@ packages:
       '@tanstack/query-sync-storage-persister': 4.20.4_yfxhplab6ibzeoxkk4xh5zjcde
       '@tanstack/react-query': 4.20.4_biqbaboplfbrettd7655fr4n2y
       '@tanstack/react-query-persist-client': 4.20.4_eyb6fqnw54pdcz7v4msrhcc35i
-      '@wagmi/core': 0.8.5_e2yja5xqlu2mtzrtxmbqr4hoii
+      '@wagmi/core': 0.8.5_hblhv2k3vhenzdkbielvjtutq4
       '@walletconnect/ethereum-provider': 1.8.0
       abitype: 0.2.5_typescript@4.9.4
       ethers: 5.7.2
