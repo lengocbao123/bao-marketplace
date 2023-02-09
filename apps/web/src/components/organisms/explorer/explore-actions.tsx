@@ -9,14 +9,14 @@ const SORT_OPTIONS: SelectOption[] = [
     value: 'recently_listed',
     label: 'Recently Listed',
   },
-  {
-    value: 'price_low_to_high',
-    label: 'Price: Low to High',
-  },
-  {
-    value: 'price_high_to_low',
-    label: 'Price: High to Low',
-  },
+  // {
+  //   value: 'price_low_to_high',
+  //   label: 'Price: Low to High',
+  // },
+  // {
+  //   value: 'price_high_to_low',
+  //   label: 'Price: High to Low',
+  // },
 ];
 
 export interface ExploreActionsProps extends HTMLAttributes<HTMLDivElement> {

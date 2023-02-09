@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { FC, Fragment, HTMLAttributes } from 'react';
 import { UserData } from 'types/data';
 import { SearchInput } from 'components/molecules/search';
+import getConfig from 'next/config';
 
 /* ---------------------------------------------------------------------------------------------------------------------
  * User Menu
@@ -18,6 +19,7 @@ export interface HeaderUserMenuProps extends HTMLAttributes<HTMLElement> {
   user: UserData;
 }
 
+const { publicRuntimeConfig } = getConfig();
 const HeaderUserMenu: FC<HeaderUserMenuProps> = ({ user }) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -130,9 +132,6 @@ export const Header: FC<HeaderProps> = (props) => {
               <Link className={'px-2.5'} href={'/collections'}>
                 Collection
               </Link>
-              <Link className={'px-2.5'} href={'/'}>
-                Resources
-              </Link>
             </nav>
             <SearchInput />
           </div>
@@ -151,17 +150,27 @@ export const Header: FC<HeaderProps> = (props) => {
             <div className="flex items-center">
               <div className="sm:mr-5">
                 <div className={'hidden lg:block xl:hidden'}>
-                  <ButtonIcon variant={'tertiary'} icon={EditIcon} title={'Create'} />
+                  <ButtonLink
+                    href={`${publicRuntimeConfig.builderUrl}/projects/my-projects`}
+                    variant={'tertiary'}
+                    icon={EditIcon}
+                    title={'Create'}
+                  />
                 </div>
 
                 <div className={'hidden sm:block lg:hidden xl:block'}>
-                  <Button label={'Create'} />
+                  <ButtonLink
+                    href={`${publicRuntimeConfig.builderUrl}/projects/my-projects`}
+                    target='_blank'
+                    variant={'primary'}
+                    label={'Create'}
+                  />
                 </div>
               </div>
 
-              <div className={'hidden sm:mr-5 sm:block'}>
-                <ButtonIcon variant={'tertiary'} icon={WalletIcon} title={'Wallet'} />
-              </div>
+              {/*<div className={'hidden sm:mr-5 sm:block'}>*/}
+              {/*  <ButtonIcon variant={'tertiary'} icon={WalletIcon} title={'Wallet'} />*/}
+              {/*</div>*/}
 
               <HeaderUserMenu user={data.user} />
             </div>

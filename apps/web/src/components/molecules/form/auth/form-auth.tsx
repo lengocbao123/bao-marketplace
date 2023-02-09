@@ -24,12 +24,12 @@ export const FormAuth: FC<FormAuthProps> = ({ children, footer, title }) => {
         </Link>
       </p>
       {children}
-      <div className={'mt-5 flex items-center'}>
+      <div className={'hidden mt-5 flex items-center'}>
         <hr className={'flex-1'} />
         <div className={'text-neutral-30 px-3 text-xs sm:text-sm md:text-base'}>Or continue with</div>
         <hr className={'flex-1'} />
       </div>
-      <div className={'mt-5 flex justify-center gap-5'}>
+      <div className={'hidden mt-5 flex justify-center gap-5'}>
         <ButtonIcon icon={GoogleIcon} variant={'tertiary'} />
         <ButtonIcon icon={TwitterIcon} variant={'tertiary'} />
         <ButtonIcon icon={FacebookIcon} variant={'tertiary'} />

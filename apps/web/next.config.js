@@ -14,6 +14,7 @@ const nextConfig = {
     // Will be available on both server and client
     googleTagManagerId: process.env.NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID,
     apiBaseUrl: process.env.OPENAPI_BASE_URL,
+    builderUrl: process.env.BUILDER_URL,
   },
   serverRuntimeConfig: {
     encryptionSecret: process.env.ENCRYPTION_SECRET,

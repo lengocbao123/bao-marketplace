@@ -45,9 +45,9 @@ export const NftsFilters: FC<NftsFiltersProps> = ({
 
   return (
     <div className={clsx('flex min-h-screen flex-col items-start justify-start divide-y', className)}>
-      {fields.includes('status') && (
-        <CheckboxFilter name="status" heading="Status" options={STATUS} onChange={onChange} values={filter.status} />
-      )}
+      {/*{fields.includes('status') && (*/}
+      {/*  <CheckboxFilter name="status" heading="Status" options={STATUS} onChange={onChange} values={filter.status} />*/}
+      {/*)}*/}
       {fields.includes('chain') && (
         <CheckboxFilter
           name="chain"

@@ -60,8 +60,8 @@ const SignIn: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getSe
             {...register('username')}
             error={errors?.username?.message}
             className={'mt-10'}
-            title={'Username'}
-            placeholder={'example'}
+            title={'Email'}
+            placeholder={'example@gmail.com'}
             type={'text'}
             block
           />
