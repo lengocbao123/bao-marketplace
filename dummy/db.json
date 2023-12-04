@@ -1,0 +1,43 @@
+{
+    "user":[
+    
+    {    "id": "56b64212-8f29-11ee-b9d1-0242ac120002",
+        "email": "tvkhanh1994vn@gmail.com",
+        "username": "tvkhanh1994vn",
+        "status": "string",
+        "bannerUrl": "https://ik.imagekit.io/gsozk5bngn/Rectangle_3551_yJjRJu9eC.svg",
+        "avatarUrl": "https://ik.imagekit.io/gsozk5bngn/Rectangle_3551_yJjRJu9eC.svg",
+        "avatar": "string",
+        "lastName": "Pow",
+        "firstName": "Le",
+        "created_at": "Wed Feb 11 1987 00:00:00",
+        "updated_at": "Wed Feb 11 1987 00:00:00",
+        "socialAccount": {
+          "website": "",
+          "facebook": "",
+          "twitter": "",
+          "instagram": "",
+          "medium": ""
+        }}
+    ],
+    "collections":[
+        {
+            "id": "5c36ba16-8f27-11ee-b9d1-0242ac120002",
+            "name": "Paragon Riftwalkers",
+            "chain": "testnet",
+            "project": "string",
+            "category": [],
+            "created_at": "Wed Feb 11 1987 00:00:00",
+            "created_by": "string",
+            "logo_image": "string",
+            "owner_info": UserData,
+            "updated_at": "string",
+            "description": "string",
+            "banner_image": "string",
+            "featured_image": "string",
+            "created_by_info": UserData,
+            "nft_contract_address": "string",
+            "total_nft": number,
+        }
+    ]
+}

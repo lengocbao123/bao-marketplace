@@ -4,37 +4,34 @@ import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
 import { unstable_getServerSession } from 'next-auth';
 import { NextPageWithLayout } from './_app';
 import { authOptions } from './api/auth/[...nextauth]';
-import { getCategories, getFeatureNfts, getPopularCollections, getTopCollections } from 'services';
+import prisma from 'lib/prismadb';
 
 export const getServerSideProps: GetServerSideProps = async ({ req, res }) => {
   const session = await unstable_getServerSession(req, res, authOptions);
-  const [categories, nfts, collections, topCollections] = await Promise.all([
-    getCategories(session),
-    getFeatureNfts(session, 'category='),
-    getPopularCollections(session),
-    getTopCollections(session, 'period=24h'),
+  const [collections, topCollections] = await Promise.all([
+    prisma.collection.findMany({ take: 10 }),
+    prisma.collection.findMany({ take: 10 }),
   ]);
 
   return {
     props: {
       session,
-      fallback: {
-        '/category/list': categories,
-        '/nft/exchange/list?limit=8&category=': nfts,
-        '/collection/exchange/list': collections,
-        '/collection/exchange/list?': topCollections,
-      },
+      collections: JSON.stringify(collections),
+      topCollections: JSON.stringify(topCollections),
     },
   };
 };
 
-const Home: NextPageWithLayout = ({}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+const Home: NextPageWithLayout = ({
+  collections,
+  topCollections,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   return (
-    <div className={'space-y-10 sm:space-y-20'}>
+    <div className="space-y-10 sm:space-y-20">
       <Hero />
       <Explorer />
-      <PopularCollections />
-      <TopCollections />
+      <PopularCollections collections={JSON.parse(collections)} />
+      <TopCollections collections={JSON.parse(topCollections)} />
       <Instruction />
       <Community />
     </div>

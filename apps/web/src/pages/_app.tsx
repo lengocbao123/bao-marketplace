@@ -1,6 +1,5 @@
 import ProgressBar from '@badrap/bar-of-progress';
 import { GTM_ID, pageView } from 'lib/gtm';
-import { fetcher } from 'lib/utils/fetcher';
 import { NextPage } from 'next';
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
@@ -12,8 +11,8 @@ import Script from 'next/script';
 import { Fragment, ReactElement, ReactNode, useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import 'styles/globals.css';
-import { SWRConfig } from 'swr';
 import nextSeoConfig from '../../next-seo.config';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 const progress = new ProgressBar({
   size: 2,
@@ -21,7 +20,8 @@ const progress = new ProgressBar({
   className: 'bar-of-progress',
   delay: 100,
 });
-
+// Create a client
+const queryClient = new QueryClient();
 Router.events.on('routeChangeStart', progress.start);
 Router.events.on('routeChangeComplete', progress.finish);
 Router.events.on('routeChangeError', progress.finish);
@@ -78,10 +78,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout<PageP
           __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer', '${GTM_ID}');`,
         }}
       />
-
-      <SWRConfig
-        value={{ fetcher: fetcher(pageProps.session), fallback: pageProps.fallback || {}, revalidateOnFocus: true }}
-      >
+      <QueryClientProvider client={queryClient}>
         <SessionProvider session={pageProps.session}>
           <DefaultSeo {...nextSeoConfig} />
 
@@ -89,7 +86,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout<PageP
 
           <Toaster />
         </SessionProvider>
-      </SWRConfig>
+      </QueryClientProvider>
     </Fragment>
   );
 }

@@ -3,11 +3,11 @@ import Link from 'next/link';
 import { FC, HTMLAttributes } from 'react';
 import { ChevronRightIcon } from 'components/icons/outline';
 import { convertToSlug } from '../../../lib/utils/string';
-import { CollectionData } from '../../../types/data';
+import { Collection } from '@prisma/client';
 
 export interface ProductSectionProps extends HTMLAttributes<HTMLDivElement> {
   title?: string;
-  collection?: CollectionData;
+  collection?: Collection;
 }
 
 export const ProductSection: FC<ProductSectionProps> = ({ collection, className, title, children, ...rest }) => {

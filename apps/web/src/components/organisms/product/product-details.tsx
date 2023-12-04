@@ -2,10 +2,10 @@ import clsx from 'clsx';
 import { FC, HTMLAttributes } from 'react';
 import { getShortAddress } from 'lib/utils/string';
 import { AccordionSection, TableInfoRow } from 'components/molecules';
-import { NftData } from '../../../types/data';
+import { Collection, Nft, User } from '@prisma/client';
 
 export interface ProductDetailsProps extends HTMLAttributes<HTMLDivElement> {
-  nft: NftData;
+  nft: Nft & { collection: Collection; user: User };
 }
 
 export const ProductDetails: FC<ProductDetailsProps> = ({ nft, className, ...rest }) => {
@@ -18,15 +18,10 @@ export const ProductDetails: FC<ProductDetailsProps> = ({ nft, className, ...res
       >
         <table className={'w-full text-sm'}>
           <tbody>
-            <TableInfoRow
-              label={'Contract Address'}
-              value={getShortAddress(nft.collection_info.nft_contract_address)}
-            />
-            <TableInfoRow label={'Token ID'} value={nft.nft_id.toString()} />
+            <TableInfoRow label={'Contract Address'} value={getShortAddress(nft.collection.nft_contract_address)} />
+            <TableInfoRow label={'Token ID'} value={nft.id} />
             <TableInfoRow className={'uppercase'} label={'Token Standard'} value={nft.nft_type} />
-            <TableInfoRow className={'capitalize'} label={'Blockchain'} value={nft.collection_info.chain} />
-            {/*<TableInfoRow label={'Metadata'} value={'Centralized'} />*/}
-            {/*<TableInfoRow label={'Creator Fees'} value={'0%'} />*/}
+            <TableInfoRow className={'capitalize'} label={'Blockchain'} value={nft.collection.chain} />
           </tbody>
         </table>
       </AccordionSection>

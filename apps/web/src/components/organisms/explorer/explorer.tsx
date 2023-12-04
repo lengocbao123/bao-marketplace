@@ -1,67 +1,70 @@
 import { ButtonLink, ListItem } from 'components/atoms';
 import { CardNft, ChipFilter, ChipOption, ListNftsSkeleton, Section } from 'components/molecules';
-import { FC, HTMLAttributes, useState } from 'react';
+import { FC, HTMLAttributes, useMemo, useState } from 'react';
 import { convertToSlug } from 'lib/utils/string';
-import { getNftPrice } from 'lib/utils/nft';
-import { useCategories, useFeatureNfts } from 'hooks/services';
-
-export type ExplorerProps = HTMLAttributes<HTMLElement>;
+import { Category, Collection, Nft, User } from '@prisma/client';
+import { useQuery } from '@tanstack/react-query';
+import { fetcher } from 'lib/utils/fetcher';
+export type ExplorerProps = HTMLAttributes<HTMLElement> & {};
 
 export const Explorer: FC<ExplorerProps> = ({}) => {
-  const { categories, error: errorCategories } = useCategories();
   const [category, setCategory] = useState('');
-  const { nfts, loading: nftsLoading, error: errorNfts } = useFeatureNfts(`category=${category}`);
+  const { data: nfts, isLoading: isLoadingNfts } = useQuery({
+    queryKey: [`/nft?category=${category}`],
+    queryFn: () => {
+      return fetcher<{ data: Array<Nft & { user: User; collection: Collection }>; page: number; totalPages: number }>(
+        `/nft?category=${category}`,
+      );
+    },
+  });
+  const { data: categories } = useQuery({
+    queryKey: [`/category`],
+    queryFn: () => {
+      return fetcher<Array<Category>>(`/category`);
+    },
+  });
+  const options = useMemo<ChipOption[]>(() => {
+    if (!categories) {
+      return [];
+    }
 
-  if (errorCategories || errorNfts) {
-    return <div className={'text-center'}>Oops! Something went wrong</div>;
-  }
+    return [
+      {
+        label: 'All',
+        value: '',
+      },
+      ...categories.map((category) => ({
+        label: category.name,
+        value: category.id,
+      })),
+    ];
+  }, [categories]);
 
   const onChangeCategory = (value: string) => {
     setCategory(value);
   };
 
-  let options: ChipOption[] = [
-    {
-      label: 'All',
-      value: '',
-    },
-  ];
-  options = [
-    ...options,
-    ...(categories.map((category) => ({
-      label: category.name,
-      value: category.code,
-    })) || []),
-  ];
-
   return (
     <Section heading="Explore The Marketplace" lead="Discover NFTs">
       <div className="sm:space-y-7.5 space-y-5">
         <ChipFilter value={category} options={options} onChange={onChangeCategory} />
-
-        {!nftsLoading ? (
-          <ListItem>
-            {nfts.list.map((nft) => {
-              const nftPrice = getNftPrice(nft.orders);
-
+        <ListItem>
+          {isLoadingNfts && <ListNftsSkeleton number={8} />}
+          {nfts &&
+            nfts.data.map((nft) => {
               return (
                 <CardNft
                   key={nft.id}
                   link={{ as: `/nfts/${nft.id}/${convertToSlug(nft.name)}`, href: '/nfts/[id]/[slug]' }}
                   image={nft.image}
                   title={nft.name}
-                  subtitle={nft.collection_info.name}
-                  price={nftPrice ? nftPrice.price : null}
-                  user={nft.created_by_info}
+                  subtitle={nft.collection.name}
+                  price={null}
+                  user={nft.user}
                 />
               );
             })}
-          </ListItem>
-        ) : (
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4">
-            <ListNftsSkeleton number={8} />
-          </div>
-        )}
+        </ListItem>
 
         <div className="flex justify-center">
           <ButtonLink variant="tertiary" label="View more" href={'/nfts'} />

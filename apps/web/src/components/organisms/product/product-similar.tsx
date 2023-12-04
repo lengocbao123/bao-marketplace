@@ -1,13 +1,12 @@
 import { CardNft, ProductSection, ListNftsSkeleton } from 'components/molecules';
 import clsx from 'clsx';
 import { FC, HTMLAttributes } from 'react';
-import { CollectionData, NftData } from 'types';
 import { convertToSlug } from 'lib/utils/string';
-import { getNftPrice } from 'lib/utils/nft';
+import { Collection, Nft, User } from '@prisma/client';
 
 export interface ProductSimilarProps extends HTMLAttributes<HTMLDivElement> {
-  products?: NftData[];
-  collection?: CollectionData;
+  products?: Array<Nft & { collection: Collection; user: User }>;
+  collection?: Collection;
   loading?: boolean;
   isError?: boolean;
 }
@@ -29,17 +28,15 @@ export const ProductSimilar: FC<ProductSimilarProps> = ({
           <ListNftsSkeleton className="grid grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-4" number={4} />
         ) : products.length > 0 ? (
           products.map((product, index) => {
-            const nftPrice = getNftPrice(product.orders);
-
             return (
               <CardNft
                 key={index}
                 title={product.name}
-                subtitle={product.collection_info.name}
-                price={nftPrice ? nftPrice.price : null}
+                subtitle={product.collection.name}
+                price={null}
                 image={product.image}
                 link={{ as: `/nfts/${product.id}/${convertToSlug(product.name)}`, href: '/nfts/[id]/[slug]' }}
-                user={product.created_by_info}
+                user={product.user}
               />
             );
           })

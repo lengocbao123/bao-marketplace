@@ -1,28 +1,17 @@
 import { useRouter } from 'next/router';
-import { Error, PageSkeleton, Tabs } from 'components/molecules';
+import { Tabs } from 'components/molecules';
 import { USER_INVENTORY_TABS } from 'lib/constants';
-import { UserResponse } from 'types/data';
 import React, { FC, HTMLAttributes } from 'react';
 import { ProfileInventory } from './profile-inventory';
-import useSWR from 'swr';
-import { isSuccess } from 'lib/utils/response';
-import { format } from 'date-fns';
+import { User } from '@prisma/client';
 
-export type ContainerInventoryProps = HTMLAttributes<HTMLDivElement>;
+export type ContainerInventoryProps = HTMLAttributes<HTMLDivElement> & {
+  user: User;
+};
 
-export const ContainerInventory: FC<ContainerInventoryProps> = ({ children }) => {
+export const ContainerInventory: FC<ContainerInventoryProps> = ({ children, user }) => {
   const router = useRouter();
   const { query } = router;
-  const { data: userResponse, error: errorUser } = useSWR<UserResponse>(`/user/exchange/${query.userId}`);
-
-  if (!userResponse) {
-    return <PageSkeleton />;
-  }
-  if (errorUser || !isSuccess(userResponse.message)) {
-    return <Error />;
-  }
-
-  const user = userResponse.data;
 
   return (
     <div className={'space-y-10 sm:space-y-20'}>
@@ -30,9 +19,8 @@ export const ContainerInventory: FC<ContainerInventoryProps> = ({ children }) =>
         <ProfileInventory
           banner={user.bannerUrl}
           avatar={user.avatar}
-          name={user.email}
-          // bio={user.}
-          joined={format(new Date(user.created_at), 'MM/dd/yyyy')}
+          name={user.username}
+          joined={''}
           address={''}
           socialLinks={[
             { link: '/', type: 'twitter' },

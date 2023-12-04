@@ -1,0 +1,125 @@
+// This is your Prisma schema file,
+// learn more about it in the docs https//pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = "mongodb+srv://lengocbaovlth1513010:lengocbao123@cluster0.vc7zamh.mongodb.net/market-place"
+}
+
+model User {
+  id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  email       String       @unique
+  username    String       @unique
+  status      String
+  bannerUrl   String
+  avatarUrl   String
+  avatar      String
+  lastName    String
+  firstName   String
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @default(now())
+  collections Collection[]
+  nfts        Nft[]
+  projects    Project[]
+  orders      Order[]
+}
+
+model Category {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  code           String
+  logoImage      String
+  featured_image String
+  banner_image   String
+  status         String
+  created_at     DateTime @default(now())
+  updated_at     DateTime @default(now())
+  nfts           Nft[]
+}
+
+model Collection {
+  id                   String   @id @default(auto()) @map("_id") @db.ObjectId
+  name                 String
+  chain                String
+  projectId            String?
+  categoryId           String
+  created_at           DateTime @default(now())
+  created_by           String   @db.ObjectId
+  logo_image           String
+  updated_at           DateTime @default(now())
+  description          String
+  banner_image         String
+  featured_image       String
+  nft_contract_address String?
+  total_nft            Int?     @default(0)
+  user                 User     @relation(fields: [created_by], references: [id])
+  nfts                 Nft[]
+}
+
+model Nft {
+  id               String     @id @default(auto()) @map("_id") @db.ObjectId
+  name             String
+  image            String
+  chain            String?    @default("polygon")
+  ownerId          String?    @db.ObjectId
+  orderIds         String[]   @db.ObjectId
+  status           String
+  projectId        String?    @db.ObjectId
+  nft_type         String
+  attributes       Json[]     @db.Json
+  collectionId     String     @db.ObjectId
+  created_at       DateTime   @default(now())
+  created_by       String     @db.ObjectId
+  updated_at       DateTime   @default(now())
+  description      String
+  metadata_cid     String?
+  mint_tx_hash     String?
+  project          Project?   @relation(fields: [projectId], references: [id])
+  transaction_id   String?
+  is_put_on_market Boolean?
+  categoryId       String?    @db.ObjectId
+  collection       Collection @relation(fields: [collectionId], references: [id])
+  user             User       @relation(fields: [created_by], references: [id])
+  category         Category?  @relation(fields: [categoryId], references: [id])
+}
+
+model Project {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  ownerId     String   @db.ObjectId
+  description String
+  avatar      String
+  is_default  Boolean
+  owner       User     @relation(fields: [ownerId], references: [id])
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+  nfts        Nft[]
+}
+
+model Order {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  ownerId    String   @db.ObjectId
+  nftId      String   @db.ObjectId
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  owner      User     @relation(fields: [ownerId], references: [id])
+  status     String
+  paymentId  String?  @db.ObjectId
+  prices     Price[]
+}
+
+model Price {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  type       String
+  amount     Int
+  status     String
+  currency   String?
+  orderId    String?  @db.ObjectId
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+  order      Order?   @relation(fields: [orderId], references: [id])
+}

@@ -1,10 +1,10 @@
 import clsx from 'clsx';
 import { FC, HTMLAttributes } from 'react';
-import { CollectionData } from 'types/data';
 import { getShortAddress } from 'lib/utils/string';
+import { Collection } from '@prisma/client';
 
 export interface CollectionInfoProps extends HTMLAttributes<HTMLDivElement> {
-  collection: CollectionData;
+  collection: Collection;
 }
 
 export const CollectionInfo: FC<CollectionInfoProps> = ({ className, collection }) => {

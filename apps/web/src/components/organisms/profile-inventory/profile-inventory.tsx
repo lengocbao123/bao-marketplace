@@ -1,12 +1,11 @@
 import clsx from 'clsx';
-import { format } from 'date-fns';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC, HTMLAttributes, ReactNode } from 'react';
 import toast from 'react-hot-toast';
 import { copyToClipboard } from 'lib/utils/navigator';
 import { getShortAddress } from 'lib/utils/string';
-import { Avatar, TextTruncate } from 'components/atoms';
+import { TextTruncate } from 'components/atoms';
 import { DiscordIcon, TwitterIcon } from 'components/icons/brand';
 import { CopyIcon, GlobeIcon } from 'components/icons/outline';
 import { DUMMY_USER_BIO } from 'lib/constants';
@@ -58,35 +57,43 @@ export const ProfileInventory: FC<ProfileInventoryProps> = (props) => {
           width={1440}
           height={280}
           alt={name}
-          className={'bg-neutral-10 aspect-[1440/280] w-full object-cover object-top'}
+          className={'bg-neutral-10 aspect-[1440/280] h-[280px] w-full object-cover object-top'}
         />
       ) : (
         <div className={'bg-neutral-10 aspect-[1440/280] w-full object-cover object-center'} />
       )}
       <div className={'container relative flex flex-col md:flex-row md:justify-between md:gap-6'}>
         <div className={'md:flex-1'}>
-          <Avatar
-            name={name}
-            onlyAvatar={true}
-            size={'xl'}
-            className={
-              'border-3 border-neutral-0 absolute -top-[50px] rounded-full md:-top-20 [&_[data-component="image"]]:md:w-40'
-            }
-            src={avatar}
-          />
+          <div className="relative -top-12 -mb-12 flex flex-none items-end justify-between lg:-top-20 lg:-mb-20">
+            {avatar ? (
+              <Image
+                src={avatar}
+                width={164}
+                height={164}
+                alt={name}
+                className={
+                  'border-3 bg-neutral-10 aspect-square w-[100px] rounded-full border-white object-cover object-center lg:w-[164px]'
+                }
+              />
+            ) : (
+              <div
+                className={
+                  'border-3 bg-neutral-10 aspect-square w-[100px] rounded-full border-white object-cover object-center lg:w-[164px]'
+                }
+              />
+            )}
+          </div>
           <div className={clsx('md:mt-7.5 mt-5 text-3xl font-bold')}>{name}</div>
           <TextTruncate text={DUMMY_USER_BIO} className={'mt-3 text-sm text-neutral-50'} />
         </div>
         <div
           className={
-            'border-neutral-10 md:mt-7.5 mt-5 flex h-fit w-full flex-col gap-4 rounded-xl border p-4 md:w-[17.5rem]'
+            'border-neutral-10 md:mt-7.5 mt-25 flex h-fit w-full flex-col gap-4 rounded-xl border p-4 md:w-[17.5rem]'
           }
         >
           <div className={'flex justify-between'}>
             <div className={'text-sm text-neutral-50'}>Joined</div>
-            {joined && (
-              <div className={'text-neutral text-sm font-medium'}>{format(new Date(joined), 'MMMM yyyy')}</div>
-            )}
+            {joined && <div className={'text-neutral text-sm font-medium'}>{joined}</div>}
           </div>
           <hr className={'border-neutral-10'} />
           <div className={'flex justify-between'}>

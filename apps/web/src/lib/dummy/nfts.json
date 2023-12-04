@@ -1,18 +1,9 @@
 [
   {
-    "id": "1261c62f-815a-4753-bf86-61a4c1bbf54e",
     "name": "Rasheed Mountains#1",
     "price": 100,
     "description": "description",
     "image": "https://images.unsplash.com/photo-1665979154453-ceb2a4934028?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1287&q=80",
-    "createdAt": "2022-10-14T10:04:18.992Z",
-    "updatedAt": "2022-10-14T10:04:18.992Z",
-    "owner": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
-      "email": "baole@codelight.co",
-      "username": null,
-      "avatarUrl": null
-    },
     "attributes": [
       {
         "type": "Color",
@@ -21,20 +12,10 @@
       {
         "type": "Hair",
         "value": "Red"
-      },
-      {
-        "type": "XXX",
-        "value": "XXX"
       }
     ],
     "order": {
       "id": null
-    },
-    "user": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
-      "email": "baole@codelight.co",
-      "username": null,
-      "avatarUrl": null
     }
   },
   {
@@ -46,7 +27,7 @@
     "createdAt": "2022-10-14T10:04:33.344Z",
     "updatedAt": "2022-10-14T10:04:33.344Z",
     "owner": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "id": "65680f937ec1f722c3e58409",
       "email": "baole@codelight.co",
       "username": null,
       "avatarUrl": null
@@ -56,7 +37,7 @@
       "id": null
     },
     "user": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "id": "65680f937ec1f722c3e58409",
       "email": "baole@codelight.co",
       "username": null,
       "avatarUrl": null
@@ -71,7 +52,7 @@
     "createdAt": "2022-10-14T10:04:36.407Z",
     "updatedAt": "2022-10-14T10:04:36.407Z",
     "owner": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "id": "65680f937ec1f722c3e58409",
       "email": "baole@codelight.co",
       "username": null,
       "avatarUrl": null
@@ -81,18 +62,18 @@
       "id": null
     },
     "user": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "id": "65680f937ec1f722c3e58409",
       "email": "baole@codelight.co",
       "username": null,
       "avatarUrl": null,
       "owner": {
-        "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+        "id": "65680f937ec1f722c3e58409",
         "email": "baole@codelight.co",
         "username": null,
         "avatarUrl": null
       },
       "user": {
-        "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+        "id": "65680f937ec1f722c3e58409",
         "email": "baole@codelight.co",
         "username": null,
         "avatarUrl": null
@@ -108,7 +89,7 @@
     "createdAt": "2022-10-14T10:04:41.031Z",
     "updatedAt": "2022-10-14T10:04:41.031Z",
     "owner": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "id": "65680f937ec1f722c3e58409",
       "email": "baole@codelight.co",
       "username": null,
       "avatarUrl": null
@@ -118,29 +99,29 @@
       "id": null
     },
     "user": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "id": "65680f937ec1f722c3e58409",
       "email": "baole@codelight.co",
       "username": null,
       "avatarUrl": null,
       "owner": {
-        "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+        "id": "65680f937ec1f722c3e58409",
         "email": "baole@codelight.co",
         "username": null,
         "avatarUrl": null
       },
       "user": {
-        "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+        "id": "65680f937ec1f722c3e58409",
         "email": "baole@codelight.co",
         "username": null,
         "avatarUrl": null,
         "owner": {
-          "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+          "id": "65680f937ec1f722c3e58409",
           "email": "baole@codelight.co",
           "username": null,
           "avatarUrl": null
         },
         "user": {
-          "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+          "id": "65680f937ec1f722c3e58409",
           "email": "baole@codelight.co",
           "username": null,
           "avatarUrl": null
@@ -157,7 +138,7 @@
     "createdAt": "2022-10-14T10:04:46.479Z",
     "updatedAt": "2022-10-14T10:04:46.479Z",
     "owner": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "id": "65680f937ec1f722c3e58409",
       "email": "baole@codelight.co",
       "username": null,
       "avatarUrl": null
@@ -167,7 +148,7 @@
       "id": null
     },
     "user": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "id": "65680f937ec1f722c3e58409",
       "email": "baole@codelight.co",
       "username": null,
       "avatarUrl": null
@@ -182,7 +163,7 @@
     "createdAt": "2022-10-14T10:04:51.281Z",
     "updatedAt": "2022-10-14T10:04:51.281Z",
     "owner": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "id": "65680f937ec1f722c3e58409",
       "email": "baole@codelight.co",
       "username": null,
       "avatarUrl": null
@@ -192,7 +173,7 @@
       "id": null
     },
     "user": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "id": "65680f937ec1f722c3e58409",
       "email": "baole@codelight.co",
       "username": null,
       "avatarUrl": null
@@ -207,7 +188,7 @@
     "createdAt": "2022-10-14T10:05:17.402Z",
     "updatedAt": "2022-10-14T10:05:17.402Z",
     "owner": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "id": "65680f937ec1f722c3e58409",
       "email": "baole@codelight.co",
       "username": null,
       "avatarUrl": null
@@ -217,7 +198,7 @@
       "id": null
     },
     "user": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "id": "65680f937ec1f722c3e58409",
       "email": "baole@codelight.co",
       "username": null,
       "avatarUrl": null
@@ -232,7 +213,7 @@
     "createdAt": "2022-10-14T10:05:25.256Z",
     "updatedAt": "2022-10-14T10:05:25.256Z",
     "owner": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "id": "65680f937ec1f722c3e58409",
       "email": "baole@codelight.co",
       "username": null,
       "avatarUrl": null
@@ -242,7 +223,7 @@
       "id": null
     },
     "user": {
-      "id": "70bb1272-b25a-4973-a8e3-6cf9249a688f",
+      "id": "65680f937ec1f722c3e58409",
       "email": "baole@codelight.co",
       "username": null,
       "avatarUrl": null

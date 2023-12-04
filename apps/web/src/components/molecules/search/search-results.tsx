@@ -1,12 +1,11 @@
 import * as React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ResultData } from 'hooks/services/search';
 import { convertToSlug } from 'lib/utils/string';
 
 export interface SearchResultsProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
-  items?: ResultData[];
+  items?: any[];
 }
 
 export const SearchResults: React.FC<SearchResultsProps> = ({ title = '', items }) => {
@@ -23,7 +22,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({ title = '', items 
 };
 
 export interface SearchItemProps extends React.HTMLAttributes<HTMLDivElement> {
-  item?: ResultData;
+  item?: any[];
 }
 
 export const SearchItem: React.FC<SearchItemProps> = ({ item }) => {
@@ -32,19 +31,19 @@ export const SearchItem: React.FC<SearchItemProps> = ({ item }) => {
   };
 
   const getLink = () => {
-    if (item.type === 'nfts') {
-      return `/nfts/${item.id}/${convertToSlug(item.data.name)}`;
-    }
-    if (item.type === 'collections') {
-      return `/collections/${item.id}/${convertToSlug(item.data.name)}`;
-    }
+    // if (item.type === 'nfts') {
+    //   return `/nfts/${item.id}/${convertToSlug(item.data.name)}`;
+    // }
+    // if (item.type === 'collections') {
+    //   return `/collections/${item.id}/${convertToSlug(item.data.name)}`;
+    // }
 
     return '/';
   };
 
   return (
     <Link href={getLink()} className={'flex items-start gap-3 py-3'}>
-      {item.data.image && (
+      {/* {item.data.image && (
         <Image
           src={item.data.image}
           className={'bg-neutral-10 inline-block aspect-square rounded-md object-cover object-center'}
@@ -56,7 +55,7 @@ export const SearchItem: React.FC<SearchItemProps> = ({ item }) => {
       <div className={'truncate'}>
         <div>{item.data.name}</div>
         {item.highlight && <small dangerouslySetInnerHTML={{ __html: getHighlight(item.highlight) }}></small>}
-      </div>
+      </div> */}
     </Link>
   );
 };

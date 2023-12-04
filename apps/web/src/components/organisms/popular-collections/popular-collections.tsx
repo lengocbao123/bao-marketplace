@@ -4,22 +4,13 @@ import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { CardPopularSkeleton } from 'components/molecules/skeleton/card-popular-skeleton';
 import { convertToSlug } from 'lib/utils/string';
-import { usePopularCollections } from 'hooks/services';
+import { Collection } from '@prisma/client';
 
-export type PopularCollectionsProps = HTMLAttributes<HTMLElement>;
+export type PopularCollectionsProps = HTMLAttributes<HTMLElement> & {
+  collections: Collection[];
+};
 
-export const PopularCollections: FC<PopularCollectionsProps> = (props) => {
-  const { ...popularCollectionsProps } = props;
-  const { collections, error } = usePopularCollections();
-
-  if (error) {
-    return (
-      <Section heading={'Popular Collections'} {...popularCollectionsProps}>
-        <div className={'text-center'}>Oops! Something went wrong</div>
-      </Section>
-    );
-  }
-
+export const PopularCollections: FC<PopularCollectionsProps> = ({ collections }) => {
   if (!collections) {
     return (
       <Section heading={'Popular Collections'}>
@@ -32,7 +23,7 @@ export const PopularCollections: FC<PopularCollectionsProps> = (props) => {
   }
 
   return (
-    <Section heading={'Popular Collections'} {...popularCollectionsProps}>
+    <Section heading={'Popular Collections'}>
       <Swiper
         modules={[Pagination]}
         pagination={{
@@ -48,7 +39,7 @@ export const PopularCollections: FC<PopularCollectionsProps> = (props) => {
           },
         }}
       >
-        {collections.list.map((collection) => (
+        {collections.map((collection) => (
           <SwiperSlide key={collection.id}>
             <CardPopular
               title={collection.name}

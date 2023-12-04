@@ -1,11 +1,12 @@
+import { Collection } from '@prisma/client';
 import { CardCollection } from 'components/molecules';
 import { List } from 'components/organisms/list';
 import { convertToSlug } from 'lib/utils/string';
 import { FC, HTMLAttributes } from 'react';
-import { CollectionData, PaginationData } from 'types/data';
+import { PaginationData } from 'types/data';
 
 export interface CollectionsListProps extends HTMLAttributes<HTMLDivElement> {
-  collections: CollectionData[];
+  collections: Array<Collection>;
   meta?: PaginationData;
   links?: any;
 }

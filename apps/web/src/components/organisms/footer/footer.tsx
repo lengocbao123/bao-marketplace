@@ -5,13 +5,12 @@ import { DiscordIcon, MediumIcon, TwitterIcon } from 'components/icons/brand';
 import { LinkIcon } from 'components/icons/outline';
 import { FormSubscribe } from 'components/molecules/form';
 import { PIKASSO_DISCORD_URL } from 'lib/constants';
-import { useCategories } from 'hooks/services';
 
 export type FooterProps = HTMLAttributes<HTMLElement>;
 
 export const Footer: FC<FooterProps> = (props) => {
   const year = new Date().getFullYear();
-  const { categories } = useCategories();
+  // const { categories } = useCategories();
 
   return (
     <footer className={'bg-secondary-70 text-neutral-30 mt-20 pt-2.5 pb-6'} {...props}>
@@ -45,7 +44,7 @@ export const Footer: FC<FooterProps> = (props) => {
             </div>
 
             <div className="gap-y-7.5 border-neutral-10/10 grid border-t pt-4 sm:grid-cols-2 lg:border-t-0 lg:pt-0">
-              {categories && (
+              {/* {categories && (
                 <div className="row-span-2 space-y-4">
                   <h2 className={'text-neutral-0 text-sm font-bold'}>Marketplace</h2>
                   <nav>
@@ -65,7 +64,7 @@ export const Footer: FC<FooterProps> = (props) => {
                     </ul>
                   </nav>
                 </div>
-              )}
+              )} */}
               {/* end Marketplace */}
 
               <div className="space-y-4">

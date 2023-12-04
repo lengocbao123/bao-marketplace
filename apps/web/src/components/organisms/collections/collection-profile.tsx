@@ -5,10 +5,10 @@ import { TextTruncate } from 'components/molecules';
 import { CollectionInfo } from './collection-info';
 import { CollectionSocials } from './collection-socials';
 import { Avatar } from 'components/atoms';
-import { CollectionData } from 'types/data';
+import { Collection, User } from '@prisma/client';
 
 export interface CollectionProfileProps extends HTMLAttributes<HTMLDivElement> {
-  collection: CollectionData;
+  collection: Collection & { user: User };
 }
 
 export const CollectionProfile: FC<CollectionProfileProps> = ({ className, collection }) => {
@@ -55,11 +55,11 @@ export const CollectionProfile: FC<CollectionProfileProps> = ({ className, colle
               <h1 className={'mb-4 text-2xl font-bold lg:text-3xl'}>{collection.name}</h1>
 
               <div className="mb-4 flex gap-2">
-                {collection.created_by_info && collection.created_by_info.avatarUrl && (
+                {collection.user && collection.user.avatarUrl && (
                   <Avatar
                     label={'Creator'}
-                    name={collection.created_by_info.email || 'Unknown'}
-                    src={collection.created_by_info.avatarUrl}
+                    name={collection.user.email || 'Unknown'}
+                    src={collection.user.avatarUrl}
                     className='flex items-center text-sm [&_[data-component="label"]]:mr-2'
                   />
                 )}

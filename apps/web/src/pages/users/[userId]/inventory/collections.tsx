@@ -1,112 +1,145 @@
 import { Layout } from 'components/layouts';
-import { Error, ExploreSection, ListNftsSkeleton } from 'components/molecules';
-import { CollectionsFilters, CollectionsList } from 'components/organisms';
+import { DropdownSelect, Tabs } from 'components/molecules';
+import { CollectionsList } from 'components/organisms';
 import { InferGetServerSidePropsType } from 'next';
+import Image from 'next/image';
 import { NextPageWithLayout } from 'pages/_app';
+import { Fragment } from 'react';
 import { useRouter } from 'next/router';
-import { convertQueryParamsToArray } from 'lib/utils/query';
-import { unstable_getServerSession } from 'next-auth';
-import { authOptions } from 'pages/api/auth/[...nextauth]';
-import { ContainerInventory } from 'components/organisms';
-import { getCollectionsByUserId } from 'services';
-import { useCollectionsByUserId } from 'hooks/services';
+import { PERIODS } from 'lib/dummy';
+import { NextSeo } from 'next-seo';
+import { fetcher } from 'lib/utils/fetcher';
+import { Collection } from '@prisma/client';
+import { Avatar, Button, ButtonText, CheckboxInput } from 'components/atoms';
+import { FilterIcon } from 'components/icons/outline';
+import { PIKASSO_CHAINS } from 'lib/constants';
+import { z } from 'zod';
+import { useFieldArray, useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-export async function getServerSideProps({ req, res, query, resolvedUrl }) {
-  const collectionsQuery = {
-    ...query,
-    page: query.page ? query.page : 1,
-  };
-  delete collectionsQuery.userId;
-
-  const session = await unstable_getServerSession(req, res, authOptions);
-  const collectionQueryString = new URLSearchParams(collectionsQuery).toString();
-
-  if (!query.page) {
-    return {
-      redirect: {
-        destination: `${resolvedUrl}?${collectionQueryString}`,
-        permanent: false,
-      },
-    };
-  }
-  const collections = await getCollectionsByUserId(session, query.userId as string, collectionQueryString);
+export async function getServerSideProps({ query }) {
+  const collections = await fetcher<{ data: Array<Collection>; page: number; totalPages: number; totalItems: number }>(
+    `/collection?${new URLSearchParams(query).toString()}`,
+  );
 
   return {
     props: {
-      collectionQueryString,
-      fallback: {
-        [`/collection/exchange/list?createdBy=${query.userId}&${collectionQueryString}`]: collections,
-      },
+      collections: collections.data,
+      page: collections.page,
+      totalPages: collections.totalPages,
+      totalItems: collections.totalItems,
     },
   };
 }
 
-const InventoryCollectionPage: NextPageWithLayout = ({
-  collectionQueryString,
+const ExploreCollectionPage: NextPageWithLayout = ({
+  collections,
+  page,
+  totalPages,
+  totalItems,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter();
   const { query } = router;
 
-  const { collections, error: errorCollections } = useCollectionsByUserId(
-    query.userId as string,
-    collectionQueryString,
-  );
+  const schema = z.object({
+    chain: z
+      .array(z.enum(['polygon', 'goerli', 'thundercore']))
+      .optional()
+      .default([]),
+  });
+  const form = useForm({
+    mode: 'onChange',
+    resolver: zodResolver(schema),
+  });
 
-  const handlerFilterChange = async (key: string, value: any) => {
-    let newQuery = query;
-    if (key === 'price') {
-      newQuery = { ...newQuery, priceMin: value[0], priceMax: value[1] };
-    } else if (key === 'period' && value === 'all' && 'period' in newQuery) {
-      delete newQuery.period;
-    } else {
-      newQuery = { ...query, [key]: value };
-    }
-    await router.push({
-      pathname: router.pathname,
-      query: newQuery,
-    });
-  };
-
-  const resetFilter = async () => {
-    const resetQuery = { page: 1, period: query.period };
-    if (query.sort) {
-      resetQuery['sort'] = query.sort;
-    }
-    await router.push({
-      pathname: router.pathname,
-      query: resetQuery,
-    });
-  };
-
-  if (errorCollections) {
-    return <Error />;
-  }
-  const convertedQuery = convertQueryParamsToArray(query);
+  const { append: appendChain, remove: removeChain } = useFieldArray({
+    control: form.control,
+    name: 'chain',
+  });
+  form.watch((data) => {
+    router.push(`${router.pathname}?${new URLSearchParams(data).toString()}`);
+  });
 
   return (
-    <ContainerInventory>
-      {errorCollections ? (
-        <Error className={'py-10'} />
-      ) : (
-        <ExploreSection
-          name={'collections'}
-          filtersComponent={<CollectionsFilters filter={convertedQuery} onChange={handlerFilterChange} />}
-          filter={convertedQuery}
-          bodyClassName="container"
-          onChangeFilter={handlerFilterChange}
-          onResetFilter={resetFilter}
-        >
-          {collections ? (
-            <CollectionsList collections={collections.list} meta={collections.meta} />
-          ) : (
-            <ListNftsSkeleton number={10} />
-          )}
-        </ExploreSection>
-      )}
-    </ContainerInventory>
+    <Fragment>
+      <NextSeo title={'Discover NFTS'} />
+      <Image
+        src={'/assets/images/banner/banner.png'}
+        width={1440}
+        height={144}
+        alt="Explore Banner"
+        className={'bg-neutral-10 aspect-[1440/144] w-full object-cover object-center'}
+      />
+      <Tabs
+        data={PERIODS.map((item) => ({
+          label: item.title,
+          value: item.value,
+          active: (item.value === 'all_time' && !query.period) || item.value === query.period,
+        }))}
+        onChangeTab={(value) => {
+          // form.setValue('category', value);
+        }}
+        className="border-neutral-10 mb-7.5 bottom-1 flex justify-start border sm:justify-center"
+      />
+      <div className="container space-y-6">
+        <div className="flex w-fit sm:w-full sm:justify-between">
+          <div className="flex justify-between gap-5">
+            <Button variant="tertiary" label="Filter" icon={FilterIcon} />
+            <ButtonText label="Clear all" variant="secondary" className="hidden sm:block"  onClick={() => form.reset({})} />
+          </div>
+          <div className="flex items-center gap-3">
+            <span className="hidden sm:block">Sort by</span>
+            <DropdownSelect
+              options={[
+                {
+                  value: 'recently_listed',
+                  label: 'Recently Listed',
+                },
+              ]}
+              onChange={(option) => []}
+              activeIndex={0}
+            />
+          </div>
+        </div>
+        <div className="flex ">
+          <div className="w-full max-w-xs space-y-6  pt-4">
+            <div className="font-medium">Chain</div>
+            {PIKASSO_CHAINS.map((chain) => {
+              return (
+                <CheckboxInput
+                  key={chain.value}
+                  label={<Avatar name={chain.label} src={chain.Icon} size={'sm'} />}
+                  className="mb-5"
+                  checked={(form.getValues('chain') || []).includes(chain.value)}
+                  onChange={(event) => {
+                    if (event.target.checked) {
+                      appendChain(chain.value);
+                    } else {
+                      const index = form.getValues('chain').findIndex((value) => value === chain.value);
+                      removeChain(index);
+                    }
+                  }}
+                />
+              );
+            })}
+          </div>
+          <CollectionsList
+            className="grow"
+            collections={collections}
+            meta={{
+              total_items: totalItems,
+              current_page: page,
+              total_pages: totalPages,
+              items_per_page: 8,
+              item_count: 8,
+            }}
+          />
+        </div>
+      </div>
+    </Fragment>
   );
 };
 
-InventoryCollectionPage.getLayout = (page) => <Layout>{page}</Layout>;
+ExploreCollectionPage.getLayout = (page) => <Layout>{page}</Layout>;
 
-export default InventoryCollectionPage;
+export default ExploreCollectionPage;
