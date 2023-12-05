@@ -10,14 +10,12 @@ import {
   ProductSimilar,
   ProductOfferHistory,
   ProductSaleHistory,
-  ProductExchange,
 } from 'components/organisms';
 import { NextPageWithLayout } from 'pages/_app';
 import { InferGetServerSidePropsType } from 'next';
 import { convertToSlug } from 'lib/utils/string';
 import prisma from 'lib/prismadb';
 import { Nft, Collection, User } from '@prisma/client';
-import { getNftPrice } from 'lib/utils/nft';
 
 export async function getServerSideProps({ req, res, query }) {
   const { id } = query;
@@ -73,7 +71,7 @@ const Index: NextPageWithLayout = ({ nft, relativeNfts }: InferGetServerSideProp
         </div>
         <div className="gap-y-7.5 col-span-3 hidden flex-col sm:flex">
           <ProductInfo className="w-full" nft={nftData} />
-           {/* <ProductExchange className="w-full" data={100} nftId={nftData.id} /> */}
+          {/* <ProductExchange className="w-full" data={100} nftId={nftData.id} /> */}
           <ProductDetails nft={nftData} className="w-full" />
         </div>
         <ProductOfferHistory className="mt-7.5 col-span-5" />

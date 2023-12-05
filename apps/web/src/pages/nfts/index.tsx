@@ -170,9 +170,6 @@ const ExplorePage: NextPageWithLayout = ({
                 <span className="mx-3 text-sm text-neutral-50">to</span>
                 <Input className="w-full" placeholder="Max" {...form.register('priceMax')} />
               </div>
-              {/* {form.formState.errors && (
-                <div className="text-accent-error mt-2 text-sm">{form.formState.errors.priceMin}</div>
-              )} */}
             </div>
             <div className="space-y-4 pt-4">
               <div className="font-medium">Collection</div>

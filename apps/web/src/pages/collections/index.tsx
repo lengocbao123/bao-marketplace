@@ -85,7 +85,12 @@ const ExploreCollectionPage: NextPageWithLayout = ({
         <div className="flex w-fit sm:w-full sm:justify-between">
           <div className="flex justify-between gap-5">
             <Button variant="tertiary" label="Filter" icon={FilterIcon} />
-            <ButtonText label="Clear all" variant="secondary" className="hidden sm:block"  onClick={() => form.reset({})} />
+            <ButtonText
+              label="Clear all"
+              variant="secondary"
+              className="hidden sm:block"
+              onClick={() => form.reset({})}
+            />
           </div>
           <div className="flex items-center gap-3">
             <span className="hidden sm:block">Sort by</span>

@@ -161,7 +161,7 @@ export const Header: FC<HeaderProps> = (props) => {
                 <div className={'hidden sm:block lg:hidden xl:block'}>
                   <ButtonLink
                     href={`${publicRuntimeConfig.builderUrl}/projects/my-projects`}
-                    target='_blank'
+                    target="_blank"
                     variant={'primary'}
                     label={'Create'}
                   />
