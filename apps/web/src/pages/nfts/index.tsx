@@ -88,7 +88,9 @@ const ExplorePage: NextPageWithLayout = ({
   }));
 
   form.watch((data) => {
-    router.push(`${router.pathname}?${new URLSearchParams(data).toString()}`);
+    if(data){
+      router.push(`${router.pathname}?${new URLSearchParams(data).toString()}`);
+    }
   });
 
   return (

@@ -1,3 +1,6 @@
+import getConfig from 'next/config';
+
+const { publicRuntimeConfig } = getConfig();
 export const fetcher = <T>(endpoint: RequestInfo | URL, options?: RequestInit): Promise<T> => {
   return fetch(`/api/${endpoint}`, {
     ...options,
@@ -9,7 +12,7 @@ export const fetcher = <T>(endpoint: RequestInfo | URL, options?: RequestInit): 
 };
 
 export const serverFetcher = <T>(endpoint: RequestInfo | URL, options?: RequestInit): Promise<T> => {
-  return fetch(process.env.OPENAPI_BASE_URL + endpoint, {
+  return fetch(publicRuntimeConfig.apiBaseUrl + endpoint, {
     ...options,
     headers: {
       ...options?.headers,
