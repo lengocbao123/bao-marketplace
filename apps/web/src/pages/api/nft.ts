@@ -33,7 +33,6 @@ const getNfts = async (req: NextApiRequest, res: NextApiResponse) => {
         contains: query.search as string,
       };
     }
-    console.log(whereCondition);
     const count = await prisma.nft.count({ where: whereCondition });
     const nfts = await prisma.nft.findMany({
       where: whereCondition,

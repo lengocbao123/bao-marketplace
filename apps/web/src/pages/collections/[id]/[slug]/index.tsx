@@ -8,7 +8,7 @@ import { CollectionProfile } from 'components/organisms';
 import { NftsList } from 'components/organisms/nfts';
 import { NextPageWithLayout } from 'pages/_app';
 import { Collection, Nft, User } from '@prisma/client';
-import { fetcher } from 'lib/utils/fetcher';
+import { serverFetcher } from 'lib/utils/fetcher';
 import { Avatar, Button, ButtonText, CheckboxInput, Input } from 'components/atoms';
 import { FilterIcon } from 'components/icons/outline';
 import { PIKASSO_CHAINS } from 'lib/constants';
@@ -20,8 +20,8 @@ import { convertToSlug } from 'lib/utils/string';
 export async function getServerSideProps({ query }) {
   const { id } = query;
   const [collection, nftsByCollection] = await Promise.all([
-    fetcher<{ data: Collection & { user: User } }>(`/collection/${id}`),
-    fetcher<{
+    serverFetcher<{ data: Collection & { user: User } }>(`/collection/${id}`),
+    serverFetcher<{
       data: Array<Nft & { collection: Collection; user: User }>;
       page: number;
       totalPages: number;

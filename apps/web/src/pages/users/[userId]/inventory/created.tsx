@@ -5,7 +5,7 @@ import { InferGetServerSidePropsType } from 'next';
 import { NextPageWithLayout } from 'pages/_app';
 import { useRouter } from 'next/router';
 import { ContainerInventory } from 'components/organisms';
-import { fetcher } from 'lib/utils/fetcher';
+import { serverFetcher } from 'lib/utils/fetcher';
 import { Category, Collection, Nft, User } from '@prisma/client';
 import { z } from 'zod';
 import { Avatar, Button, ButtonText, CheckboxInput, Input } from 'components/atoms';
@@ -15,15 +15,15 @@ import { FilterIcon } from 'components/icons/outline';
 import { PIKASSO_CHAINS } from 'lib/constants';
 export async function getServerSideProps({ query }) {
   const [categories, nfts, collections, user] = await Promise.all([
-    fetcher<Array<Category>>(`/category`),
-    fetcher<{
+    serverFetcher<Array<Category>>(`/category`),
+    serverFetcher<{
       data: Array<Nft & { collection: Collection; user: User }>;
       page: number;
       totalPages: number;
       totalItems: number;
     }>(`/nft?${new URLSearchParams(query).toString()}`),
-    fetcher<{ data: Array<Collection>; page: number; totalPages: number; totalItems: number }>(`/collection`),
-    fetcher<User>(`/user?userId=${query.userId}`),
+    serverFetcher<{ data: Array<Collection>; page: number; totalPages: number; totalItems: number }>(`/collection`),
+    serverFetcher<User>(`/user?userId=${query.userId}`),
   ]);
 
   return {

@@ -8,7 +8,7 @@ import { Fragment } from 'react';
 import { useRouter } from 'next/router';
 import { PERIODS } from 'lib/dummy';
 import { NextSeo } from 'next-seo';
-import { fetcher } from 'lib/utils/fetcher';
+import { serverFetcher } from 'lib/utils/fetcher';
 import { Collection } from '@prisma/client';
 import { Avatar, Button, ButtonText, CheckboxInput } from 'components/atoms';
 import { FilterIcon } from 'components/icons/outline';
@@ -18,9 +18,12 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 export async function getServerSideProps({ query }) {
-  const collections = await fetcher<{ data: Array<Collection>; page: number; totalPages: number; totalItems: number }>(
-    `/collection?${new URLSearchParams(query).toString()}`,
-  );
+  const collections = await serverFetcher<{
+    data: Array<Collection>;
+    page: number;
+    totalPages: number;
+    totalItems: number;
+  }>(`/collection?${new URLSearchParams(query).toString()}`);
 
   return {
     props: {

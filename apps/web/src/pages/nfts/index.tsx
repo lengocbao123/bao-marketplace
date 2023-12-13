@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { NextPageWithLayout } from 'pages/_app';
 import { Fragment } from 'react';
 import { useRouter } from 'next/router';
-import { fetcher } from 'lib/utils/fetcher';
+import { serverFetcher } from 'lib/utils/fetcher';
 import { Category, Collection, Nft, User } from '@prisma/client';
 import { Avatar, Button, ButtonText, CheckboxInput, Input } from 'components/atoms';
 import { PIKASSO_CHAINS } from 'lib/constants';
@@ -17,14 +17,14 @@ import { FilterIcon } from 'components/icons/outline';
 
 export async function getServerSideProps({ query }) {
   const [categories, nfts, collections] = await Promise.all([
-    fetcher<Array<Category>>(`/category`),
-    fetcher<{
+    serverFetcher<Array<Category>>(`/category`),
+    serverFetcher<{
       data: Array<Nft & { collection: Collection; user: User }>;
       page: number;
       totalPages: number;
       totalItems: number;
     }>(`/nft?${new URLSearchParams(query).toString()}`),
-    fetcher<{ data: Array<Collection>; page: number; totalPages: number; totalItems: number }>(`/collection`),
+    serverFetcher<{ data: Array<Collection>; page: number; totalPages: number; totalItems: number }>(`/collection`),
   ]);
 
   return {
